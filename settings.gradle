@@ -1,0 +1,6 @@
+rootProject.projectDir = new File(settingsDir, '.')
+rootProject.name = "OculusRoot"
+
+include ':',
+':VrApi:Loader:Projects:Android',
+':VrIntegration:Loader:Projects:Android'

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string
+      name="app_name"
+      project="oculus-360-photos"
+      description="The title of the application, which lets you browse 360 panorama photos"
+      >Oculus 360 Photos SDK</string>
+   	<string
+      name="action_settings"
+      project="oculus-360-photos"
+      description="The name of the settings menu."
+      >Settings</string>
+    <string
+        name="media_not_found"
+        project="oculus-360-videos"
+        description="The message displayed when no media found on the phone."
+        >To view your own 360 photos, save them to the /Oculus/360Photos/ folder on your device.</string>
+
+</resources>

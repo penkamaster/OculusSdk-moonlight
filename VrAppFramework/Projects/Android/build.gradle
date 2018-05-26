@@ -1,0 +1,24 @@
+apply from: "${rootProject.projectDir}/VrLib.gradle"
+apply plugin: 'com.android.library'
+
+android {
+	defaultConfig {
+		externalNativeBuild {
+			ndkBuild {
+				targets "vrappframework"
+			}
+		}
+	}
+
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['../../java']
+			res.srcDirs = ['../../res']
+			// Native libs will be picked up by the build scripts.  They are not
+			// included in the aar because the format does not allow for header
+			// files or other ways to link native code against any binaries
+			// within.
+		}
+	}
+}

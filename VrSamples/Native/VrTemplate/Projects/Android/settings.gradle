@@ -1,0 +1,9 @@
+rootProject.projectDir = new File(settingsDir, '../../../../..')
+rootProject.name = "VrTemplate"
+
+include ':', \
+	'VrAppFramework:Projects:Android', \
+	'VrAppSupport:VrLocale:Projects:Android', \
+	'VrAppSupport:VrSound:Projects:Android', \
+	'VrSamples:Native:VrTemplate:Projects:Android', \
+	'VrAppSupport:VrGUI:Projects:Android'

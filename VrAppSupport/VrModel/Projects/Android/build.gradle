@@ -1,0 +1,17 @@
+apply from: "${rootProject.projectDir}/VrLib.gradle"
+
+android {
+	defaultConfig {
+		externalNativeBuild {
+			ndkBuild {
+				targets "vrmodel"
+			}
+		}
+	}
+
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+		}
+	}
+}

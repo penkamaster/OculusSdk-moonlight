@@ -1,0 +1,4 @@
+rootProject.projectDir = new File(settingsDir, '../../../..')
+rootProject.name = "OpenGL_Loader"
+
+include ':', ':1stParty:OpenGL_Loader:Projects:Android'

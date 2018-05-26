@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/../../../../.." />
+            <option value="$PROJECT_DIR$/../../../../../VrAppFramework" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppFramework/Projects" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppFramework/Projects/Android" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Projects" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Projects/Android" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrLocale" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrLocale/Projects" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrLocale/Projects/Android" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrSound" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrSound/Projects" />
+            <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrSound/Projects/Android" />
+            <option value="$PROJECT_DIR$/../../../.." />
+            <option value="$PROJECT_DIR$/../../.." />
+            <option value="$PROJECT_DIR$/../.." />
+            <option value="$PROJECT_DIR$/.." />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/../../../../../moonlight-common" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

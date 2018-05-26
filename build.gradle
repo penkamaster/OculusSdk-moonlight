@@ -1,0 +1,51 @@
+buildscript {
+  repositories {
+    jcenter()
+    // Gradle 4.1 and higher include support for Google's Maven repo using
+    // the google() method. And you need to include this repo to download
+    // Android plugin 3.0.0 or higher.
+    google()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.0.1'
+  }
+}
+
+// TODO_BUILD: Replace this with proper debug/release configurations for prebuilt libraries.
+// TODO_BUILD: For now, can this be moved to the plugins?
+subprojects {
+
+  repositories {
+    jcenter()
+    // Gradle 4.1 and higher include support for Google's Maven repo using
+    // the google() method. And you need to include this repo to download
+    // Android plugin 3.0.0 or higher.
+    google()
+  }
+
+  if ( project.file("build.gradle").exists() ) {
+
+    // NOTE: TEMP: The start up parameters when kicking off a build from AS differ
+    // from our python scripts, therefore we check for if 'Debug' is present
+    // in any of the tasks, vs checking for a specific task being present.
+    List<String> startTaskNames = project.gradle.startParameter.getTaskNames()
+    boolean isClean = false
+    boolean isDebugBuild = false
+    for ( String taskName : startTaskNames ) {
+      if ( taskName.contains( "clean" ) ) {
+        isClean = true
+        break
+      }
+      if ( taskName.contains( "Debug" ) ) {
+        isDebugBuild = true
+        break
+      }
+    }
+    if ( isClean ) {
+        project.ext.buildType = "clean"
+    } else {
+        project.ext.buildType = ( isDebugBuild ) ? "Debug" : "Release"
+    }
+  }
+}

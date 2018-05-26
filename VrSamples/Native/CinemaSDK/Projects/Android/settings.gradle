@@ -1,0 +1,10 @@
+rootProject.projectDir = new File(settingsDir, '../../../../..')
+rootProject.name = "CinemaSDK"
+
+include ':', \
+	'VrAppFramework:Projects:Android', \
+	'VrAppSupport:VrLocale:Projects:Android', \
+	'VrAppSupport:VrSound:Projects:Android', \
+	'VrSamples:Native:CinemaSDK:Projects:Android', \
+	'VrAppSupport:VrGUI:Projects:Android', \
+	':moonlight-common'

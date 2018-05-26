@@ -1,0 +1,19 @@
+apply from: "${rootProject.projectDir}/VrLib.gradle"
+apply plugin: 'com.android.library'
+
+android {
+	defaultConfig {
+		externalNativeBuild {
+			ndkBuild {
+				targets "vrsound"
+			}
+		}
+	}
+
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['../../java']
+		}
+	}
+}

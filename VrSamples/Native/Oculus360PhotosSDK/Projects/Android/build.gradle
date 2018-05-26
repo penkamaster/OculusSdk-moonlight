@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+apply from: "${rootProject.projectDir}/VrApp.gradle"
+
+dependencies {
+  implementation project(':VrAppFramework:Projects:Android')
+  implementation project(':VrAppSupport:VrGUI:Projects:Android')
+  implementation project(':VrAppSupport:VrLocale:Projects:Android')
+  implementation project(':VrAppSupport:VrSound:Projects:Android')
+}
+
+android {
+  project.archivesBaseName = "oculus360photossdk"
+
+  defaultConfig {
+    applicationId "com.oculus.oculus360photossdk"
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ['../../java']
+      jniLibs.srcDir 'libs'
+      res.srcDirs = ['../../res']
+      assets.srcDirs = ['../../assets']
+    }
+  }
+
+  lintOptions {
+    disable 'MissingTranslation'
+    disable 'ExtraTranslation'
+  }
+}

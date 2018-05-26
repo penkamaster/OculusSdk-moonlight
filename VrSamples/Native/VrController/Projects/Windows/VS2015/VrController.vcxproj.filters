@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Src\VrController.cpp" />
+    <ClCompile Include="..\..\..\Src\BeamRenderer.cpp" />
+    <ClCompile Include="..\..\..\Src\EaseFunctions.cpp" />
+    <ClCompile Include="..\..\..\Src\ParticleSystem.cpp" />
+    <ClCompile Include="..\..\..\Src\TextureAtlas.cpp" />
+    <ClCompile Include="..\..\..\Src\OVR_Skeleton.cpp" />
+    <ClCompile Include="..\..\..\Src\OVR_ArmModel.cpp" />
+    <ClCompile Include="..\..\..\Src\OVR_Collision.cpp" />
+    <ClCompile Include="..\..\..\Src\ControllerGUI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\res_pc\resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Src\VrController.h" />
+    <ClInclude Include="..\..\..\Src\BeamRenderer.h" />
+    <ClInclude Include="..\..\..\Src\EaseFunctions.h" />
+    <ClInclude Include="..\..\..\Src\ParticleSystem.h" />
+    <ClInclude Include="..\..\..\Src\TextureAtlas.h" />
+    <ClInclude Include="..\..\..\Src\OVR_Skeleton.h" />
+    <ClInclude Include="..\..\..\Src\OVR_ArmModel.h" />
+    <ClInclude Include="..\..\..\Src\OVR_Collision.h" />
+    <ClInclude Include="..\..\..\Src\ControllerGUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{7c2fc542-33b9-47bf-97f4-4426c43c4d9a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\res_pc\Resource.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\res_pc\resource\icon1.ico" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,11 @@
+{
+  "Sounds": {
+    "carousel_move"		: "carousel_move.wav",
+    "gaze_off"			: "gaze_off.wav",
+    "gaze_on"			: "gaze_on.wav",
+    "touch_down"		: "touch_down.wav",
+	"touch_up"			: "touch_up.wav",
+	"sv_release_active" : "",
+	"sv_deselect"		: ""
+  }
+}

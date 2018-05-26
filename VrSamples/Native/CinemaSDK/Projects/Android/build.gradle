@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+apply from: "${rootProject.projectDir}/VrApp.gradle"
+
+dependencies {
+	implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.59'
+    implementation 'org.jcodec:jcodec:0.2.3'
+	
+    implementation project(':VrAppFramework:Projects:Android')
+    implementation project(':VrAppSupport:VrGUI:Projects:Android')
+    implementation project(':VrAppSupport:VrLocale:Projects:Android')
+    implementation project(':VrAppSupport:VrSound:Projects:Android')
+    implementation project(':moonlight-common')
+	
+	compile 'com.google.android.exoplayer:exoplayer:2.6.1'
+    compile 'com.google.android.exoplayer:extension-gvr:2.6.1'
+
+    compile 'com.google.vr:sdk-base:1.130.0'
+    compile 'com.google.vr:sdk-common:1.130.0'
+    compile 'com.google.vr:sdk-controller:1.130.0'
+}
+
+android {
+  project.archivesBaseName = "cinemasdk"
+
+  defaultConfig {
+    applicationId "com.oculus.cinemasdk"
+
+    // override app plugin abiFilters to test experimental 64-bit support
+    externalNativeBuild {
+        ndk {
+                abiFilters 'armeabi-v7a','arm64-v8a'
+        }
+        ndkBuild {
+                abiFilters 'armeabi-v7a','arm64-v8a'
+        }
+    } 
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ['../../java']
+      jniLibs.srcDir 'libs'
+      res.srcDirs = ['../../res']
+      assets.srcDirs = ['../../assets']
+    }
+  }
+
+  lintOptions {
+    disable 'MissingTranslation'
+    disable 'ExtraTranslation'
+  }
+  
+  /*externalNativeBuild {
+        ndkBuild {
+            path "../../Src/moonlight/Android.mk"
+        }
+    }*/
+}
