@@ -1037,7 +1037,7 @@ Vector2f MoviePlayerView::GazeCoordinatesOnScreen( const Matrix4f & viewMatrix, 
             Vector2f travel = screenCursor - lastMouse;
             if(travel.x != 0.0 && travel.y != 0.0)
             {
-				Native::MouseMove(Cinema.app, streamWidth / 2 * gazeScaleValue * travel.x, streamHeight / -2 * gazeScaleValue * travel.y );
+				Native::MouseMove(Cinema.app, streamWidth / 2 * gazeScaleValue * travel.x, (streamHeight / -2 * gazeScaleValue * travel.y ));
 			}
             lastMouse = screenCursor;
         }
@@ -1631,7 +1631,7 @@ void MoviePlayerView::CarouselPressed()
 	{
 		switch(Cinema.SceneMgr.CurrentMovieFormat)
 		{
-			case VT_2D:
+			/*case VT_2D:
 				Cinema.SceneMgr.CurrentMovieFormat = VT_LEFT_RIGHT_3D;
 				Cinema.SceneMgr.CurrentMovieWidth /= 2;
 				break;
@@ -1644,7 +1644,13 @@ void MoviePlayerView::CarouselPressed()
 				break;
 			case VT_LEFT_RIGHT_3D_FULL:
 				Cinema.SceneMgr.CurrentMovieFormat = VT_2D;
-				break;
+				break;*/
+            case VT_2D:
+                Cinema.SceneMgr.CurrentMovieFormat = VT_LEFT_RIGHT_3D;
+                break;
+            case VT_LEFT_RIGHT_3D:
+                Cinema.SceneMgr.CurrentMovieFormat = VT_2D;
+                break;
 			default:
 				Cinema.SceneMgr.CurrentMovieFormat = VT_2D;
 		}

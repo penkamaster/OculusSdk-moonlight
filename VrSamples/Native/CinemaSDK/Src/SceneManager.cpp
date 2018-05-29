@@ -851,7 +851,7 @@ namespace OculusCinema
             }*/
 
             //CurrentMovieFormat = VT_LEFT_RIGHT_3D;
-            CurrentMovieFormat = VT_2D;
+            //CurrentMovieFormat = VT_2D;
 
             MovieTextureWidth = width;
             MovieTextureHeight = height;
@@ -866,7 +866,7 @@ namespace OculusCinema
                 LOG( "Oversized movie.  Switching to Void scene to reduce judder" );
                 SetSceneModel( *Cinema.ModelMgr.VoidScene );
                 PutScreenInFront();
-                UseOverlay = false;
+                UseOverlay = true;
                 VoidedScene = true;
                 FixVoidedScene = true;
 
