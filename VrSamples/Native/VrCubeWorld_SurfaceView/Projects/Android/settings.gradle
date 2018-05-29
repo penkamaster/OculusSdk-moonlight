@@ -1,4 +1,0 @@
-rootProject.projectDir = new File(settingsDir, '../../../../..')
-rootProject.name = "VrCubeWorld_SurfaceView"
-
-include ':', 'VrSamples:Native:VrCubeWorld_SurfaceView:Projects:Android'
