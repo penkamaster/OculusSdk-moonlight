@@ -140,6 +140,7 @@ static jmethodID     pairPcMethodId = NULL;
 static jmethodID     getPcPairStateMethodId = NULL;
 static jmethodID     getPcStateMethodId = NULL;
 static jmethodID     getPcReachabilityMethodId = NULL;
+static jmethodID    addPCbyIPMethodId = NULL;
 static jmethodID     initAppSelectorMethodId = NULL;
 static jmethodID    mouseMoveMethodId = NULL;
 static jmethodID    mouseClickMethodId = NULL;
@@ -180,7 +181,8 @@ void Native::OneTimeInit( App *app, jclass mainActivityClass )
     getPcPairStateMethodId                 = GetMethodID( app, mainActivityClass, "getPcPairState", "(Ljava/lang/String;)I" );
     getPcStateMethodId                     = GetMethodID( app, mainActivityClass, "getPcState", "(Ljava/lang/String;)I" );
     getPcReachabilityMethodId             = GetMethodID( app, mainActivityClass, "getPcReachability", "(Ljava/lang/String;)I" );
-    initAppSelectorMethodId             = GetMethodID( app, mainActivityClass, "initAppSelector", "(Ljava/lang/String;)V" );
+	addPCbyIPMethodId                    = GetMethodID( app, mainActivityClass, "addPCbyIP", "(Ljava/lang/String;)I" );
+	initAppSelectorMethodId             = GetMethodID( app, mainActivityClass, "initAppSelector", "(Ljava/lang/String;)V" );
     mouseMoveMethodId                     = GetMethodID( app, mainActivityClass, "mouseMove", "(II)V" );
     mouseClickMethodId                     = GetMethodID( app, mainActivityClass, "mouseClick", "(IZ)V" );
     mouseScrollMethodId                 = GetMethodID( app, mainActivityClass, "mouseScroll", "(B)V" );
@@ -336,6 +338,13 @@ void Native::MouseScroll(App *app, signed char amount)
 	app->GetJava()->Env->CallVoidMethod( app->GetJava()->ActivityObject, mouseScrollMethodId, amount );
 }
 
+int Native::addPCbyIP(App *app, const char* ip)
+{
+	jstring jstrIP = app->GetJava()->Env->NewStringUTF( ip );
+	int result = app->GetJava()->Env->CallIntMethod( app->GetJava()->ActivityObject, addPCbyIPMethodId, jstrIP );
+	app->GetJava()->Env->DeleteLocalRef( jstrIP );
+	return result;
+}
 
 
 

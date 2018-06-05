@@ -16,6 +16,7 @@ of patent rights can be found in the PATENTS file in the same directory.
 #if !defined( PcSelectionView_h )
 #define PcSelectionView_h
 
+#include <UI/UIButton.h>
 #include "Kernel/OVR_Array.h"
 #include "Lerp.h"
 #include "SelectionView.h"
@@ -139,6 +140,24 @@ private:
 
 	bool								RepositionScreen;
 	bool								HadSelection;
+	int                                    newPCWidth;
+	int                                    newPCHeight;
+	GLuint                                newPCTex;
+
+    UITexture                ButtonTexture;
+    UITexture                ButtonHoverTexture;
+    UITexture                ButtonPressedTexture;
+
+	UIContainer *                        newPCMenu;
+	UITexture                            bgTintTexture;
+	UIImage                                newPCbg;
+	UILabel                                newPCIPLabel;
+	Array<UIButton*>                newPCIPButtons;
+	int                                 IPoctets[4];
+	int                                    currentOctet;
+	String                                IPString;
+
+
 
 private:
 	PcSelectionView &				operator=( const PcSelectionView & );
@@ -155,6 +174,11 @@ private:
 	void								UpdateSelectionFrame( const ovrFrameInput & vrFrame );
 
 	bool								ErrorShown() const;
+	friend void                            NewPCIPButtonCallback( UIButton *button, void *object );
+	void                                NewPCIPButtonPressed( UIButton *button);
+
+	bool                                BackPressed();
+
 };
 
 } // namespace OculusCinema

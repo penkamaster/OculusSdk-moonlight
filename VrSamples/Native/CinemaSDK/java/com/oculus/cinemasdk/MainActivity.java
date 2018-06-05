@@ -379,6 +379,12 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 		return playbackFailed;
 	}
 
+	public int addPCbyIP(final String IP)
+	{
+		return pcSelector.addPCbyIP(IP);
+	}
+
+
 	public void startMovie( final String uuid, final String appName, final int appId, final String binder, final int width, final int height, final int fps, final boolean hostAudio )
 	{
 		// set playbackFinished and playbackFailed to false immediately so it's set when we return to native

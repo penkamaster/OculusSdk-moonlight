@@ -70,6 +70,10 @@ cinema.GetLocale().GetString( "@string/Error_NoVideosInLimeLight", "@string/Erro
 	cinema.GetLocale().GetString( "@string/ButtonText_LabelGazeScale", 	"@string/ButtonText_LabelGazeScale", 	ButtonText_LabelGazeScale );
 	cinema.GetLocale().GetString( "@string/ButtonText_LabelTrackpadScale", 	"@string/ButtonText_LabelTrackpadScale", 	ButtonText_LabelTrackpadScale );
 
+	cinema.GetLocale().GetString( "@string/Error_UnknownHost", 	"@string/Error_UnknownHost", 	Error_UnknownHost );
+
+
+
 
 
 

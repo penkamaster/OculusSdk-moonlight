@@ -74,6 +74,10 @@ public:
 	String    ButtonText_ButtonOff;
 	String    ButtonText_LabelGazeScale;
 
+	String 	  Error_UnknownHost;
+	String    Error_AddPCFailed;
+
+
 	String		Error_UnableToPlayMovie;
 
 	String		MoviePlayer_Reorient;

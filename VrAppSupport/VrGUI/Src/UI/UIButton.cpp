@@ -99,6 +99,13 @@ void UIButton::SetText( const char * text )
 	object->SetText( text );
 }
 
+const String & UIButton::GetText() const
+{
+    VRMenuObject * object = GetMenuObject();
+    OVR_ASSERT( object );
+    return object->GetText();
+}
+
 void UIButton::SetOnFocusGained( void( *callback )( UIButton *, void * ), void *object )
 {
 	OnFocusGainedFunction = callback;

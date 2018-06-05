@@ -87,7 +87,7 @@
     <string name="applist_menu_cancel">Cancel</string>
     <string name="applist_refresh_title">App List</string>
     <string name="applist_refresh_msg">Refreshing apps…</string>
-    <string name="applist_refresh_error_title">Error</string>
+    <string name="applist_refresh_error_title">error</string>
     <string name="applist_refresh_error_msg">Failed to get app list</string>
     <string name="applist_quit_app">Quitting</string>
     <string name="applist_quit_success">Successfully quit</string>

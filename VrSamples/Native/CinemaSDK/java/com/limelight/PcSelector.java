@@ -7,6 +7,7 @@ import com.oculus.cinemasdk.MainActivity;
 import java.io.FileNotFoundException;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
@@ -365,7 +366,22 @@ public class PcSelector {
         }).start();
     }
 
-    
+    public int addPCbyIP(final String host)
+    {
+
+        //InetAddress addr = InetAddress.getByName(host);
+
+        if (!managerBinder.addComputerBlocking( host,true))
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
+
     private void updateComputer(ComputerDetails details) {
         //prefConfig = PreferenceConfiguration.readPreferences(activity);
 

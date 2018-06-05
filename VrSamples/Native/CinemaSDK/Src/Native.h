@@ -65,6 +65,8 @@ public:
 	static void            MouseMove(App *app, int deltaX, int deltaY);
 	static void            MouseClick(App *app, int buttonId, bool down);
 	static void            MouseScroll(App *app, signed char amount);
+	static int             addPCbyIP(App *app, const char* ip);
+
 
 
 };
