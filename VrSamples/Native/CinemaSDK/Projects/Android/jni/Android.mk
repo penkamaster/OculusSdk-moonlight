@@ -27,7 +27,8 @@ LOCAL_SRC_FILES	:= 	../../../Src/CinemaApp.cpp \
 					../../../Src/ResumeMovieView.cpp \
 					../../../Src/ResumeMovieComponent.cpp \
 					../../../Src/CarouselSwipeHintComponent.cpp \
-					../../../Src/CinemaStrings.cpp
+					../../../Src/CinemaStrings.cpp \
+					../../../Src/Settings.cpp
 
 LOCAL_STATIC_LIBRARIES += vrsound vrmodel vrlocale vrgui vrappframework libovrkernel
 LOCAL_SHARED_LIBRARIES += vrapi

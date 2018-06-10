@@ -13,6 +13,8 @@ of patent rights can be found in the PATENTS file in the same directory.
 
 *************************************************************************************/
 
+#include <unistd.h>
+#include <stdio.h>
 #include <OVR_Input.h>
 #include "OVR_Input.h"
 #include "CinemaApp.h"
@@ -65,6 +67,16 @@ MoviePlayerView::MoviePlayerView( CinemaApp &cinema ) :
 	PlayButton( Cinema.GetGuiSys() ),
 	FastForwardButton( Cinema.GetGuiSys() ),
 	CarouselButton( Cinema.GetGuiSys() ),
+	SaveMenu( NULL ),
+	ButtonSaveApp( Cinema.GetGuiSys()),
+	ButtonSaveDefault( Cinema.GetGuiSys() ),
+	ButtonResetSettings( Cinema.GetGuiSys() ),
+	ButtonSaveSettings1( Cinema.GetGuiSys() ),
+	ButtonSaveSettings2( Cinema.GetGuiSys() ),
+	ButtonSaveSettings3( Cinema.GetGuiSys() ),
+	ButtonLoadSettings1( Cinema.GetGuiSys() ),
+	ButtonLoadSettings2( Cinema.GetGuiSys() ),
+	ButtonLoadSettings3( Cinema.GetGuiSys() ),
 	MouseMenuButton( Cinema.GetGuiSys() ),
 	MouseMenu( NULL ),
 	ButtonGaze( Cinema.GetGuiSys()  ),
@@ -112,6 +124,17 @@ MoviePlayerView::MoviePlayerView( CinemaApp &cinema ) :
 	ButtonSpeed( Cinema.GetGuiSys()  ),
 	ButtonComfortMode( Cinema.GetGuiSys()  ),
 	ButtonMapKeyboard( Cinema.GetGuiSys()  ),
+	settingsVersion(1.0f),
+	defaultSettingsPath(""),
+	settings1Path(""),
+	settings2Path(""),
+	settings3Path(""),
+	appSettingsPath(""),
+	defaultSettings( NULL ),
+	settings1( NULL ),
+	settings2( NULL ),
+	settings3( NULL ),
+	appSettings( NULL ),
 	BackgroundClicked( false ),
 	UIOpened( false ),
 	allowDrag(false),
@@ -128,10 +151,15 @@ MoviePlayerView::MoviePlayerView( CinemaApp &cinema ) :
     streamWidth(1280),
     streamHeight(720),
     streamFPS(60),
-    streamHostAudio(true)
-
-
-
+    streamHostAudio(true),
+	GazeMin(0.7),
+	GazeMax(1.58),
+	TrackpadMin(-4.0),
+	TrackpadMax(4.0),
+	VoidScreenDistanceMin(0.1),
+	VoidScreenDistanceMax(3.0),
+	VoidScreenScaleMin(-3.0),
+	VoidScreenScaleMax(4.0)
 
 {
 }
@@ -158,6 +186,16 @@ void MoviePlayerView::OneTimeInit( const char * launchIntent )
 void MoviePlayerView::OneTimeShutdown()
 {
 	LOG( "MoviePlayerView::OneTimeShutdown" );
+	delete(defaultSettings);
+	defaultSettings = NULL;
+	delete(appSettings);
+	appSettings = NULL;
+	delete(settings1);
+	settings1 = NULL;
+	delete(settings2);
+	settings2 = NULL;
+	delete(settings3);
+	settings3 = NULL;
 }
 
 float PixelScale( const float x )
@@ -170,205 +208,64 @@ Vector3f PixelPos( const float x, const float y, const float z )
 	return Vector3f( PixelScale( x ), PixelScale( y ), PixelScale( z ) );
 }
 
-void PlayPressedCallback( UIButton *button, void *object )
-{
-	OVR_UNUSED( button );
-	
-}
+void MouseMenuButtonCallback		( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->MouseMenuButtonPressed(); }
+void StreamMenuButtonCallback		( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->StreamMenuButtonPressed(); }
+void ScreenMenuButtonCallback		( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->ScreenMenuButtonPressed(); }
+void ControllerMenuButtonCallback	( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->ControllerMenuButtonPressed(); }
 
-void RewindPressedCallback( UIButton *button, void *object )
-{
-	OVR_UNUSED( button );
-	( ( MoviePlayerView * )object )->RewindPressed();
-}
+void SaveAppCallback				( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->SaveAppPressed(); }
+void SaveDefaultCallback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->SaveDefaultPressed(); }
+void ResetDefaultCallback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->ResetDefaultPressed(); }
+void Save1Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Save1Pressed(); }
+void Save2Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Save2Pressed(); }
+void Save3Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Save3Pressed(); }
+void Load1Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Load1Pressed(); }
+void Load2Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Load2Pressed(); }
+void Load3Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Load3Pressed(); }
 
-void FastForwardPressedCallback( UIButton *button, void *object )
-{
-	OVR_UNUSED( button );
-	( ( MoviePlayerView * )object )->FastForwardPressed();
-}
+void GazeCallback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->GazePressed(); }
+void TrackpadCallback				( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->TrackpadPressed(); }
+void OffCallback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->OffPressed(); }
+void GazeScaleCallback				( SliderComponent *button, void *object, const float value ) { ( ( MoviePlayerView * )object )->GazeScalePressed( value ); }
+void TrackpadScaleCallback			( SliderComponent *button, void *object, const float value ) { ( ( MoviePlayerView * )object )->TrackpadScalePressed( value ); }
+bool GazeActiveCallback				( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->GazeActive(); }
+bool TrackpadActiveCallback			( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->TrackpadActive(); }
+bool OffActiveCallback				( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->OffActive(); }
 
-void CarouselPressedCallback( UIButton *button, void *object )
-{
-	OVR_UNUSED( button );
-	( ( MoviePlayerView * )object )->CarouselPressed();
-}
+void Button4k60Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button4k60Pressed(); }
+void Button4k30Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button4k30Pressed(); }
+void Button1080p60Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button1080p60Pressed(); }
+void Button1080p30Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button1080p30Pressed(); }
+void Button720p60Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button720p60Pressed(); }
+void Button720p30Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button720p30Pressed(); }
+void HostAudioCallback				( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->HostAudioPressed(); }
+bool Button1080p60IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button1080p60IsSelected(); }
+bool Button1080p30IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button1080p30IsSelected(); }
+bool Button720p60IsSelectedCallback	( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button720p60IsSelected(); }
+bool Button720p30IsSelectedCallback	( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button720p30IsSelected(); }
+bool HostAudioIsSelectedCallback	( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->HostAudioIsSelected(); }
+
+void SBSCallback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->SBSPressed(); }
+void ChangeSeatCallback				( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->ChangeSeatPressed(); }
+void DistanceCallback				( SliderComponent *button, void *object, const float value ) { ( ( MoviePlayerView * )object )->DistancePressed( value ); }
+void SizeCallback					( SliderComponent *button, void *object, const float value ) { ( ( MoviePlayerView * )object )->SizePressed( value ); }
+bool IsChangeSeatsEnabledCallback	( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->IsChangeSeatsEnabled(); }
+
+void SpeedCallback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->SpeedPressed(); }
+void ComfortModeCallback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->ComfortModePressed(); }
+void MapKeyboardCallback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->MapKeyboardPressed(); }
+
+bool DisableButton					( UIButton *button, void *object ) { return false; }
 
 
-
-	void MouseMenuButtonCallback( UIButton *button, void *object )
+	void MoviePlayerView::TextButtonHelper(UIButton& button, float scale, int w, int h)
 	{
-		( ( MoviePlayerView * )object )->MouseMenuButtonPressed();
-	}
-	void StreamMenuButtonCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->StreamMenuButtonPressed();
-	}
-	void ScreenMenuButtonCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->ScreenMenuButtonPressed();
-	}
-	void ControllerMenuButtonCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->ControllerMenuButtonPressed();
-	}
-
-	void GazeCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->GazePressed();
-	}
-	void TrackpadCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->TrackpadPressed();
-	}
-	void OffCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->OffPressed();
-	}
-
-
-    void GazeScaleCallback( SliderComponent *button, void *object, const float value ){
-        ( ( MoviePlayerView * )object )->GazeScalePressed( value );
-    }
-
-    void TrackpadScaleCallback( SliderComponent *button, void *object, const float value )
-    {
-        ( ( MoviePlayerView * )object )->TrackpadScalePressed( value );
-    }
-    void Button4k60Callback( UIButton *button, void *object )
-    {
-        ( ( MoviePlayerView * )object )->Button4k60Pressed();
-    }
-    void Button4k30Callback( UIButton *button, void *object )
-    {
-        ( ( MoviePlayerView * )object )->Button4k30Pressed();
-    }
-	void Button1080p60Callback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->Button1080p60Pressed();
-	}
-	void Button1080p30Callback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->Button1080p30Pressed();
-	}
-	void Button720p60Callback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->Button720p60Pressed();
-	}
-	void Button720p30Callback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->Button720p30Pressed();
-	}
-	void HostAudioCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->HostAudioPressed();
-	}
-	void SBSCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->SBSPressed();
-	}
-	void ChangeSeatCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->ChangeSeatPressed();
-	}
-    void DistanceCallback( SliderComponent *button, void *object, const float value )
-	{
-        ( ( MoviePlayerView * )object )->DistancePressed( value );
-    }
-    void SizeCallback( SliderComponent *button, void *object, const float value )
-    {
-        ( ( MoviePlayerView * )object )->SizePressed( value );
-    }
-	void SpeedCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->SpeedPressed();
-	}
-	void ComfortModeCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->ComfortModePressed();
-	}
-	void MapKeyboardCallback( UIButton *button, void *object )
-	{
-		( ( MoviePlayerView * )object )->MapKeyboardPressed();
-	}
-
-    bool GazeActiveCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->GazeActive();
-		return false;
-    }
-    bool TrackpadActiveCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->TrackpadActive();
-		return false;
-
-    }
-    bool OffActiveCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->OffActive();
-		return false;
-    }
-
-    bool Button4k60IsSelectedCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->Button4k60IsSelected();
-		return false;
-    }
-    bool Button4k30IsSelectedCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->Button4k30IsSelected();
-		return false;
-    }
-
-    bool Button1080p60IsSelectedCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->Button1080p60IsSelected();
-        return false;
-    }
-    bool Button1080p30IsSelectedCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->Button1080p30IsSelected();
-        return false;
-    }
-
-    bool Button720p60IsSelectedCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->Button720p60IsSelected();
-		return false;
-    }
-    bool Button720p30IsSelectedCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->Button720p30IsSelected();
-		return false;
-    }
-    bool HostAudioIsSelectedCallback( UIButton *button, void *object )
-    {
-        //return ( ( MoviePlayerView * )object )->HostAudioIsSelected();
-		return false;
-    }
-
-
-    bool IsChangeSeatsEnabledCallback( UIButton *button, void *object )
-    {
-        return ( ( MoviePlayerView * )object )->IsChangeSeatsEnabled();
-    }
-
-
-
-    bool DisableButton( UIButton *button, void *object )
-	{
-		return false;
-	}
-
-
-	void MoviePlayerView::TextButtonHelper(UIButton& button)
-	{
-		button.SetLocalScale( Vector3f( 1.0f ) );
+		button.SetLocalScale( Vector3f( scale ) );
 		//button.SET SetFontScale( 1.0f );
 		button.SetColor( Vector4f( 0.0f, 0.0f, 0.0f, 1.0f ) );
 		//button.SetSetTextColor( Vector4f( 1.0f, 1.0f, 1.0f, 1.0f ) );
 		//button.GetMenuObject()->AddFlags( VRMenuObjectFlags_t( VRMENUOBJECT_DONT_HIT_ALL ) );
-		button.SetImage( 0, SURFACE_TEXTURE_DIFFUSE, BackgroundTintTexture, 320, 120 );
+		button.SetImage( 0, SURFACE_TEXTURE_DIFFUSE, BackgroundTintTexture, w, h );
 		button.GetMenuObject()->SetLocalBoundsExpand( PixelPos( 20, 0, 0 ), Vector3f::ZERO );
 
 	}
@@ -413,6 +310,87 @@ void CarouselPressedCallback( UIButton *button, void *object )
 
     }
 
+void MoviePlayerView::InitializeSettings()
+{
+	String	outPath;
+	const bool validDir = Cinema.app->GetStoragePaths().GetPathIfValidPermission(
+					EST_INTERNAL_STORAGE, EFT_FILES, "", permissionFlags_t( PERMISSION_READ ) | permissionFlags_t( PERMISSION_WRITE ), outPath );
+
+	if(validDir)
+	{
+		if(defaultSettings == NULL)
+		{
+			defaultSettingsPath = outPath + "settings.json";
+			defaultSettings = new Settings(defaultSettingsPath);
+
+			defaultSettings->Define("StreamTheaterSettingsVersion", &settingsVersion);
+			defaultSettings->Define("MouseMode", (int*)&mouseMode);
+			defaultSettings->Define("StreamWidth", &streamWidth);
+			defaultSettings->Define("StreamHeight", &streamHeight);
+			defaultSettings->Define("StreamFPS", &streamFPS);
+			defaultSettings->Define("EnableHostAudio", &streamHostAudio);
+
+			defaultSettings->Define("GazeScale", &gazeScaleValue);
+			defaultSettings->Define("TrackpadScale", &trackpadScaleValue);
+
+			defaultSettings->Define("VoidScreenDistance", &Cinema.SceneMgr.FreeScreenDistance);
+			defaultSettings->Define("VoidScreenScale", &Cinema.SceneMgr.FreeScreenScale);
+
+			defaultSettings->Define("GazeScaleMax", &GazeMax);
+			defaultSettings->Define("GazeScaleMin", &GazeMin);
+			defaultSettings->Define("TrackpadScaleMax", &TrackpadMax);
+			defaultSettings->Define("TrackpadScaleMin", &TrackpadMin);
+			defaultSettings->Define("VoidScreenDistanceMax", &VoidScreenDistanceMax);
+			defaultSettings->Define("VoidScreenDistanceMin", &VoidScreenDistanceMin);
+			defaultSettings->Define("VoidScreenScaleMax", &VoidScreenScaleMax);
+			defaultSettings->Define("VoidScreenScaleMin", &VoidScreenScaleMin);
+
+			defaultSettings->Load();
+		}
+
+		if(settings1 == NULL)
+		{
+			settings1Path = outPath + "settings.1.json";
+			settings2Path = outPath + "settings.2.json";
+			settings3Path = outPath + "settings.3.json";
+
+			settings1 = new Settings(settings1Path);
+			settings2 = new Settings(settings2Path);
+			settings3 = new Settings(settings3Path);
+
+			settings1->CopyDefines(*defaultSettings);
+			settings1->Define("3dMode", (int*)&Cinema.SceneMgr.CurrentMovieFormat);
+
+			settings2->CopyDefines(*settings1);
+			settings3->CopyDefines(*settings1);
+		}
+
+		if(appSettings != NULL)
+		{
+			delete(appSettings);
+			appSettings = NULL;
+		}
+
+		appSettingsPath = outPath + "settings." + Cinema.GetCurrentMovie()->Name + ".json";
+		appSettings = new Settings(appSettingsPath);
+		appSettings->CopyDefines(*defaultSettings);
+		appSettings->Load();
+
+		if( Cinema.SceneMgr.CurrentMovieFormat == VT_LEFT_RIGHT_3D )
+		{
+			Cinema.SceneMgr.CurrentMovieWidth /= 2;
+		}
+
+		GazeSlider.SetExtents(GazeMax,GazeMin,2);
+		GazeSlider.SetValue(gazeScaleValue);
+		TrackpadSlider.SetExtents(TrackpadMax,TrackpadMin,2);
+		TrackpadSlider.SetValue(trackpadScaleValue);
+		DistanceSlider.SetExtents(VoidScreenDistanceMax,VoidScreenDistanceMin,2);
+		DistanceSlider.SetValue(Cinema.SceneMgr.FreeScreenDistance);
+		SizeSlider.SetExtents(VoidScreenScaleMax,VoidScreenScaleMin,2);
+		SizeSlider.SetValue(Cinema.SceneMgr.FreeScreenScale);
+	}
+}
 
     void MoviePlayerView::CreateMenu( OvrGuiSys & guiSys )
 {
@@ -555,6 +533,75 @@ void CarouselPressedCallback( UIButton *button, void *object )
 	const static int MENU_X = 200;
 	const static int MENU_Y = -150;
 	const static int MENU_TOP = 200;
+
+	SaveMenu = new UIContainer( Cinema.GetGuiSys() );
+	SaveMenu->AddToMenu(  PlaybackControlsMenu, &PlaybackControlsScale );
+	SaveMenu->SetLocalPosition( PixelPos( 0, -400, 1 ) );
+	SaveMenu->SetVisible(false);
+
+	ButtonSaveApp.AddToMenu( PlaybackControlsMenu, SaveMenu );
+	ButtonSaveApp.SetLocalPosition( PixelPos( 400, 0, 1 ) );
+	ButtonSaveApp.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveApp.ToCStr()  );
+	ButtonSaveApp.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonSaveApp, 0.5f);
+	ButtonSaveApp.SetOnClick( SaveAppCallback, this);
+
+	ButtonSaveDefault.AddToMenu(  PlaybackControlsMenu, SaveMenu );
+	ButtonSaveDefault.SetLocalPosition( PixelPos( 600, 0, 1 ) );
+	ButtonSaveDefault.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveDefault.ToCStr()  );
+	ButtonSaveDefault.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonSaveDefault, 0.5f);
+	ButtonSaveDefault.SetOnClick( SaveDefaultCallback, this);
+
+	ButtonResetSettings.AddToMenu(  PlaybackControlsMenu, SaveMenu );
+	ButtonResetSettings.SetLocalPosition( PixelPos( 800, 0, 1 ) );
+	ButtonResetSettings.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonResetSettings.ToCStr()  );
+	ButtonResetSettings.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonResetSettings, 0.5f);
+	ButtonResetSettings.SetOnClick( ResetDefaultCallback, this);
+
+	ButtonSaveSettings1.AddToMenu( PlaybackControlsMenu, SaveMenu );
+	ButtonSaveSettings1.SetLocalPosition( PixelPos( 400, 65, 1 ) );
+	ButtonSaveSettings1.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveSettings1.ToCStr()  );
+	ButtonSaveSettings1.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonSaveSettings1, 0.5f);
+	ButtonSaveSettings1.SetOnClick( Save1Callback, this);
+
+	ButtonSaveSettings2.AddToMenu( PlaybackControlsMenu, SaveMenu );
+	ButtonSaveSettings2.SetLocalPosition( PixelPos( 600, 65, 1 ) );
+	ButtonSaveSettings2.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveSettings2.ToCStr()  );
+	ButtonSaveSettings2.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonSaveSettings2, 0.5f);
+	ButtonSaveSettings2.SetOnClick( Save2Callback, this);
+
+	ButtonSaveSettings3.AddToMenu( PlaybackControlsMenu, SaveMenu );
+	ButtonSaveSettings3.SetLocalPosition( PixelPos( 800, 65, 1 ) );
+	ButtonSaveSettings3.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveSettings3.ToCStr()  );
+	ButtonSaveSettings3.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonSaveSettings3, 0.5f);
+	ButtonSaveSettings3.SetOnClick( Save3Callback, this);
+
+	ButtonLoadSettings1.AddToMenu(  PlaybackControlsMenu, SaveMenu );
+	ButtonLoadSettings1.SetLocalPosition( PixelPos( 400, 130, 1 ) );
+	ButtonLoadSettings1.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonLoadSettings1.ToCStr()  );
+	ButtonLoadSettings1.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonLoadSettings1, 0.5f);
+	ButtonLoadSettings1.SetOnClick( Load1Callback, this);
+
+	ButtonLoadSettings2.AddToMenu(  PlaybackControlsMenu, SaveMenu );
+	ButtonLoadSettings2.SetLocalPosition( PixelPos( 600, 130, 1 ) );
+	ButtonLoadSettings2.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonLoadSettings2.ToCStr() );
+	ButtonLoadSettings2.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonLoadSettings2, 0.5f);
+	ButtonLoadSettings2.SetOnClick( Load2Callback, this);
+
+	ButtonLoadSettings3.AddToMenu(  PlaybackControlsMenu, SaveMenu );
+	ButtonLoadSettings3.SetLocalPosition( PixelPos( 800, 130, 1 ) );
+	ButtonLoadSettings3.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonLoadSettings3.ToCStr() );
+	ButtonLoadSettings3.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	TextButtonHelper(ButtonLoadSettings3, 0.5f);
+	ButtonLoadSettings3.SetOnClick( Load3Callback, this);
+
 
 	MouseMenu = new UIContainer( Cinema.GetGuiSys() );
 	MouseMenu->AddToMenu(  PlaybackControlsMenu, &PlaybackControlsScale );
@@ -770,7 +817,7 @@ void MoviePlayerView::OnOpen()
 
 	RepositionScreen = false;
 	MoveScreenAlpha.Set( 0, 0, 0, 0.0f );
-
+	InitializeSettings();
 	HideUI();
 	Cinema.SceneMgr.LightsOff( 1.5f );
 
@@ -929,6 +976,7 @@ void MoviePlayerView::ShowUI()
 void MoviePlayerView::HideUI()
 {
 	LOG( "HideUI" );
+	SaveMenu->SetVisible(false);
     MouseMenu->SetVisible(false);
     ScreenMenu->SetVisible(false);
     StreamMenu->SetVisible(false);
@@ -1461,24 +1509,6 @@ Vector2f MoviePlayerView::GazeCoordinatesOnScreen( const Matrix4f & viewMatrix, 
 	}*/
 }
 
-void MoviePlayerView::RewindPressed()
-{
-	
-}
-
-void MoviePlayerView::FastForwardPressed()
-{
-	
-}
-
-void MoviePlayerView::CarouselPressed()
-{
-	Cinema.AppSelection( false );
-}
-
-
-
-
 
     void MoviePlayerView::MouseMenuButtonPressed()
     {
@@ -1489,6 +1519,7 @@ void MoviePlayerView::CarouselPressed()
         StreamMenu->SetVisible(false);
         ScreenMenu->SetVisible(false);
         ControllerMenu->SetVisible(false);
+		SaveMenu->SetVisible(MouseMenu->GetVisible());
     }
     void MoviePlayerView::StreamMenuButtonPressed()
     {
@@ -1499,6 +1530,7 @@ void MoviePlayerView::CarouselPressed()
         StreamMenu->SetVisible(!StreamMenu->GetVisible());
         ScreenMenu->SetVisible(false);
         ControllerMenu->SetVisible(false);
+		SaveMenu->SetVisible(StreamMenu->GetVisible());
     }
     void MoviePlayerView::ScreenMenuButtonPressed()
     {
@@ -1509,6 +1541,7 @@ void MoviePlayerView::CarouselPressed()
         StreamMenu->SetVisible(false);
         ScreenMenu->SetVisible(!ScreenMenu->GetVisible());
         ControllerMenu->SetVisible(false);
+		SaveMenu->SetVisible(ScreenMenu->GetVisible());
     }
     void MoviePlayerView::ControllerMenuButtonPressed()
     {
@@ -1520,6 +1553,140 @@ void MoviePlayerView::CarouselPressed()
         ScreenMenu->SetVisible(false);
         ControllerMenu->SetVisible(!ControllerMenu->GetVisible());*/
     }
+
+void MoviePlayerView::SaveAppPressed()
+{
+	if(!appSettings) return;
+	appSettings->SaveChanged();
+	UpdateMenus();
+}
+void MoviePlayerView::SaveDefaultPressed()
+{
+	if(!defaultSettings) return;
+//	defaultSettings->SaveChanged();
+//	defaultSettings->SaveVarNames();
+	defaultSettings->SaveAll();
+	UpdateMenus();
+}
+void MoviePlayerView::ResetDefaultPressed()
+{
+	LOG("Resetting default settings");
+	remove(defaultSettingsPath);
+	delete(defaultSettings);
+	defaultSettings = NULL;
+
+	LOG("Resetting settings 1");
+	remove(settings1Path);
+	delete(settings1);
+	settings1 = NULL;
+
+	LOG("Resetting settings 2");
+	remove(settings2Path);
+	delete(settings2);
+	settings2 = NULL;
+
+	LOG("Resetting settings 3");
+	remove(settings3Path);
+	delete(settings3);
+	settings3 = NULL;
+
+	LOG("Resetting app settings");
+	remove(appSettingsPath);
+	delete(appSettings);
+	appSettings = NULL;
+
+	//FIXME: Define all these defaults in a better place
+	gazeScaleValue = 1.05;
+	trackpadScaleValue = 2.0;
+	streamWidth = 1280;
+	streamHeight = 720;
+	streamFPS = 60;
+	streamHostAudio = true;
+	GazeMin = 0.7;
+	GazeMax = 1.58;
+	TrackpadMin = -4.0;
+	TrackpadMax = 4.0;
+	VoidScreenDistanceMin = 0.1;
+	VoidScreenDistanceMax = 3.0;
+	VoidScreenScaleMin = -3.0;
+	VoidScreenScaleMax = 4.0;
+	Cinema.SceneMgr.FreeScreenDistance = 1.5;
+	Cinema.SceneMgr.FreeScreenScale = 1.0;
+
+	InitializeSettings();
+
+	Cinema.SceneMgr.ClearMovie();
+	UpdateMenus();
+	Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+
+}
+void MoviePlayerView::Save1Pressed()
+{
+	if(!settings1) return;
+	settings1->SaveAll();
+	UpdateMenus();
+}
+void MoviePlayerView::Save2Pressed()
+{
+	if(!settings2) return;
+	settings2->SaveAll();
+	UpdateMenus();
+}
+void MoviePlayerView::Save3Pressed()
+{
+	if(!settings3) return;
+	settings3->SaveAll();
+	UpdateMenus();
+}
+void MoviePlayerView::Load1Pressed()
+{
+	LoadSettings(settings1);
+}
+void MoviePlayerView::Load2Pressed()
+{
+	LoadSettings(settings2);
+}
+void MoviePlayerView::Load3Pressed()
+{
+	LoadSettings(settings3);
+}
+void MoviePlayerView::LoadSettings(Settings* set)
+{
+	MovieFormat oldFormat = Cinema.SceneMgr.CurrentMovieFormat;
+	int oldWidth = 	streamWidth;
+	int oldHeight = streamHeight;
+	int oldFPS = streamFPS;
+
+	set->Load();
+
+	if( oldWidth != streamWidth || oldHeight != streamHeight || oldFPS != streamFPS )
+	{
+		Cinema.SceneMgr.ClearMovie();
+		Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+	}
+
+	GazeSlider.SetExtents(GazeMax,GazeMin,2);
+	GazeSlider.SetValue(gazeScaleValue);
+	TrackpadSlider.SetExtents(TrackpadMax,TrackpadMin,2);
+	TrackpadSlider.SetValue(trackpadScaleValue);
+	DistanceSlider.SetExtents(VoidScreenDistanceMax,VoidScreenDistanceMin,2);
+	DistanceSlider.SetValue(Cinema.SceneMgr.FreeScreenDistance);
+	SizeSlider.SetExtents(VoidScreenScaleMax,VoidScreenScaleMin,2);
+	SizeSlider.SetValue(Cinema.SceneMgr.FreeScreenScale);
+
+	if( Cinema.SceneMgr.CurrentMovieFormat == VT_LEFT_RIGHT_3D && oldFormat != VT_LEFT_RIGHT_3D )
+	{
+		Cinema.SceneMgr.CurrentMovieWidth /= 2;
+	}
+
+	if( oldFormat == VT_LEFT_RIGHT_3D && Cinema.SceneMgr.CurrentMovieFormat != VT_LEFT_RIGHT_3D )
+	{
+		Cinema.SceneMgr.CurrentMovieWidth *= 2;
+	}
+
+	UpdateMenus();
+}
+
 
 // Mouse controls
     void MoviePlayerView::GazePressed()

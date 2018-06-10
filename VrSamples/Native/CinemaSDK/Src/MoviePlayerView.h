@@ -25,6 +25,7 @@ of patent rights can be found in the PATENTS file in the same directory.
 #include "UI/UILabel.h"
 #include "UI/UIImage.h"
 #include "UI/UIButton.h"
+#include "Settings.h"
 
 
 using namespace OVR;
@@ -218,6 +219,17 @@ private:
 	UITexture                ControllerHoverTexture;
 	UITexture                ControllerPressedTexture;
 
+	UIContainer *			SaveMenu;
+	UIButton			ButtonSaveApp;
+	UIButton			ButtonSaveDefault;
+	UIButton			ButtonResetSettings;
+	UIButton			ButtonSaveSettings1;
+	UIButton			ButtonSaveSettings2;
+	UIButton			ButtonSaveSettings3;
+	UIButton			ButtonLoadSettings1;
+	UIButton			ButtonLoadSettings2;
+	UIButton			ButtonLoadSettings3;
+
 	UITexture                ButtonTexture;
 	UITexture                ButtonHoverTexture;
 	UITexture                ButtonPressedTexture;
@@ -278,6 +290,18 @@ private:
     UIButton            ButtonComfortMode;
     UIButton            ButtonMapKeyboard;
 
+	float					settingsVersion;
+	String					defaultSettingsPath;
+	String					settings1Path;
+	String					settings2Path;
+	String					settings3Path;
+	String					appSettingsPath;
+	Settings*				defaultSettings;
+	Settings*				settings1;
+	Settings*				settings2;
+	Settings*				settings3;
+	Settings*				appSettings;
+
 
 	bool					BackgroundClicked;
 	bool					UIOpened;							// Used to ignore button A or touchpad until release so we don't close the UI immediately after opening it
@@ -301,9 +325,17 @@ private:
 	int						streamFPS;
 	bool					streamHostAudio;
 
+	float					GazeMin;
+	float					GazeMax;
+	float					TrackpadMin;
+	float					TrackpadMax;
+	float					VoidScreenDistanceMin;
+	float					VoidScreenDistanceMax;
+	float					VoidScreenScaleMin;
+	float					VoidScreenScaleMax;
 
 private:
-	void					TextButtonHelper(UIButton& button);
+	void					TextButtonHelper(UIButton& button, float scale = 1.0f, int w = 320, int h = 120);
 	void                    SetUpSlider(OvrGuiSys & guiSys, UIObject *parent, SliderComponent& scrub, UIImage& bg,
 										UIImage& ind, UILabel& cur, UILabel& set, int slideWidth, int xoff, int yoff);
 
@@ -313,15 +345,7 @@ private:
 	void					BackPressed();
 	void					BackPressedDouble();
 
-	friend void 			PlayPressedCallback( UIButton *button, void *object );
-	void					RewindPressed();
-	friend void 			RewindPressedCallback( UIButton *button, void *object );
-	void					FastForwardPressed();
-	friend void 			FastForwardPressedCallback( UIButton *button, void *object );
-	void					CarouselPressed();
-	friend void 			CarouselPressedCallback( UIButton *button, void *object );
-
-
+	
 	friend void        MouseMenuButtonCallback( UIButton *button, void *object );
 	void            MouseMenuButtonPressed();
 	friend void        StreamMenuButtonCallback( UIButton *button, void *object );
@@ -330,6 +354,26 @@ private:
 	void            ScreenMenuButtonPressed();
 	friend void        ControllerMenuButtonCallback( UIButton *button, void *object );
 	void            ControllerMenuButtonPressed();
+
+	friend void		SaveAppCallback( UIButton *button, void *object );
+	void			SaveAppPressed();
+	friend void		SaveDefaultCallback( UIButton *button, void *object );
+	void			SaveDefaultPressed();
+	friend void		ResetDefaultCallback( UIButton *button, void *object );
+	void			ResetDefaultPressed();
+	friend void		Save1Callback( UIButton *button, void *object );
+	void			Save1Pressed();
+	friend void		Save2Callback( UIButton *button, void *object );
+	void			Save2Pressed();
+	friend void		Save3Callback( UIButton *button, void *object );
+	void			Save3Pressed();
+	friend void		Load1Callback( UIButton *button, void *object );
+	void			Load1Pressed();
+	friend void		Load2Callback( UIButton *button, void *object );
+	void			Load2Pressed();
+	friend void		Load3Callback( UIButton *button, void *object );
+	void			Load3Pressed();
+
 
 	friend void        GazeCallback( UIButton *button, void *object );
 	void            GazePressed();
@@ -409,6 +453,9 @@ private:
 
 
 	Vector2f 				GazeCoordinatesOnScreen( const Matrix4f & viewMatrix, const Matrix4f panelMatrix ) const;
+
+	void					LoadSettings(Settings* set);
+	void					InitializeSettings();
 
 	void 					UpdateUI( const ovrFrameInput & vrFrame );
 	void 					CheckInput( const ovrFrameInput & vrFrame );

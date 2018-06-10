@@ -460,7 +460,7 @@ namespace OculusCinema
                                        Matrix4f::Translation( 0, 0, -FreeScreenDistance*applyScale ) *
                                        Matrix4f::Scaling( applyScale, applyScale * (3.0f/4.0f), applyScale );
 
-            return Posef( Quatf( FreeScreenPose ), ViewOrigin( screenMvp ) );
+            return Posef( Quatf( FreeScreenPose ).Normalized(), ViewOrigin( screenMvp ) );
         }
         else
         {

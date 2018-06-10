@@ -396,7 +396,7 @@ public:
         }
     };
 
-private:
+public:
     // For casting to a pointer to char.
     operator const char*() const        { return GetData()->Data; }
 };

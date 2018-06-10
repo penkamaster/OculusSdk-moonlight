@@ -51,6 +51,16 @@ public:
 	String		Error_NoVideosInMyVideos;
 	String      Error_NoVideosInLimeLight;
 
+	String	ButtonText_ButtonSaveApp;
+	String	ButtonText_ButtonSaveDefault;
+	String	ButtonText_ButtonResetSettings;
+	String	ButtonText_ButtonSaveSettings1;
+	String	ButtonText_ButtonSaveSettings2;
+	String	ButtonText_ButtonSaveSettings3;
+	String	ButtonText_ButtonLoadSettings1;
+	String	ButtonText_ButtonLoadSettings2;
+	String	ButtonText_ButtonLoadSettings3;
+
 	String    ButtonText_ButtonMapKeyboard;
 	String    ButtonText_ButtonSpeed;
 	String    ButtonText_ButtonComfortMode;

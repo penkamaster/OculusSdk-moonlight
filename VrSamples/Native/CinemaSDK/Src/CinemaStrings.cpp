@@ -72,6 +72,17 @@ cinema.GetLocale().GetString( "@string/Error_NoVideosInLimeLight", "@string/Erro
 
 	cinema.GetLocale().GetString( "@string/Error_UnknownHost", 	"@string/Error_UnknownHost", 	Error_UnknownHost );
 
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveApp", 	"@string/ButtonText_ButtonSaveApp", 	ButtonText_ButtonSaveApp );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveDefault", 	"@string/ButtonText_ButtonSaveDefault", 	ButtonText_ButtonSaveDefault );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonResetSettings", 	"@string/ButtonText_ButtonResetSettings", 	ButtonText_ButtonResetSettings );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveSettings1", 	"@string/ButtonText_ButtonSaveSettings1", 	ButtonText_ButtonSaveSettings1 );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveSettings2", 	"@string/ButtonText_ButtonSaveSettings2", 	ButtonText_ButtonSaveSettings2 );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveSettings3", 	"@string/ButtonText_ButtonSaveSettings3", 	ButtonText_ButtonSaveSettings3 );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonLoadSettings1", 	"@string/ButtonText_ButtonLoadSettings1", 	ButtonText_ButtonLoadSettings1 );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonLoadSettings2", 	"@string/ButtonText_ButtonLoadSettings2", 	ButtonText_ButtonLoadSettings2 );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonLoadSettings3", 	"@string/ButtonText_ButtonLoadSettings3", 	ButtonText_ButtonLoadSettings3);
+	
+
 
 
 

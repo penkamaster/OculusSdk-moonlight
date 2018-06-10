@@ -95,6 +95,16 @@
       description="Text displayed when user looks away from the screen in the Void theater to indicate that they can reorient the screen by tapping the touchpad."
       >Tap the touchpad to reorient screen</string>
 
+	<string name="ButtonText_ButtonSaveApp">Save App</string>
+	<string name="ButtonText_ButtonSaveDefault">Save Default</string>
+	<string name="ButtonText_ButtonResetSettings">Reset Defaults</string>
+	<string name="ButtonText_ButtonSaveSettings1">Save 1</string>
+	<string name="ButtonText_ButtonSaveSettings2">Save 2</string>
+	<string name="ButtonText_ButtonSaveSettings3">Save 3</string>
+	<string name="ButtonText_ButtonLoadSettings1">Load 1</string>
+	<string name="ButtonText_ButtonLoadSettings2">Load 2</string>
+	<string name="ButtonText_ButtonLoadSettings3">Load 3</string>
+
     <string name="ButtonText_ButtonGaze">Gaze</string>
     <string name="ButtonText_ButtonTrackpad">Trackpad</string>
     <string name="ButtonText_ButtonOff">Off</string>
