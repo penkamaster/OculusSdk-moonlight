@@ -53,6 +53,8 @@ public:
     String            UUID;
     String            Binding;
     int                Id;
+	bool            isRunning;
+	bool            isRemote;
 
 	GLuint			Poster;
 	int				PosterWidth;
@@ -78,9 +80,9 @@ public:
 	void					OneTimeShutdown();
 
     void
-    AddPc(const char *name, const char *uuid, Native::PairState pairState, const char *binding, int i,
-              int i1);
-    void                    RemovePc(const String &name);
+    AddPc(const char *name, const char *uuid, Native::PairState pairState, Native::Reachability reachability, const char *binding, const bool isRunning);
+
+	void                    RemovePc(const String &name);
     void                    LoadPcs();
     Array<const PcDef *>    GetPcList( PcCategory category ) const;
 

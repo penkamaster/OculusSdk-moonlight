@@ -58,6 +58,8 @@ public:
 	virtual void LoadBool(bool b) = 0;
 	virtual JSON* Serialize() = 0;
 	virtual bool IsChanged() = 0;
+	virtual void SaveValue() = 0;
+
 public:
 	char* name;
 	JSON* json;
@@ -96,6 +98,8 @@ public:
 		return newJSON;
 	}
 	virtual bool IsChanged() { return ( *varPtr != initialValue ); }
+	virtual void SaveValue() { initialValue = *varPtr; }
+
 public:
 	T* varPtr;
 	T initialValue;
@@ -147,6 +151,14 @@ public:
 		return newJSON;
 	}
 	virtual bool IsChanged() { return 0 != strcmp(*varPtr, initialValue); }
+	virtual void SaveValue() {
+		if(initialValue)
+		{
+			free(initialValue);
+		}
+		initialValue = strdup(*varPtr);
+	}
+
 public:
 	char** varPtr;
 	char* initialValue;
@@ -189,6 +201,8 @@ public:
 		return newJSON;
 	}
 	virtual bool IsChanged() { return ( *varPtr != initialValue ); }
+	virtual void SaveValue() { initialValue = *varPtr; }
+
 public:
 	String* varPtr;
 	String initialValue;
@@ -332,6 +346,23 @@ template<typename T> bool Settings::GetVal(const char* varName, T* toSet)
 	return false;
 }
 
+bool Settings::IsChanged()
+{
+	if(settingsJSON == NULL) return false;
+	for(int i = 0; i < variables.GetSizeI(); i++)
+	{
+		IVariable* var = variables[i];
+		var->SaveValue();
+		if(var->IsChanged())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
 void Settings::DeleteVar(const char* varName)
 {
 	if(settingsJSON == NULL) return;
@@ -425,6 +456,8 @@ void Settings::SaveChanged()
 		{
 			continue;
 		}
+		var->SaveValue();
+
 		JSON* varJSON = var->json;
 		if(varJSON == NULL)
 		{
@@ -464,7 +497,7 @@ void Settings::SaveOnly(const Array<const char*> &varNames)
 		{
 			continue;
 		}
-
+		var->SaveValue();
 		JSON* varJSON = var->json;
 		if(varJSON == NULL)
 		{

@@ -97,9 +97,8 @@ void PcManager::OneTimeShutdown()
 	LOG( "PcManager::OneTimeShutdown" );
 }
 
-
-void PcManager::AddPc(const char *name, const char *uuid, Native::PairState pairState, const char *binding, int width,
-					  int height) {
+//void PcManager::AddPc(const String &name, const String &uuid, Native::PairState pairState, Native::Reachability reachability, const String &binding, const bool isRunning) {
+void PcManager::AddPc(const char *name, const char *uuid, Native::PairState pairState, Native::Reachability reachability,const char *binding, const bool isRunning) {
 	PcDef *movie = NULL;
 	bool isNew = false;
 
@@ -116,8 +115,11 @@ void PcManager::AddPc(const char *name, const char *uuid, Native::PairState pair
 	movie->Name = name;
 	movie->UUID = uuid;
 	movie->Binding = binding;
-	movie->ResWidth = width;
-	movie->ResHeight = height;
+	movie->isRunning = isRunning;
+	movie->isRemote = reachability == Native::REMOTE;
+
+	//movie->ResWidth = width;
+	//movie->ResHeight = height;
 	if (isNew) {
 		ReadMetaData(movie);
 	}

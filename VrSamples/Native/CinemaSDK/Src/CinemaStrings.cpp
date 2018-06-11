@@ -70,6 +70,13 @@ cinema.GetLocale().GetString( "@string/Error_NoVideosInLimeLight", "@string/Erro
 	cinema.GetLocale().GetString( "@string/ButtonText_LabelGazeScale", 	"@string/ButtonText_LabelGazeScale", 	ButtonText_LabelGazeScale );
 	cinema.GetLocale().GetString( "@string/ButtonText_LabelTrackpadScale", 	"@string/ButtonText_LabelTrackpadScale", 	ButtonText_LabelTrackpadScale );
 
+	cinema.GetLocale().GetString( "@string/ButtonText_LabelLatency", 	"@string/ButtonText_LabelLatency",  	ButtonText_LabelLatency );
+	cinema.GetLocale().GetString( "@string/ButtonText_LabelVRXScale", 	"@string/ButtonText_LabelVRXScale", 	ButtonText_LabelVRXScale );
+	cinema.GetLocale().GetString( "@string/ButtonText_LabelVRYScale", 	"@string/ButtonText_LabelVRYScale", 	ButtonText_LabelVRYScale );
+	cinema.GetLocale().GetString( "@string/ButtonText_CloseApp", 	    "@string/ButtonText_CloseApp", 	        ButtonText_CloseApp );
+	cinema.GetLocale().GetString( "@string/ButtonText_Settings", 	    "@string/ButtonText_Settings",       	ButtonText_Settings );
+	cinema.GetLocale().GetString( "@string/HelpText", 	                "@string/HelpText", 	                HelpText );
+
 	cinema.GetLocale().GetString( "@string/Error_UnknownHost", 	"@string/Error_UnknownHost", 	Error_UnknownHost );
 
 	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveApp", 	"@string/ButtonText_ButtonSaveApp", 	ButtonText_ButtonSaveApp );

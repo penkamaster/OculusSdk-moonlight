@@ -83,6 +83,13 @@ public:
 
 	String    ButtonText_ButtonOff;
 	String    ButtonText_LabelGazeScale;
+	String    ButtonText_LabelLatency;
+	String    ButtonText_LabelVRXScale;
+	String    ButtonText_LabelVRYScale;
+	String    ButtonText_CloseApp;
+	String    ButtonText_Settings;
+
+	String    HelpText;
 
 	String 	  Error_UnknownHost;
 	String    Error_AddPCFailed;

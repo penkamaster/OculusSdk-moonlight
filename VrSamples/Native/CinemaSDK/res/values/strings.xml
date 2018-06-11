@@ -110,6 +110,10 @@
     <string name="ButtonText_ButtonOff">Off</string>
     <string name="ButtonText_LabelGazeScale">Gaze Scale</string>
     <string name="ButtonText_LabelTrackpadScale">Trackpad Scale</string>
+    <string name="ButtonText_LabelLatency">VR Screen Lag</string>
+    <string name="ButtonText_LabelVRXScale">Horizontal Scale</string>
+    <string name="ButtonText_LabelVRYScale">Vertical Scale</string>
+
     <string name="ButtonText_Button4k60">4k60</string>
     <string name="ButtonText_Button4k30">4k30</string>
     <string name="ButtonText_Button1080p60">1080p60</string>
@@ -124,9 +128,17 @@
     <string name="ButtonText_ButtonSpeed">Speed</string>
     <string name="ButtonText_ButtonComfortMode">Comfort Mode</string>
     <string name="ButtonText_ButtonMapKeyboard">Map Keyboard</string>
+    <string name="ButtonText_CloseApp">Close App</string>
+    <string name="ButtonText_Settings">Settings</string>
+
+    <string name="HelpText">Help!\n
+       VR Mode: Starts off in mouse mode - Hit back to start VR tracking.  Tapping the touchpad will go to mouse mode again, or back will open the menu.\n
+       Turning the game\'s mouse sensitivity down and the VR Horizontal and Vertical Scale up will give the best sensitivity.
+    </string>
 
 
-    <string name="app_label" translatable="false">Moonlight</string>
+
+  <string name="app_label" translatable="false">Moonlight</string>
     <string name="app_label_root" translatable="false">Moonlight (Root)</string>
 
     <!-- Shortcut strings -->

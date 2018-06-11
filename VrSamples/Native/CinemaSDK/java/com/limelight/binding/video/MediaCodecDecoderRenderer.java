@@ -73,6 +73,7 @@ public class MediaCodecDecoderRenderer extends VideoDecoderRenderer {
     private int lastFrameNumber;
     private int refreshRate;
     private PreferenceConfiguration prefs;
+    private long presentationTimeUs;
 
     private int numSpsIn;
     private int numPpsIn;
@@ -382,6 +383,12 @@ public class MediaCodecDecoderRenderer extends VideoDecoderRenderer {
         }
     }
 
+
+    @Override
+    public long getLastFrameTimestamp() {
+        return presentationTimeUs / 1000;
+    }
+
     private void startRendererThread()
     {
         rendererThread = new Thread() {
@@ -393,7 +400,7 @@ public class MediaCodecDecoderRenderer extends VideoDecoderRenderer {
                         // Try to output a frame
                         int outIndex = videoDecoder.dequeueOutputBuffer(info, 50000);
                         if (outIndex >= 0) {
-                            long presentationTimeUs = info.presentationTimeUs;
+                            presentationTimeUs = info.presentationTimeUs;
                             int lastIndex = outIndex;
 
                             // Get the last output buffer in the queue

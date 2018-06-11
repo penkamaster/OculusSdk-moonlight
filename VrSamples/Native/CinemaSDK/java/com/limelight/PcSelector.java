@@ -417,7 +417,8 @@ public class PcSelector {
         else if(details.reachability == ComputerDetails.Reachability.OFFLINE) reachInt = RS_OFFLINE;
         else reachInt = RS_UNKNOWN;
         //MainActivity.nativeAddPc(activity.getAppPtr(), details.name, details.uuid.toString(), pairInt, reachInt, managerBinder.getUniqueId(), details.runningGameId != 0);
-        MainActivity.nativeAddPc(activity.getAppPtr(), details.name, details.uuid.toString(), pairInt, managerBinder.getUniqueId(),1920,1080);
+
+        MainActivity.nativeAddPc(activity.getAppPtr(), details.name, details.uuid.toString(), pairInt, reachInt, managerBinder.getUniqueId(),details.runningGameId != 0);
     }
 
     public void closeApp(final String compUUID)

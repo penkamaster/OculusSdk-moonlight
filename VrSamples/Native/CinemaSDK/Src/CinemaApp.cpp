@@ -319,7 +319,10 @@ const PcDef * CinemaApp::GetPreviousMovie() const
 	if ( CurrentMovie != NULL )
 	{
 		MovieFinishedPlaying = false;
-		Native::StartMovie( app, CurrentPc->UUID.ToCStr(), CurrentMovie->Name.ToCStr(), CurrentMovie->Id, CurrentPc->Binding.ToCStr(), width, height, fps, hostAudio );
+		//Native::StartMovie( app, CurrentPc->UUID.ToCStr(), CurrentMovie->Name.ToCStr(), CurrentMovie->Id, CurrentPc->Binding.ToCStr(), width, height, fps, hostAudio );
+		bool remote = CurrentPc->isRemote;
+		Native::StartMovie( app, CurrentPc->UUID.ToCStr(), CurrentMovie->Name.ToCStr(), CurrentMovie->Id, CurrentPc->Binding.ToCStr(), width, height, fps, hostAudio, remote );
+
 		ShouldResumeMovie = false;
 	}
 }
@@ -508,6 +511,13 @@ ovrCinemaStrings & CinemaApp::GetCinemaStrings() const
 {
 	return *CinemaStrings;
 }
+
+void CinemaApp::MovieScreenUpdated()
+{
+	MoviePlayer.MovieScreenUpdated();
+}
+
+
 
 } // namespace OculusCinema
 

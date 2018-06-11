@@ -54,7 +54,7 @@ jobject Java_com_oculus_cinemasdk_MainActivity_nativePrepareNewVideo( JNIEnv *jn
 	return texobj;
 }
 void Java_com_oculus_cinemasdk_MainActivity_nativeDisplayMessage( JNIEnv *jni, jclass clazz, jlong interfacePtr, jstring text, int time, bool isError ) {}
-void Java_com_oculus_cinemasdk_MainActivity_nativeAddPc( JNIEnv *jni, jclass clazz, jlong interfacePtr, jstring name, jstring uuid, int psi, jstring binding,int width,int height)
+void Java_com_oculus_cinemasdk_MainActivity_nativeAddPc( JNIEnv *jni, jclass clazz, jlong interfacePtr, jstring name, jstring uuid, int psi, int reach, jstring binding, bool isRunning)
 {
     OculusCinema::CinemaApp *cinema = ( OculusCinema::CinemaApp * )( ( (App *)interfacePtr )->GetAppInterface() );
     JavaUTFChars utfName( jni, name );
@@ -62,7 +62,10 @@ void Java_com_oculus_cinemasdk_MainActivity_nativeAddPc( JNIEnv *jni, jclass cla
     JavaUTFChars utfBind( jni, binding );
 
     OculusCinema::Native::PairState ps = (OculusCinema::Native::PairState) psi;
-    cinema->PcMgr.AddPc(utfName.ToStr(), utfUUID.ToStr(), ps, utfBind.ToStr(), width, height);
+    //cinema->PcMgr.AddPc(utfName.ToStr(), utfUUID.ToStr(), ps, utfBind.ToStr(), width, height);
+	OculusCinema::Native::Reachability rs = (OculusCinema::Native::Reachability) reach;
+	cinema->PcMgr.AddPc(utfName.ToStr(), utfUUID.ToStr(), ps, rs, utfBind.ToStr(), isRunning);
+
 }
 void Java_com_oculus_cinemasdk_MainActivity_nativeRemovePc( JNIEnv *jni, jclass clazz, jlong interfacePtr, jstring name)
 {
@@ -70,13 +73,13 @@ void Java_com_oculus_cinemasdk_MainActivity_nativeRemovePc( JNIEnv *jni, jclass 
     JavaUTFChars utfName( jni, name );
     cinema->PcMgr.RemovePc(utfName.ToStr());
 }
-void Java_com_oculus_cinemasdk_MainActivity_nativeAddApp( JNIEnv *jni, jclass clazz, jlong interfacePtr, jstring name, jstring posterfilename, int id)
+void Java_com_oculus_cinemasdk_MainActivity_nativeAddApp( JNIEnv *jni, jclass clazz, jlong interfacePtr, jstring name, jstring posterfilename, int id, bool isRunning)
 {
 
     OculusCinema::CinemaApp *cinema = ( OculusCinema::CinemaApp * )( ( (App *)interfacePtr )->GetAppInterface() );
     JavaUTFChars utfName( jni, name );
     JavaUTFChars utfPosterFileName( jni, posterfilename );
-    cinema->AppMgr.AddApp(utfName.ToStr(), utfPosterFileName.ToStr(), id);
+    cinema->AppMgr.AddApp(utfName.ToStr(), utfPosterFileName.ToStr(), id, isRunning);
 
 }
 void Java_com_oculus_cinemasdk_MainActivity_nativeRemoveApp( JNIEnv *jni, jclass clazz, jlong interfacePtr, int id)
@@ -145,6 +148,10 @@ static jmethodID     initAppSelectorMethodId = NULL;
 static jmethodID    mouseMoveMethodId = NULL;
 static jmethodID    mouseClickMethodId = NULL;
 static jmethodID    mouseScrollMethodId = NULL;
+static jmethodID    getLastFrameTimestampMethodId = NULL;
+static jmethodID    currentTimeMillisMethodId = NULL;
+static jmethodID    closeAppMethodId = NULL;
+
 
 
 
@@ -174,7 +181,7 @@ void Native::OneTimeInit( App *app, jclass mainActivityClass )
 	isPlayingMethodId 					= GetMethodID( app, mainActivityClass, "isPlaying", "()Z" );
 	isPlaybackFinishedMethodId			= GetMethodID( app, mainActivityClass, "isPlaybackFinished", "()Z" );
 	hadPlaybackErrorMethodId			= GetMethodID( app, mainActivityClass, "hadPlaybackError", "()Z" );
-	startMovieMethodId                     = GetMethodID( app, mainActivityClass, "startMovie", "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;IIIZ)V" );
+	startMovieMethodId                     = GetMethodID( app, mainActivityClass, "startMovie", "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;IIIZZ)V" );
 	stopMovieMethodId 					= GetMethodID( app, mainActivityClass, "stopMovie", "()V" );
 	initPcSelectorMethodId                 = GetMethodID( app, mainActivityClass, "initPcSelector", "()V" );
     pairPcMethodId                         = GetMethodID( app, mainActivityClass, "pairPc", "(Ljava/lang/String;)V" );
@@ -186,6 +193,9 @@ void Native::OneTimeInit( App *app, jclass mainActivityClass )
     mouseMoveMethodId                     = GetMethodID( app, mainActivityClass, "mouseMove", "(II)V" );
     mouseClickMethodId                     = GetMethodID( app, mainActivityClass, "mouseClick", "(IZ)V" );
     mouseScrollMethodId                 = GetMethodID( app, mainActivityClass, "mouseScroll", "(B)V" );
+	getLastFrameTimestampMethodId        = GetMethodID( app, mainActivityClass, "getLastFrameTimestamp", "()J" );
+	currentTimeMillisMethodId            = GetMethodID( app, mainActivityClass, "currentTimeMillis", "()J" );
+	closeAppMethodId                    = GetMethodID( app, mainActivityClass, "closeApp", "(Ljava/lang/String;I)V" );
 
 
 
@@ -270,7 +280,7 @@ bool Native::HadPlaybackError( App * app )
 #endif
 }
 
-void Native::StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio )
+void Native::StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio, bool remote )
 
 {
 	LOG( "StartMovie( %s )", appName );
@@ -280,7 +290,7 @@ void Native::StartMovie( App *app, const char * uuid, const char * appName, int 
 	jstring jstrBinder = app->GetJava()->Env->NewStringUTF( binder );
 
 
-	app->GetJava()->Env->CallVoidMethod( app->GetJava()->ActivityObject, startMovieMethodId, jstrUUID, jstrAppName, id, jstrBinder, width, height, fps, hostAudio );
+	app->GetJava()->Env->CallVoidMethod( app->GetJava()->ActivityObject, startMovieMethodId, jstrUUID, jstrAppName, id, jstrBinder, width, height, fps, hostAudio, remote );
 
 	app->GetJava()->Env->DeleteLocalRef( jstrUUID );
 	app->GetJava()->Env->DeleteLocalRef( jstrAppName );
@@ -337,6 +347,23 @@ void Native::MouseScroll(App *app, signed char amount)
 {
 	app->GetJava()->Env->CallVoidMethod( app->GetJava()->ActivityObject, mouseScrollMethodId, amount );
 }
+
+void Native::closeApp(App *app, const char* uuid, int appID)
+{
+	jstring jstrUUID = app->GetJava()->Env->NewStringUTF( uuid );
+	app->GetJava()->Env->CallVoidMethod( app->GetJava()->ActivityObject, closeAppMethodId, jstrUUID, appID );
+	app->GetJava()->Env->DeleteLocalRef( jstrUUID );
+}
+
+long Native::getLastFrameTimestamp(App *app)
+{
+	return app->GetJava()->Env->CallLongMethod( app->GetJava()->ActivityObject, getLastFrameTimestampMethodId );
+}
+long Native::currentTimeMillis(App *app)
+{
+	return app->GetJava()->Env->CallLongMethod( app->GetJava()->ActivityObject, currentTimeMillisMethodId );
+}
+
 
 int Native::addPCbyIP(App *app, const char* ip)
 {

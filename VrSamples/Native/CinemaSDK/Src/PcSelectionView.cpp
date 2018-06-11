@@ -55,6 +55,7 @@ PcSelectionView::PcSelectionView( CinemaApp &cinema ) :
 	ResumeIconTexture(),
 	ErrorIconTexture(),
 	SDCardTexture(),
+	CloseIconTexture(),
 	Menu( NULL ),
 	CenterRoot( NULL ),
 	ErrorMessage( NULL ),
@@ -72,6 +73,7 @@ PcSelectionView::PcSelectionView( CinemaApp &cinema ) :
 	LeftSwipes(),
 	RightSwipes(),
 	ResumeIcon( NULL ),
+	CloseAppButton( NULL ),
 	TimerIcon( NULL ),
 	TimerText( NULL ),
 	TimerStartTime( 0 ),
@@ -240,8 +242,12 @@ void NewPCIPButtonCallback( UIButton *button, void *object )
 }
 
 
+void CloseAppButtonCallback( UIButton *button, void *object )
+{
+	( ( PcSelectionView * )object )->CloseAppButtonPressed();
+}
 
-	void PcSelectionView::CreateMenu( OvrGuiSys & guiSys )
+void PcSelectionView::CreateMenu( OvrGuiSys & guiSys )
 {
 	OVR_UNUSED( guiSys );
 
@@ -260,6 +266,7 @@ void NewPCIPButtonCallback( UIButton *button, void *object )
 	ResumeIconTexture.LoadTextureFromApplicationPackage( "assets/resume.png" );
 	ErrorIconTexture.LoadTextureFromApplicationPackage( "assets/error.png" );
 	SDCardTexture.LoadTextureFromApplicationPackage( "assets/sdcard.png" );
+	CloseIconTexture.LoadTextureFromApplicationPackage( "assets/close.png" );
 
 	newPCTex = LoadTextureFromApplicationPackage(
 			"assets/generic_add_poster.png",
@@ -524,6 +531,20 @@ void NewPCIPButtonCallback( UIButton *button, void *object )
 
 	// ==============================================================================
 	//
+	// close app button
+	//
+	CloseAppButton = new UIButton( Cinema.GetGuiSys()  );
+	CloseAppButton->AddToMenu(  Menu, MovieRoot );
+	CloseAppButton->SetLocalPose( forward, CenterPosition + Vector3f( 0.8f, -1.28f, 0.5f ) );
+	CloseAppButton->SetButtonImages( CloseIconTexture, CloseIconTexture, CloseIconTexture );
+	CloseAppButton->SetLocalScale( 3.0f );
+	CloseAppButton->SetVisible( false );
+	CloseAppButton->SetOnClick( CloseAppButtonCallback, this );
+
+
+
+	// ==============================================================================
+	//
 	// timer
 	//
 	TimerIcon = new UILabel( Cinema.GetGuiSys() );
@@ -533,6 +554,7 @@ void NewPCIPButtonCallback( UIButton *button, void *object )
 	TimerIcon->SetFontScale( 1.0f );
 	TimerIcon->SetLocalScale( 2.0f );
 	TimerIcon->SetText( "10" );
+    //TimerIcon->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TimerIcon->SetVisible( false );
 
 	VRMenuSurfaceParms timerSurfaceParms( "timer",
@@ -680,7 +702,19 @@ void NewPCIPButtonCallback( UIButton *button, void *object )
 
 	}
 
-Vector3f PcSelectionView::ScalePosition( const Vector3f &startPos, const float scale, const float menuOffset ) const
+void PcSelectionView::CloseAppButtonPressed()
+{
+	const PcDef* pc = GetSelectedPc();
+
+	if(pc)
+	{
+		Native::closeApp( Cinema.app, pc->UUID, 0);
+	}
+}
+
+
+
+	Vector3f PcSelectionView::ScalePosition( const Vector3f &startPos, const float scale, const float menuOffset ) const
 {
 	const float eyeHieght = Cinema.SceneMgr.Scene.GetEyeHeight();
 
@@ -928,16 +962,21 @@ void PcSelectionView::UpdateSelectionFrame( const ovrFrameInput & vrFrame )
 
     SelectionFrame->SetColor( Vector4f( static_cast<float>( SelectionFader.Value( now ) ) ) );
 
-    if ( !ShowTimer && !Cinema.InLobby && ( MoviesIndex == MovieBrowser->GetSelection() ) )
-    {
+	int selected = MovieBrowser->GetSelection();
+	if ( MovieList.GetSizeI() > selected && MovieList[selected]->isRunning )
+	{
         ResumeIcon->SetColor( Vector4f( static_cast<float>( SelectionFader.Value( now ) ) ) );
         ResumeIcon->SetTextColor( Vector4f( static_cast<float>( SelectionFader.Value( now ) ) ) );
         ResumeIcon->SetVisible( true );
-    }
+		CloseAppButton->SetVisible( true );
+
+	}
     else
     {
         ResumeIcon->SetVisible( false );
-    }
+		CloseAppButton->SetVisible( false );
+
+	}
 
     if ( ShowTimer && ( TimerStartTime != 0 ) )
     {

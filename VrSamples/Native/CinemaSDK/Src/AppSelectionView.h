@@ -26,6 +26,10 @@ of patent rights can be found in the PATENTS file in the same directory.
 #include "UI/UIContainer.h"
 #include "UI/UILabel.h"
 #include "UI/UIImage.h"
+#include "UI/UIButton.h"
+#include "Settings.h"
+
+
 
 using namespace OVR;
 
@@ -86,6 +90,12 @@ private:
 	UITexture							ResumeIconTexture;
 	UITexture							ErrorIconTexture;
 	UITexture							SDCardTexture;
+	UITexture                           CloseIconTexture;
+	UITexture                           SettingsIconTexture;
+
+	UITexture                			ButtonTexture;
+	UITexture                			ButtonHoverTexture;
+	UITexture                			ButtonPressedTexture;
 
 	UIMenu *							Menu;
 
@@ -113,6 +123,9 @@ private:
 	UIImage * 							RightSwipes[ 3 ];
 
 	UILabel	*							ResumeIcon;
+	UIButton *                          CloseAppButton;
+	UIButton *                          SettingsButton;
+
 
 	UILabel *							TimerIcon;
 	UILabel *							TimerText;
@@ -141,9 +154,40 @@ private:
 
 	bool								RepositionScreen;
 	bool								HadSelection;
+	UIContainer *                        settingsMenu;
+	UITexture                            bgTintTexture;
+	UIImage                                newPCbg;
+
+	UIButton *                        ButtonGaze;
+	UIButton *                        ButtonTrackpad;
+	UIButton *                        ButtonOff;
+	UIButton *                        Button4k60;
+	UIButton *                        Button4k30;
+	UIButton *                        Button1080p60;
+	UIButton *                        Button1080p30;
+	UIButton *                        Button720p60;
+	UIButton *                        Button720p30;
+	UIButton *                        ButtonHostAudio;
+	UIButton *                        ButtonSaveApp;
+	UIButton *                        ButtonSaveDefault;
+
+	int                                    mouseMode;
+	int                                    streamWidth;
+	int                                    streamHeight;
+	int                                    streamFPS;
+	bool                                streamHostAudio;
+
+	float                                settingsVersion;
+	String                                defaultSettingsPath;
+	String                                appSettingsPath;
+	Settings*                            defaultSettings;
+	Settings*                            appSettings;
+
+
 
 private:
 	AppSelectionView &				operator=( const AppSelectionView & );
+	void                            TextButtonHelper(UIButton* button, float scale = 1.0f, int w = 300, int h = 120);
 
 	const PcDef *					GetSelectedApp() const;
 
@@ -155,6 +199,25 @@ private:
 
 	void								UpdateAppTitle();
 	void								UpdateSelectionFrame( const ovrFrameInput & vrFrame );
+
+	friend void                            AppCloseAppButtonCallback( UIButton *button, void *object );
+	void                                CloseAppButtonPressed();
+
+	friend void                            SettingsButtonCallback( UIButton *button, void *object );
+	void                                SettingsButtonPressed();
+
+	friend void                            SettingsCallback( UIButton *button, void *object );
+	void                                SettingsPressed( UIButton *button );
+
+	friend bool                            SettingsSelectedCallback( UIButton *button, void *object );
+	bool                                SettingsIsSelected( UIButton *button );
+
+	friend bool                            SettingsActiveCallback( UIButton *button, void *object );
+	bool                                SettingsIsActive( UIButton *button );
+
+	bool                                BackPressed();
+
+
 
 	bool								ErrorShown() const;
 };

@@ -956,6 +956,8 @@ namespace OculusCinema
                 FrameUpdateNeeded = true;
             }
             FrameUpdateNeeded = true;
+            Cinema.MovieScreenUpdated();
+
         }
 
         CheckForbufferResize();

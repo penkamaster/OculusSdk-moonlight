@@ -43,7 +43,7 @@ public:
 	virtual void			OneTimeShutdown();
 	void					LoadApps();
 	void                    LoadPosters();
-	void					AddApp(const String &name, const String &posterFileName, int id);
+	void                    AddApp(const String &name, const String &posterFileName, int id, bool isRunning);
 	void					RemoveApp( int id);
 
 	Array<const PcDef *>	GetAppList( PcCategory category ) const;

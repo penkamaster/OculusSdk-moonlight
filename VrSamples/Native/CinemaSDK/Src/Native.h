@@ -33,7 +33,7 @@ public:
 	static bool 		IsPlaybackFinished( App *app );
 	static bool 		HadPlaybackError( App *app );
 
-	static void         StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio );
+	static void         StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio, bool remote );
 
 
 	static void 		StopMovie( App *app );
@@ -65,6 +65,11 @@ public:
 	static void            MouseMove(App *app, int deltaX, int deltaY);
 	static void            MouseClick(App *app, int buttonId, bool down);
 	static void            MouseScroll(App *app, signed char amount);
+	static void            closeApp(App *app, const char* uuid, int appID);
+
+	static long            getLastFrameTimestamp(App *app);
+	static long            currentTimeMillis(App *app);
+
 	static int             addPCbyIP(App *app, const char* ip);
 
 

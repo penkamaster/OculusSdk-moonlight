@@ -66,9 +66,12 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 
 	public static native void nativeDisplayMessage(long appPtr, String text, int time, boolean isError );
 	//public static native void nativeAddPc(long appPtr, String name, String s, int pairInt, int reachInt, String uniqueId, boolean b);
-	public static native void nativeAddPc(long appPtr, String name, String uuid, int pairState, String binding, int width, int height);
+	public static native void nativeAddPc(long appPtr, String name, String uuid, int pairState, int reachability, String binding, boolean isRunning );
 	public static native void nativeRemovePc(long appPtr, String name );
-	public static native void nativeAddApp(long appPtr, String appName, String fileName, int appId);
+	public static native void nativeAddApp(long appPtr, String appName, String fileName, int appId , boolean isRunning );
+
+
+
 	public static native void nativeRemoveApp(long appPtr, int appId);
 	public static native void nativeShowPair(long appPtr, String s);
 	public static native void nativePairSuccess(long appPtr);
@@ -385,7 +388,7 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 	}
 
 
-	public void startMovie( final String uuid, final String appName, final int appId, final String binder, final int width, final int height, final int fps, final boolean hostAudio )
+	public void startMovie( final String uuid, final String appName, final int appId, final String binder, final int width, final int height, final int fps, final boolean hostAudio , final boolean remote)
 	{
 		// set playbackFinished and playbackFailed to false immediately so it's set when we return to native
 		playbackFinished = false;
@@ -396,12 +399,12 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 		 @Override
     		public void run()
     		{
-			 	startMovieLocal(  uuid, appName, appId, binder, width, height, fps, hostAudio);
+			 	startMovieLocal(  uuid, appName, appId, binder, width, height, fps, hostAudio,remote);
 			}
     	} );
 	}
 
-	private void startMovieLocal( final String uuid, final String appName, int appId, final String binder, int width, int height, int fps, boolean hostAudio )
+	private void startMovieLocal( final String uuid, final String appName, int appId, final String binder, int width, int height, int fps, boolean hostAudio, boolean remote )
 	{
 		Log.v(TAG, "startMovie " + appName + " on " + uuid );
 		
@@ -434,7 +437,7 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 
 			ModifiableSurfaceHolder surfaceHolder = new ModifiableSurfaceHolder();
 			surfaceHolder.setSurface(movieSurface);
-			streamInterface = new StreamInterface(this, uuid, currentAppName, appId, binder, surfaceHolder, width, height, fps, hostAudio );
+			streamInterface = new StreamInterface(this, uuid, currentAppName, appId, binder, surfaceHolder, width, height, fps, hostAudio ,remote);
 			streamInterface.surfaceCreated(surfaceHolder);
 			// Manually poke this - originally the movie player would call it
 
@@ -555,5 +558,39 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 		streamInterface.mouseScroll(amount);
 	}
 
+	public long getLastFrameTimestamp()
+	{
+		if(streamInterface != null)
+			return streamInterface.getLastFrameTimestamp();
+		return 0;
+	}
+
+	public long currentTimeMillis()
+	{
+		return System.currentTimeMillis();
+	}
+
+	public void closeApp(final String compUUID, int appID)
+	{
+		try
+		{
+			if(appSelector != null && appID != 0)
+			{
+				Log.d(TAG, "Closing app: " + appID);
+				appSelector.closeApp(appID);
+			}
+			else if(pcSelector != null)
+			{
+				Log.d(TAG, "Closing active app");
+				pcSelector.closeApp(compUUID);
+			}
+			Log.d(TAG, "Closed!");
+		}
+		catch ( Exception e )
+		{
+			Log.e( TAG, "Closing app failed: " + e.getMessage() );
+			e.printStackTrace();
+		}
+	}
 
 }

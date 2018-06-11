@@ -142,12 +142,17 @@ public class StreamInterface implements SurfaceHolder.Callback,
     public static final String EXTRA_APP_ID = "AppId";
     public static final String EXTRA_UNIQUEID = "UniqueId";
     public static final String EXTRA_STREAMING_REMOTE = "Remote";
+    public long getLastFrameTimestamp() {
+        if(decoderRenderer != null)
+            return decoderRenderer.getLastFrameTimestamp();
+        return 0;
+    }
+
     public static final String EXTRA_PC_UUID = "UUID";
     public static final String EXTRA_PC_NAME = "PcName";
     public static final String EXTRA_APP_HDR = "HDR";
 
-
-    public StreamInterface(MainActivity creatingActivity, String compUUID, String appName, int appId, String uniqueId, SurfaceHolder sh, int width, int height, int fps, boolean hostAudio) {
+    public StreamInterface(MainActivity creatingActivity, String compUUID, String appName, int appId, String uniqueId, SurfaceHolder sh, int width, int height, int fps, boolean hostAudio, boolean remote) {
         //super.onCreate(savedInstanceState);
         activity = creatingActivity;
         UiHelper.setLocale(activity);
@@ -208,7 +213,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
         wifiLock.setReferenceCounted(false);
         wifiLock.acquire();
 
-        boolean remote = activity.getIntent().getBooleanExtra(EXTRA_STREAMING_REMOTE, false);
+        //boolean remote = activity.getIntent().getBooleanExtra(EXTRA_STREAMING_REMOTE, false);
         //String uuid = StreamInterface.this.getIntent().getStringExtra(EXTRA_PC_UUID);
         //String pcName = StreamInterface.this.getIntent().getStringExtra(EXTRA_PC_NAME);
         boolean willStreamHdr = activity.getIntent().getBooleanExtra(EXTRA_APP_HDR, false);

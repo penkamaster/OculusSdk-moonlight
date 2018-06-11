@@ -26,6 +26,8 @@ of patent rights can be found in the PATENTS file in the same directory.
 #include "UI/UIImage.h"
 #include "UI/UIButton.h"
 #include "Settings.h"
+#include "Kernel/OVR_List.h"
+
 
 
 using namespace OVR;
@@ -145,6 +147,10 @@ public:
 	virtual void 			Frame( const ovrFrameInput & vrFrame );
 
 	void 					MovieLoaded( const int width, const int height, const int duration );
+	virtual void            SetError( const char *text, bool showSDCard, bool showErrorIcon );
+
+	void                    MovieScreenUpdated();
+
 
 private:
 	CinemaApp &				Cinema;
@@ -215,9 +221,18 @@ private:
 	UITexture                ScreenHoverTexture;
 	UITexture                ScreenPressedTexture;
 
-	UITexture                ControllerTexture;
-	UITexture                ControllerHoverTexture;
-	UITexture                ControllerPressedTexture;
+	UITexture                HelpTexture;
+	UITexture                HelpHoverTexture;
+	UITexture                HelpPressedTexture;
+
+	UITexture                ExitTexture;
+	UITexture                ExitHoverTexture;
+	UITexture                ExitPressedTexture;
+
+	UITexture                VRModeTexture;
+	UITexture                VRModeHoverTexture;
+	UITexture                VRModePressedTexture;
+
 
 	UIContainer *			SaveMenu;
 	UIButton			ButtonSaveApp;
@@ -284,11 +299,36 @@ private:
 	SliderComponent         SizeSlider;
 
 
-	UIButton                ControllerMenuButton;
-	UIContainer *            ControllerMenu;
-    UIButton            ButtonSpeed;
-    UIButton            ButtonComfortMode;
-    UIButton            ButtonMapKeyboard;
+	UIButton                HelpMenuButton;
+	UIContainer *            HelpMenu;
+	UILabel                    HelpText;
+
+	UIButton                ExitButton;
+
+	UIButton                VRModeMenuButton;
+	UIContainer *            VRModeMenu;
+
+	UILabel                    LatencyScale;
+	UIImage                    LatencySliderBackground;
+	UIImage                    LatencySliderIndicator;
+	UILabel                 LatencyCurrentSetting;
+	UILabel                 LatencyNewSetting;
+	SliderComponent         LatencySlider;
+
+	UILabel                    VRXScale;
+	UIImage                    VRXSliderBackground;
+	UIImage                    VRXSliderIndicator;
+	UILabel                 VRXCurrentSetting;
+	UILabel                 VRXNewSetting;
+	SliderComponent         VRXSlider;
+
+	UILabel                    VRYScale;
+	UIImage                    VRYSliderBackground;
+	UIImage                    VRYSliderIndicator;
+	UILabel                 VRYCurrentSetting;
+	UILabel                 VRYNewSetting;
+	SliderComponent         VRYSlider;
+
 
 	float					settingsVersion;
 	String					defaultSettingsPath;
@@ -333,6 +373,26 @@ private:
 	float					VoidScreenDistanceMax;
 	float					VoidScreenScaleMin;
 	float					VoidScreenScaleMax;
+	class OldScreenPose : public ListNode<OldScreenPose> {
+	public: long time;
+		Matrix4f pose;
+	};
+	List<OldScreenPose>        oldPoses;
+	int                        calibrationStage;
+	Matrix4f                lastPose;
+	float                    trackCalibrationYaw;
+	float                    trackCalibrationPitch;
+	int                        latencyAddition;
+	bool                    screenMotionPaused;
+	float                    vrXscale;
+	float                    vrYscale;
+	int                        VRLatencyMax;
+	int                        VRLatencyMin;
+	float                    VRXScaleMax;
+	float                    VRXScaleMin;
+	float                    VRYScaleMax;
+	float                    VRYScaleMin;
+
 
 private:
 	void					TextButtonHelper(UIButton& button, float scale = 1.0f, int w = 320, int h = 120);
@@ -352,8 +412,13 @@ private:
 	void            StreamMenuButtonPressed();
 	friend void        ScreenMenuButtonCallback( UIButton *button, void *object );
 	void            ScreenMenuButtonPressed();
-	friend void        ControllerMenuButtonCallback( UIButton *button, void *object );
-	void            ControllerMenuButtonPressed();
+	friend void        VRModeMenuButtonCallback( UIButton *button, void *object );
+	void            VRModeMenuButtonPressed();
+	friend void        HelpMenuButtonCallback( UIButton *button, void *object );
+	void            HelpMenuButtonPressed();
+	friend void        ExitButtonCallback( UIButton *button, void *object );
+	void            ExitButtonPressed();
+
 
 	friend void		SaveAppCallback( UIButton *button, void *object );
 	void			SaveAppPressed();
@@ -410,8 +475,8 @@ private:
 	void            Button720p30Pressed();
 	friend void        HostAudioCallback( UIButton *button, void *object );
 	void            HostAudioPressed();
-	friend void        SBSCallback( UIButton *button, void *object );
-	void            SBSPressed();
+	//friend void        SBSCallback( UIButton *button, void *object );
+	//void            SBSPressed();
 
 	friend bool        Button4k60IsSelectedCallback( UIButton *button, void *object );
 	bool            Button4k60IsSelected();
@@ -428,10 +493,19 @@ private:
     friend bool        HostAudioIsSelectedCallback( UIButton *button, void *object );
     bool            HostAudioIsSelected();
 
+	friend void        LatencyCallback( SliderComponent *button, void *object, const float value );
+	void            LatencyPressed(const float value);
+	friend void        VRXCallback( SliderComponent *button, void *object, const float value );
+	void            VRXPressed(const float value);
+	friend void        VRYCallback( SliderComponent *button, void *object, const float value );
+	void            VRYPressed(const float value);
 
 
-    friend void        ChangeSeatCallback( UIButton *button, void *object );
+
+	friend void        ChangeSeatCallback( UIButton *button, void *object );
 	void            ChangeSeatPressed();
+	friend void        SBSCallback( UIButton *button, void *object );
+	void            SBSPressed();
 	friend void        DistanceCallback( SliderComponent *button, void *object, const float value );
 	void            DistancePressed( const float value);
 	friend void        SizeCallback( SliderComponent *button, void *object, const float value );
@@ -466,6 +540,12 @@ private:
 
 	void 					ShowUI();
 	void 					HideUI();
+
+	Matrix4f                InterpolatePoseAtTime(long time);
+	void                    RecordPose( long time, Matrix4f pose );
+	void                    CheckVRInput( const ovrFrameInput & vrFrame );
+	void                    HandleCalibration( const ovrFrameInput & vrFrame );
+
 };
 
 } // namespace OculusCinema

@@ -93,6 +93,8 @@ void ModelManager::LoadModels()
 		VoidScene->UseDynamicProgram = false;
 		VoidScene->UseScreenGeometry = false;
 		VoidScene->UseFreeScreen = true;
+		//        VoidScene->UseVRScreen = true;
+
 
 		int width = 0, height = 0;
 		VoidScene->IconTexture = LoadTextureFromApplicationPackage( "assets/VoidTheater.png",
@@ -103,6 +105,25 @@ void ModelManager::LoadModels()
 		MakeTextureClamped( GlTexture( VoidScene->IconTexture, width, height ) );
 
 		Theaters.PushBack( VoidScene );
+
+		// create void scene
+		VRScene = new SceneDef();
+		VRScene->SceneModel = new ModelFile( "VR" );
+		VRScene->UseSeats = false;
+		VRScene->UseDynamicProgram = false;
+		VRScene->UseScreenGeometry = false;
+		VRScene->UseFreeScreen = true;
+		VRScene->UseVRScreen = true;
+
+		VRScene->IconTexture = LoadTextureFromApplicationPackage( "assets/VRTheater.png",
+																  TextureFlags_t( TEXTUREFLAG_NO_DEFAULT ), width, height );
+
+		BuildTextureMipmaps( VRScene->IconTexture );
+		MakeTextureTrilinear( VRScene->IconTexture );
+		MakeTextureClamped( VRScene->IconTexture );
+
+		Theaters.PushBack( VRScene );
+
 
 		// load all scenes on startup, so there isn't a delay when switching theaters
 		ScanDirectoryForScenes( Cinema.ExternalRetailDir( TheatersDirectory ), true, false, Theaters );

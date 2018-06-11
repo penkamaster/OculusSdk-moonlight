@@ -99,6 +99,7 @@ public:
     void                    PairSuccess();
     void                    ShowError( const String& msg );
     void                    ClearError();
+	void                    MovieScreenUpdated();
 
 	bool					HeadsetWasMounted() const { return ( MountState == true ) && ( LastMountState == false ); }
 	bool					HeadsetWasUnmounted() const { return ( MountState == false ) && ( LastMountState == true ); }

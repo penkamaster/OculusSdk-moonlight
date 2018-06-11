@@ -103,8 +103,9 @@ namespace OculusCinema {
 
     }
 
-    void AppManager::AddApp(const String &name, const String &posterFileName, int id) {
-        LOG("App %s with id %i added!", name.ToCStr(), id);
+    void AppManager::AddApp(const String &name, const String &posterFileName, int id, bool isRunning)
+    {
+    LOG("App %s with id %i added!", name.ToCStr(), id);
         AppDef *anApp = NULL;
         bool isNew = false;
         for (UPInt i = 0; i < Apps.GetSize(); i++) {
@@ -120,6 +121,7 @@ namespace OculusCinema {
         anApp->Name = name;
         anApp->Id = id;
         anApp->PosterFileName = posterFileName;
+        anApp->isRunning = isRunning;
 
         if (isNew) ReadMetaData(anApp);
         if (anApp->Poster == 0) LoadPoster(anApp);

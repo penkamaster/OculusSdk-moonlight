@@ -85,6 +85,7 @@ private:
 	UITexture							ResumeIconTexture;
 	UITexture							ErrorIconTexture;
 	UITexture							SDCardTexture;
+	UITexture							CloseIconTexture;
 
 	UIMenu *							Menu;
 
@@ -112,6 +113,8 @@ private:
 	UIImage * 							RightSwipes[ 3 ];
 
 	UILabel	*							ResumeIcon;
+	UIButton *                            CloseAppButton;
+
 
 	UILabel *							TimerIcon;
 	UILabel *							TimerText;
@@ -174,8 +177,12 @@ private:
 	void								UpdateSelectionFrame( const ovrFrameInput & vrFrame );
 
 	bool								ErrorShown() const;
-	friend void                            NewPCIPButtonCallback( UIButton *button, void *object );
-	void                                NewPCIPButtonPressed( UIButton *button);
+	friend void                         NewPCIPButtonCallback( UIButton *button, void *object );
+	void                                NewPCIPButtonPressed( UIButton *button );
+
+	friend void                         CloseAppButtonCallback( UIButton *button, void *object );
+	void                                CloseAppButtonPressed();
+
 
 	bool                                BackPressed();
 

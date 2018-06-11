@@ -439,7 +439,8 @@ public class AppSelector {
                     }*/
 
 
-                    MainActivity.nativeAddApp(activity.getAppPtr(), app.getAppName(), fileName, app.getAppId());
+                    MainActivity.nativeAddApp(activity.getAppPtr(), app.getAppName(), fileName, app.getAppId(), app.isInitialized());
+
                 }
 
                 // Next handle app removals
@@ -478,4 +479,28 @@ public class AppSelector {
         });
 
     }
+
+    public void closeApp(int appID)
+    {
+        for(NvApp app : appList)
+        {
+            if(app.getAppId() == appID)
+            {
+                suspendGridUpdates = true;
+                ServerHelper.doQuit(activity,
+                        ServerHelper.getCurrentAddressFromComputer(computer),
+                        app, managerBinder, new Runnable() {
+                            @Override
+                            public void run() {
+                                // Trigger a poll immediately
+                                suspendGridUpdates = false;
+                                if (poller != null) {
+                                    poller.pollNow();
+                                }
+                            }
+                        });
+            }
+        }
+    }
+
 }
