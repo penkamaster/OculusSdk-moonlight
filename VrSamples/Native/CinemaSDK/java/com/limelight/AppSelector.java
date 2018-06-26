@@ -249,7 +249,7 @@ public class AppSelector {
         try {
             // Try to load from cache
             lastRawApplist = CacheHelper.readInputStreamToString(CacheHelper.openCacheFileForInput(activity.getCacheDir(), "applist", uuidString));
-            List<NvApp> appList = NvHTTP.getAppListByReader(new StringReader(lastRawApplist));
+            appList = NvHTTP.getAppListByReader(new StringReader(lastRawApplist));
             updateAppList(appList);
             LimeLog.info("Loaded applist from cache");
         } catch (Exception e) {
