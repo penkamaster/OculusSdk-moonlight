@@ -122,7 +122,8 @@ void ModelManager::LoadModels()
 		MakeTextureTrilinear( VRScene->IconTexture );
 		MakeTextureClamped( VRScene->IconTexture );
 
-		Theaters.PushBack( VRScene );
+		//TODO activar el modo vr
+		//Theaters.PushBack( VRScene );
 
 
 		// load all scenes on startup, so there isn't a delay when switching theaters
