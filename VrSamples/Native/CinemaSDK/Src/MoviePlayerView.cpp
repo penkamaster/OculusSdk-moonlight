@@ -581,7 +581,7 @@ void MoviePlayerView::InitializeSettings()
 	ScreenMenuButton.SetOnClick( ScreenMenuButtonCallback, this );
 	ScreenMenuButton.GetMenuObject()->SetLocalBoundsExpand( PixelPos( 20, 0, 0 ), Vector3f::ZERO );
 
-	VRModeMenuButton.AddToMenu( PlaybackControlsMenu, &ControlsBackground );
+	/*VRModeMenuButton.AddToMenu( PlaybackControlsMenu, &ControlsBackground );
 	VRModeMenuButton.SetLocalScale( Vector3f( 2.0f ) );
 	VRModeMenuButton.SetButtonImages( VRModeTexture, VRModeHoverTexture, VRModePressedTexture );
 	VRModeMenuButton.SetOnClick( VRModeMenuButtonCallback, this );
@@ -592,7 +592,7 @@ void MoviePlayerView::InitializeSettings()
 	HelpMenuButton.SetButtonImages( HelpTexture, HelpTexture, HelpTexture );
 	HelpMenuButton.SetOnClick( HelpMenuButtonCallback, this );
 	HelpMenuButton.GetMenuObject()->SetLocalBoundsExpand( PixelPos( 20, 0, 0 ), Vector3f::ZERO );
-
+*/
 	ExitButton.AddToMenu( PlaybackControlsMenu, &ControlsBackground );
 	ExitButton.SetLocalScale( Vector3f( 2.0f ) );
 	ExitButton.SetButtonImages( ExitTexture, ExitHoverTexture, ExitPressedTexture );
