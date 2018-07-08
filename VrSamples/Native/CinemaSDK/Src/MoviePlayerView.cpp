@@ -502,8 +502,8 @@ void MoviePlayerView::InitializeSettings()
 
 
 	ButtonTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
-	ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
-	ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
+	ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button_hoover.png" );
+	ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button_pressed.png" );
 
 
 
@@ -555,7 +555,7 @@ void MoviePlayerView::InitializeSettings()
     ControlsBackground.AddToMenu( PlaybackControlsMenu, &PlaybackControlsScale );
 	ControlsBackground.AddFlags( VRMENUOBJECT_RENDER_HIERARCHY_ORDER );
 
-	ControlsBackground.SetLocalPosition( PixelPos( 0, 550, 0 ) );
+	ControlsBackground.SetLocalPosition( PixelPos( 220, 500, 0 ) );
 
 	ControlsBackground.SetImage( 0, SURFACE_TEXTURE_DIFFUSE, BackgroundTintTexture, 1200, 168 );
     ControlsBackground.AddComponent( &GazeTimer );
@@ -610,10 +610,11 @@ void MoviePlayerView::InitializeSettings()
 	menuButtonPos += MenuButtonsStep;
 	ScreenMenuButton.SetLocalPosition( PixelPos( menuButtonPos, 0, 1 ) );
 	menuButtonPos += MenuButtonsStep;
-	VRModeMenuButton.SetLocalPosition( PixelPos( menuButtonPos, 0, 1 ) );
+	/*VRModeMenuButton.SetLocalPosition( PixelPos( menuButtonPos, 0, 1 ) );
 	menuButtonPos += MenuButtonsStep;
 	HelpMenuButton.SetLocalPosition( PixelPos( menuButtonPos, 0, 1 ) );
 	menuButtonPos += MenuButtonsStep;
+	 */
 	ExitButton.SetLocalPosition( PixelPos( menuButtonPos, 0, 1 ) );
 
 
@@ -621,69 +622,76 @@ void MoviePlayerView::InitializeSettings()
 	const static int MENU_Y = -150;
 	const static int MENU_TOP = 200;
 
+    const static int MENU_DIST_1_ROW= 0;
+    const static int MENU_DIST_2_ROW= 85;
+    const static int MENU_DIST_3_ROW= 170;
+
+
+
+
 	SaveMenu = new UIContainer( Cinema.GetGuiSys() );
 	SaveMenu->AddToMenu(  PlaybackControlsMenu, &PlaybackControlsScale );
-	SaveMenu->SetLocalPosition( PixelPos( 0, -500, 1 ) );
+	SaveMenu->SetLocalPosition( PixelPos( 0, -450, 1 ) );
 	SaveMenu->SetVisible(false);
 
 	ButtonSaveApp.AddToMenu( PlaybackControlsMenu, SaveMenu );
-	ButtonSaveApp.SetLocalPosition( PixelPos( 800, 130, 1 ) );
+	ButtonSaveApp.SetLocalPosition( PixelPos( 660, MENU_DIST_3_ROW, 1 ) );
 	ButtonSaveApp.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveApp.ToCStr()  );
 	ButtonSaveApp.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonSaveApp, 0.5f);
 	ButtonSaveApp.SetOnClick( SaveAppCallback, this);
 
 	ButtonSaveDefault.AddToMenu(  PlaybackControlsMenu, SaveMenu );
-	ButtonSaveDefault.SetLocalPosition( PixelPos( 800, 65, 1 ) );
+	ButtonSaveDefault.SetLocalPosition( PixelPos( 660, MENU_DIST_2_ROW, 1 ) );
 	ButtonSaveDefault.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveDefault.ToCStr()  );
 	ButtonSaveDefault.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonSaveDefault, 0.5f);
 	ButtonSaveDefault.SetOnClick( SaveDefaultCallback, this);
 
 	ButtonResetSettings.AddToMenu(  PlaybackControlsMenu, SaveMenu );
-	ButtonResetSettings.SetLocalPosition( PixelPos( 800, 0, 1 ) );
+	ButtonResetSettings.SetLocalPosition( PixelPos( 660, MENU_DIST_1_ROW, 1 ) );
 	ButtonResetSettings.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonResetSettings.ToCStr()  );
 	ButtonResetSettings.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonResetSettings, 0.5f);
 	ButtonResetSettings.SetOnClick( ResetDefaultCallback, this);
 
 	ButtonSaveSettings1.AddToMenu( PlaybackControlsMenu, SaveMenu );
-	ButtonSaveSettings1.SetLocalPosition( PixelPos( 200, 65, 1 ) );
+	ButtonSaveSettings1.SetLocalPosition( PixelPos( 0, MENU_DIST_2_ROW, 1 ) );
 	ButtonSaveSettings1.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveSettings1.ToCStr()  );
 	ButtonSaveSettings1.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonSaveSettings1, 0.5f);
 	ButtonSaveSettings1.SetOnClick( Save1Callback, this);
 
 	ButtonSaveSettings2.AddToMenu( PlaybackControlsMenu, SaveMenu );
-	ButtonSaveSettings2.SetLocalPosition( PixelPos( 400, 65, 1 ) );
+	ButtonSaveSettings2.SetLocalPosition( PixelPos( 220, MENU_DIST_2_ROW, 1 ) );
 	ButtonSaveSettings2.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveSettings2.ToCStr()  );
 	ButtonSaveSettings2.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonSaveSettings2, 0.5f);
 	ButtonSaveSettings2.SetOnClick( Save2Callback, this);
 
 	ButtonSaveSettings3.AddToMenu( PlaybackControlsMenu, SaveMenu );
-	ButtonSaveSettings3.SetLocalPosition( PixelPos( 600, 65, 1 ) );
+	ButtonSaveSettings3.SetLocalPosition( PixelPos( 440, MENU_DIST_2_ROW, 1 ) );
 	ButtonSaveSettings3.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonSaveSettings3.ToCStr()  );
 	ButtonSaveSettings3.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonSaveSettings3, 0.5f);
 	ButtonSaveSettings3.SetOnClick( Save3Callback, this);
 
 	ButtonLoadSettings1.AddToMenu(  PlaybackControlsMenu, SaveMenu );
-	ButtonLoadSettings1.SetLocalPosition( PixelPos( 200, 0, 1 ) );
+	ButtonLoadSettings1.SetLocalPosition( PixelPos( 0, MENU_DIST_1_ROW, 1 ) );
 	ButtonLoadSettings1.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonLoadSettings1.ToCStr()  );
 	ButtonLoadSettings1.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonLoadSettings1, 0.5f);
 	ButtonLoadSettings1.SetOnClick( Load1Callback, this);
 
 	ButtonLoadSettings2.AddToMenu(  PlaybackControlsMenu, SaveMenu );
-	ButtonLoadSettings2.SetLocalPosition( PixelPos( 400, 0, 1 ) );
+	ButtonLoadSettings2.SetLocalPosition( PixelPos( 220, MENU_DIST_1_ROW, 1 ) );
 	ButtonLoadSettings2.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonLoadSettings2.ToCStr() );
 	ButtonLoadSettings2.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonLoadSettings2, 0.5f);
 	ButtonLoadSettings2.SetOnClick( Load2Callback, this);
 
 	ButtonLoadSettings3.AddToMenu(  PlaybackControlsMenu, SaveMenu );
-	ButtonLoadSettings3.SetLocalPosition( PixelPos( 600, 0, 1 ) );
+	ButtonLoadSettings3.SetLocalPosition( PixelPos( 440, MENU_DIST_1_ROW, 1 ) );
 	ButtonLoadSettings3.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonLoadSettings3.ToCStr() );
 	ButtonLoadSettings3.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
 	TextButtonHelper(ButtonLoadSettings3, 0.5f);
@@ -807,12 +815,12 @@ void MoviePlayerView::InitializeSettings()
     Button720p30.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
     //Button720p30.SetIsSelected( Button720p30IsSelectedCallback, this);
 
-	ButtonHostAudio.AddToMenu(  PlaybackControlsMenu, StreamMenu );
+	/*ButtonHostAudio.AddToMenu(  PlaybackControlsMenu, StreamMenu );
 	ButtonHostAudio.SetLocalPosition( PixelPos( MENU_X * -1, MENU_Y * 4, 1 ) );
 	ButtonHostAudio.SetText( Cinema.GetCinemaStrings().ButtonText_ButtonHostAudio.ToCStr());
 	TextButtonHelper(ButtonHostAudio);
 	ButtonHostAudio.SetOnClick( HostAudioCallback, this);
-    ButtonHostAudio.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+    ButtonHostAudio.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );*/
     //ButtonHostAudio.SetIsSelected( HostAudioIsSelectedCallback, this);
 
 
@@ -927,6 +935,16 @@ void MoviePlayerView::OnOpen()
 	MoveScreenAlpha.Set( 0, 0, 0, 0.0f );
 	InitializeSettings();
 	HideUI();
+
+    GazeSlider.SetExtents(GazeMax,GazeMin,2);
+    GazeSlider.SetValue(gazeScaleValue);
+    TrackpadSlider.SetExtents(TrackpadMax,TrackpadMin,2);
+    TrackpadSlider.SetValue(trackpadScaleValue);
+    DistanceSlider.SetExtents(VoidScreenDistanceMax,VoidScreenDistanceMin,2);
+    DistanceSlider.SetValue(Cinema.SceneMgr.FreeScreenDistance);
+    SizeSlider.SetExtents(VoidScreenScaleMax,VoidScreenScaleMin,2);
+    SizeSlider.SetValue(Cinema.SceneMgr.FreeScreenScale);
+
 	Cinema.SceneMgr.LightsOff( 1.5f );
 
     Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
@@ -937,7 +955,7 @@ void MoviePlayerView::OnOpen()
 	}
 	else
 	{
-		VRModeMenuButton.SetVisible(false);
+		//VRModeMenuButton.SetVisible(false);
 	}
 
 
@@ -2178,7 +2196,7 @@ void MoviePlayerView::LoadSettings(Settings* set)
         Button1080p30.UpdateButtonState();
         Button720p60.UpdateButtonState();
         Button720p30.UpdateButtonState();
-        ButtonHostAudio.UpdateButtonState();
+        //ButtonHostAudio.UpdateButtonState();
 
         ButtonSBS.UpdateButtonState();
         ButtonChangeSeat.UpdateButtonState();

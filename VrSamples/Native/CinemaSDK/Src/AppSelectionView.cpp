@@ -431,8 +431,8 @@ static const char* Guuid;
         bgTintTexture.LoadTextureFromApplicationPackage( "assets/backgroundTint.png" );
 
         ButtonTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
-        ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
-        ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
+        ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button_hoover.png" );
+        ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button_pressed.png" );
         // ==============================================================================
         //
         // create menu
@@ -1285,6 +1285,7 @@ static const char* Guuid;
             if (CurrentCategory == CATEGORY_LIMELIGHT) {
                 SetError("error", false,
                          false);
+                ErrorMessageClicked = true;
             } else {
                 SetError("error", true,
                          false);

@@ -274,8 +274,8 @@ void PcSelectionView::CreateMenu( OvrGuiSys & guiSys )
 	bgTintTexture.LoadTextureFromApplicationPackage( "assets/backgroundTint.png" );
 
     ButtonTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
-    ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
-    ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
+	ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button_hoover.png" );
+	ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button_pressed.png" );
 
 	// ==============================================================================
 	//
