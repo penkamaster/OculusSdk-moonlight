@@ -93,6 +93,7 @@ public:
 
 	String 	  Error_UnknownHost;
 	String    Error_AddPCFailed;
+	String    title_add_pc;
 
 
 	String		Error_UnableToPlayMovie;

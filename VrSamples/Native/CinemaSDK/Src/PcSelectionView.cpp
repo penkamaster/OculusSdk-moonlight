@@ -197,7 +197,7 @@ void PcSelectionView::OnClose()
 
 bool PcSelectionView::BackPressed()
 {
-	if(ErrorShown())
+	/*if(ErrorShown())
 	{
 		ClearError();
 		return true;
@@ -211,6 +211,7 @@ bool PcSelectionView::BackPressed()
 
 		return true;
 	}
+	 */
 	return false;
 }
 
@@ -620,13 +621,13 @@ void PcSelectionView::CreateMenu( OvrGuiSys & guiSys )
 		//button->SetFontScale( 1.0f );
 		button->SetColor( Vector4f( 0.0f, 0.0f, 0.0f, 1.0f ) );
 		//button->SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 120, 120 );
-        button->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+        button->SetButtonImages( ButtonTexture, ButtonTexture, ButtonTexture );
 		button->SetOnClick( NewPCIPButtonCallback, this);
 		//button->UpdateButtonState();
 		newPCIPButtons[i] = button;
 	}
 	//newPCIPButtons[numButtons - 1]->SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 320, 120 );
-    newPCIPButtons[numButtons - 1]->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+    newPCIPButtons[numButtons - 1]->SetButtonImages( ButtonTexture, ButtonTexture, ButtonTexture);
 	newPCIPButtons[numButtons - 1]->SetLocalPosition(Vector3f( 0.0f, 0.45f + ( (numButtons -1) / cols) * -0.3f, 0.15f ));
 
 }
@@ -922,7 +923,8 @@ void PcSelectionView::UpdatePcTitle()
         }
         else
         {
-			MovieTitle->SetText( "Add PC manually" );
+
+			MovieTitle->SetText( Cinema.GetCinemaStrings().title_add_pc );
 		}
 
         LastMovieDisplayed = currentMovie;

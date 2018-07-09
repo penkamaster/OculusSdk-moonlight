@@ -78,6 +78,7 @@ cinema.GetLocale().GetString( "@string/Error_NoVideosInLimeLight", "@string/Erro
 	cinema.GetLocale().GetString( "@string/HelpText", 	                "@string/HelpText", 	                HelpText );
 
 	cinema.GetLocale().GetString( "@string/Error_UnknownHost", 	"@string/Error_UnknownHost", 	Error_UnknownHost );
+	cinema.GetLocale().GetString( "@string/title_add_pc", 	"@string/title_add_pc", 	title_add_pc );
 
 	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveApp", 	"@string/ButtonText_ButtonSaveApp", 	ButtonText_ButtonSaveApp );
 	cinema.GetLocale().GetString( "@string/ButtonText_ButtonSaveDefault", 	"@string/ButtonText_ButtonSaveDefault", 	ButtonText_ButtonSaveDefault );
