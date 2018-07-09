@@ -1072,7 +1072,7 @@ bool MoviePlayerView::OnKeyEvent( const int keyCode, const int repeatCount, cons
 			{
 				case KEY_EVENT_SHORT_PRESS:
                     LOG( "KEY_EVENT_SHORT_PRESS" );
-					BackPressedDouble();
+                    BackPressed();
                     return true;
                     break;
                 default:
@@ -1535,7 +1535,7 @@ void MoviePlayerView::MovieScreenUpdated()
 
 
 
-    if (   vrFrame.Input.buttonPressed & BUTTON_TOUCH_DOUBLE){
+    /*if (   vrFrame.Input.buttonPressed & BUTTON_TOUCH_DOUBLE){
         if(uiActive)
         {
             HideUI();
@@ -1544,7 +1544,7 @@ void MoviePlayerView::MovieScreenUpdated()
         {
             ShowUI();
         }
-    }
+    }*/
 
     if( ( !RepositionScreen ) && ( !uiActive ) && mouseMode != MOUSE_OFF )
     {

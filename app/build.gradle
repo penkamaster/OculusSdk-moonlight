@@ -48,7 +48,7 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            debuggable false
+            debuggable true
         }
         release {
             // To whomever is releasing/using an APK in release mode with
