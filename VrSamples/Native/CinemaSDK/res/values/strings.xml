@@ -7,7 +7,7 @@
   <string
       name="app_name"      project="oculus-cinemasdk"
       description="The title of the application, Oculus Cinema, which let's you watch movies inside of Oculus"
-      >Oculus Cinema SDK</string>
+      >Streaming Cinema</string>
   <string
       name="action_settings"      project="oculus-cinemasdk"
       description="The name of the settings menu."

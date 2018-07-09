@@ -6,7 +6,7 @@
 
     <!-- Help strings -->
     <string name="help_loading_title"> 帮助查看器 </string>
-    <string name="help_loading_msg"> 加载帮助页面中…… </string>
+    <string name="help_loading_msg"> 加载帮助页面中... </string>
 
     <!-- PC view menu entries -->
     <string name="pcview_menu_app_list"> 浏览游戏列表 </string>
@@ -16,7 +16,7 @@
     <string name="pcview_menu_delete_pc"> 删除电脑 </string>
 
     <!-- Pair messages -->
-    <string name="pairing"> 配对中…… </string>
+    <string name="pairing"> 配对中... </string>
     <string name="pair_pc_offline"> 电脑离线中 </string>
     <string name="pair_pc_ingame"> 电脑正在游戏中，你必须在配对之前先退出游戏 </string>
     <string name="pair_pairing_title"> 配对中 </string>
@@ -28,14 +28,14 @@
     <!-- WOL messages -->
     <string name="wol_pc_online"> 电脑在线中 </string>
     <string name="wol_no_mac"> 由于GeForce Experience没有发送MAC地址过来因此无法唤醒电脑 </string>
-    <string name="wol_waking_pc"> 唤醒电脑中…… </string>
+    <string name="wol_waking_pc"> 唤醒电脑中... </string>
     <string name="wol_waking_msg"> 远程唤醒电脑需要一些时间\n\n
     	如果电脑没有唤醒，请确保Wake-On-LAN的设置无误
     </string>
     <string name="wol_fail"> 无法发送Wake-On-LAN数据包 </string>
 
     <!-- Unpair messages -->
-    <string name="unpairing"> 取消配对中…… </string>
+    <string name="unpairing"> 取消配对中... </string>
     <string name="unpair_success"> 成功取消配对 </string>
     <string name="unpair_fail"> 无法配对 </string>
     <string name="unpair_error"> 设备没有配对过 </string>
@@ -55,7 +55,7 @@
     <string name="conn_client_latency"> 每帧解码平均延迟:</string>
     <string name="conn_client_latency_hw"> 硬解码器延迟:</string>
     <string name="conn_hardware_latency"> 硬解码器平均延迟:</string>
-    <string name="conn_starting"> 启动中…… </string>
+    <string name="conn_starting"> 启动中... </string>
     <string name="conn_error_title"> 连接错误 </string>
     <string name="conn_error_msg"> 启动失败 </string>
     <string name="conn_terminated_title"> 连接被终结 </string>
@@ -63,7 +63,7 @@
 
     <!-- General strings -->
     <string name="ip_hint"> 串流电脑的IP地址 </string>
-    <string name="searching_pc"> 正在搜寻运行着GAMESTREAM的电脑…… \n\n
+    <string name="searching_pc"> 正在搜寻运行着GAMESTREAM的电脑... \n\n
         确保GeForce Experience里面SHIELD选项里面的GAMESTREAM开关是开着的 </string>
     <string name="yes"> 是 </string>
     <string name="no"> 否 </string>
@@ -72,13 +72,13 @@
 
     <!-- AppList activity -->
     <string name="title_applist">Apps on</string>
-    <string name="applist_connect_msg"> 连接到电脑中…… </string>
+    <string name="applist_connect_msg"> 连接到电脑中... </string>
     <string name="applist_menu_resume"> 恢复串流 </string>
     <string name="applist_menu_quit"> 退出串流 </string>
     <string name="applist_menu_quit_and_start"> 退出当前游戏并开始这个游戏 </string>
     <string name="applist_menu_cancel"> 取消 </string>
     <string name="applist_refresh_title"> 游戏列表 </string>
-    <string name="applist_refresh_msg"> 刷新中…… </string>
+    <string name="applist_refresh_msg"> 刷新中... </string>
     <string name="applist_refresh_error_title"> 错误 </string>
     <string name="applist_refresh_error_msg"> 获取列表失败 </string>
     <string name="applist_quit_app"> 退出中 </string>
@@ -88,7 +88,7 @@
 
     <!-- Add computer manually activity -->
     <string name="title_add_pc"> 手动添加电脑 </string>
-    <string name="msg_add_pc"> 连接到电脑中…… </string>
+    <string name="msg_add_pc"> 连接到电脑中... </string>
     <string name="addpc_fail"> 无法连接到指定的电脑。请确保指定的端口没有被防火墙阻止 </string>
     <string name="addpc_success"> 成功添加电脑 </string>
     <string name="addpc_unknown_host"> 无法解析电脑的IP地址，请确保IP地址输入无误 </string>
@@ -180,6 +180,11 @@
     <string name="ButtonText_ButtonMapKeyboard">Map Keyboard</string>
     <string name="ButtonText_CloseApp">Close App</string>
     <string name="ButtonText_Settings">Settings</string>
+
+    <string
+        name="app_name"      project="oculus-cinemasdk"
+        description="The title of the application, Oculus Cinema, which let's you watch movies inside of Oculus"
+        >串流影院</string>
 
     <string
         name="MovieSelection_Resume"
