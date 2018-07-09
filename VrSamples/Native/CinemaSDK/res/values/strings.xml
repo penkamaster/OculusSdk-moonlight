@@ -48,7 +48,7 @@
       name="MovieSelection_Resume"
       project="oculus-cinemasdk"
       description="Resume movie icon text for movie selection carousel. Let's you resume a paused movie."
-      >Resume</string>
+      >Play</string>
   <string
       name="MovieSelection_Next"
       project="oculus-cinemasdk"
@@ -114,14 +114,14 @@
     <string name="ButtonText_LabelVRXScale">Horizontal Scale</string>
     <string name="ButtonText_LabelVRYScale">Vertical Scale</string>
 
-    <string name="ButtonText_Button4k60">4k60</string>
-    <string name="ButtonText_Button4k30">4k30</string>
-    <string name="ButtonText_Button1080p60">1080p60</string>
-    <string name="ButtonText_Button1080p30">1080p30</string>
-    <string name="ButtonText_Button720p60">720p60</string>
-    <string name="ButtonText_Button720p30">720p30</string>
+    <string name="ButtonText_Button4k60">4k 60fps</string>
+    <string name="ButtonText_Button4k30">4k 30fps</string>
+    <string name="ButtonText_Button1080p60">1080p 60fps</string>
+    <string name="ButtonText_Button1080p30">1080p 30fps</string>
+    <string name="ButtonText_Button720p60">720p 60fps</string>
+    <string name="ButtonText_Button720p30">720p 30fps</string>
     <string name="ButtonText_ButtonHostAudio">Host Audio</string>
-    <string name="ButtonText_ButtonSBS">SBS</string>
+    <string name="ButtonText_ButtonSBS">3D SBS</string>
     <string name="ButtonText_ButtonChangeSeat">Change Seat</string>
     <string name="ButtonText_ButtonDistance">Distance</string>
     <string name="ButtonText_ButtonSize">Scale</string>

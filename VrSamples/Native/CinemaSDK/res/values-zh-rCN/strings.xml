@@ -138,5 +138,53 @@
     <string name="category_advanced_settings"> 高级设置 </string>
     <string name="title_video_format"> H.265设置 </string>
     <string name="summary_video_format">H.265能降低带宽需求，但是需要设备支持 </string>
+    <!-- VR -->
+
+    <string
+        name="MoviePlayer_Reorient"
+        project="oculus-cinemasdk"
+        description="Text displayed when user looks away from the screen in the Void theater to indicate that they can reorient the screen by tapping the touchpad."
+        >Tap the touchpad to reorient screen</string>
+
+    <string name="ButtonText_ButtonSaveApp">未当前应用存储设置</string>
+    <string name="ButtonText_ButtonSaveDefault">保存默认设置</string>
+    <string name="ButtonText_ButtonResetSettings">保存默认设置</string>
+    <string name="ButtonText_ButtonSaveSettings1">设置存档1</string>
+    <string name="ButtonText_ButtonSaveSettings2">设置存档2</string>
+    <string name="ButtonText_ButtonSaveSettings3">设置存档3</string>
+    <string name="ButtonText_ButtonLoadSettings1">读取存档1</string>
+    <string name="ButtonText_ButtonLoadSettings2">读取存档2</string>
+    <string name="ButtonText_ButtonLoadSettings3">读取存档3</string>
+    <string name="ButtonText_ButtonGaze">头部瞄准</string>
+    <string name="ButtonText_ButtonTrackpad">触摸板</string>
+    <string name="ButtonText_ButtonOff">关闭</string>
+    <string name="ButtonText_LabelGazeScale">头部瞄准灵敏度</string>
+    <string name="ButtonText_LabelTrackpadScale">触摸板灵敏度</string>
+    <string name="ButtonText_LabelLatency">VR Screen Lag</string>
+    <string name="ButtonText_LabelVRXScale">Horizontal Scale</string>
+    <string name="ButtonText_LabelVRYScale">Vertical Scale</string>
+
+    <string name="ButtonText_Button4k60">4k 60fps</string>
+    <string name="ButtonText_Button4k30">4k 30fps</string>
+    <string name="ButtonText_Button1080p60">1080p 60fps</string>
+    <string name="ButtonText_Button1080p30">1080p 30fps</string>
+    <string name="ButtonText_Button720p60">720p 60fps</string>
+    <string name="ButtonText_Button720p30">720p 30fps</string>
+    <string name="ButtonText_ButtonHostAudio">Host Audio</string>
+    <string name="ButtonText_ButtonSBS">左右3D</string>
+    <string name="ButtonText_ButtonChangeSeat">改变座位</string>
+    <string name="ButtonText_ButtonDistance">距离</string>
+    <string name="ButtonText_ButtonSize">尺寸大小</string>
+    <string name="ButtonText_ButtonSpeed">Speed</string>
+    <string name="ButtonText_ButtonComfortMode">Comfort Mode</string>
+    <string name="ButtonText_ButtonMapKeyboard">Map Keyboard</string>
+    <string name="ButtonText_CloseApp">Close App</string>
+    <string name="ButtonText_Settings">Settings</string>
+
+    <string
+        name="MovieSelection_Resume"
+        project="oculus-cinemasdk"
+        description="Resume movie icon text for movie selection carousel. Let's you resume a paused movie."
+        >Play</string>
 
 </resources>
