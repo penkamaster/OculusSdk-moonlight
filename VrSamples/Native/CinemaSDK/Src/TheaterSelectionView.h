@@ -37,7 +37,7 @@ public:
 
 	virtual void 				OnOpen();
 	virtual void 				OnClose();
-
+	virtual bool 				BackPressed();
 	virtual bool 				OnKeyEvent( const int keyCode, const int repeatCount, const KeyEventType eventType );
 	virtual void 				Frame( const ovrFrameInput & vrFrame );
 

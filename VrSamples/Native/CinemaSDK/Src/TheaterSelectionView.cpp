@@ -114,11 +114,30 @@ void TheaterSelectionView::OnClose()
 	CurViewState = VIEWSTATE_CLOSED;
 }
 
+bool TheaterSelectionView::BackPressed()
+{
+	return false;
+}
+
 bool TheaterSelectionView::OnKeyEvent( const int keyCode, const int repeatCount, const KeyEventType eventType )
 {
 	OVR_UNUSED( keyCode );
 	OVR_UNUSED( repeatCount );
 	OVR_UNUSED( eventType );
+	switch ( keyCode ) {
+		case OVR_KEY_BACK: {
+			switch (eventType) {
+				case KEY_EVENT_SHORT_PRESS:
+					LOG("KEY_EVENT_SHORT_PRESS");
+					BackPressed();
+					return true;
+					break;
+				default:
+					//LOG( "unexpected back key state %i", eventType );
+					break;
+			}
+		}
+	}
 	return false;
 }
 
@@ -377,7 +396,7 @@ void TheaterSelectionView::Frame( const ovrFrameInput & vrFrame )
 	if ( Menu->IsClosedOrClosing() && !Menu->IsOpenOrOpening() )
 	{
 
-		Cinema.AppSelection( true );
+		Cinema.AppSelection( false );
 	}
 
 	if ( vrFrame.Input.buttonPressed & BUTTON_B )
@@ -385,7 +404,7 @@ void TheaterSelectionView::Frame( const ovrFrameInput & vrFrame )
 		Cinema.GetSoundEffectContext().Play( "touch_up" );
 
 
-        Cinema.AppSelection( true );
+        Cinema.AppSelection( false );
 	}
 
 	Cinema.SceneMgr.Frame( vrFrame );

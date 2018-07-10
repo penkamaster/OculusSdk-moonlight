@@ -231,11 +231,11 @@ static const char* Guuid;
 #endif
 
             if (vrFrame.Input.buttonPressed & BUTTON_B) {
-                if (Cinema.InLobby) {
+                /*if (Cinema.InLobby) {
                     Cinema.app->ShowSystemUI(VRAPI_SYS_UI_CONFIRM_QUIT_MENU);
                 } else {
                     Cinema.GetGuiSys().CloseMenu(Menu->GetVRMenu(), false);
-                }
+                }*/
             }
 
             // check if they closed the menu with the back button
@@ -808,10 +808,10 @@ static const char* Guuid;
         settingsMenu->SetVisible(false);
 
         newPCbg.AddToMenu(  Menu, settingsMenu);
-        newPCbg.SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 700, 800 );
+        newPCbg.SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 800, 900 );
 
-        static const float column1 = -0.32f;
-        static const float column2 = 0.32f;
+        static const float column1 = -0.40f;
+        static const float column2 = 0.40f;
         static const float rowstart = 0.775f;
         static const float rowinc = -0.25f;
         float rowpos = rowstart;
@@ -879,13 +879,13 @@ static const char* Guuid;
         // skip 1/4 a space
         rowpos += rowinc /4;
 
-        ButtonHostAudio = new UIButton( Cinema.GetGuiSys() );
+        /*ButtonHostAudio = new UIButton( Cinema.GetGuiSys() );
         ButtonHostAudio->AddToMenu( Menu, settingsMenu );
         ButtonHostAudio->SetLocalPosition( Vector3f( column1, rowpos += rowinc, 0.1f ) );
         ButtonHostAudio->SetText( Cinema.GetCinemaStrings().ButtonText_ButtonHostAudio );
         TextButtonHelper(ButtonHostAudio);
         ButtonHostAudio->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-        ButtonHostAudio->SetOnClick( SettingsCallback, this);
+        ButtonHostAudio->SetOnClick( SettingsCallback, this);*/
         //ButtonHostAudio->SetSelected(SettingsSelectedCallback(ButtonHostAudio,this));
         //ButtonHostAudio->SetIsSelected( SettingsSelectedCallback, this);
 
@@ -1008,7 +1008,7 @@ static const char* Guuid;
         Button1080p30->UpdateButtonState();
         Button720p60->UpdateButtonState();
         Button720p30->UpdateButtonState();
-        ButtonHostAudio->UpdateButtonState();
+        //ButtonHostAudio->UpdateButtonState();
         ButtonSaveApp->UpdateButtonState();
         ButtonSaveDefault->UpdateButtonState();
 
@@ -1065,7 +1065,7 @@ static const char* Guuid;
         Button1080p30->UpdateButtonState();
         Button720p60->UpdateButtonState();
         Button720p30->UpdateButtonState();
-        ButtonHostAudio->UpdateButtonState();
+        //ButtonHostAudio->UpdateButtonState();
         ButtonSaveApp->UpdateButtonState();
         ButtonSaveDefault->UpdateButtonState();
     }
@@ -1141,6 +1141,7 @@ static const char* Guuid;
             ClearError();
             return true;
         }
+
         if(settingsMenu->GetVisible())
         {
             settingsMenu->SetVisible(false);
@@ -1148,8 +1149,8 @@ static const char* Guuid;
             return true;
         }
 
-        Cinema.PcSelection(true);
-        return true;
+        //Cinema.PcSelection(true);
+        return false;
     }
 
 
@@ -1159,6 +1160,20 @@ static const char* Guuid;
         OVR_UNUSED(keyCode);
         OVR_UNUSED(repeatCount);
         OVR_UNUSED(eventType);
+        switch ( keyCode ) {
+            case OVR_KEY_BACK: {
+                switch (eventType) {
+                    case KEY_EVENT_SHORT_PRESS:
+                        LOG("KEY_EVENT_SHORT_PRESS");
+                        BackPressed();
+                        return true;
+                        break;
+                    default:
+                        //LOG( "unexpected back key state %i", eventType );
+                        break;
+                }
+            }
+        }
         return false;
     }
 

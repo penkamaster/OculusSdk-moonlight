@@ -504,11 +504,14 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 		}else{
 			Log.e("INPUT dispatchKeyEvent OTRO", "KeyEvent source: " + event.getSource());
 		}
-		if (event.getKeyCode() != KeyEvent.KEYCODE_BACK ) {
+
+		return super.dispatchKeyEvent(event);
+
+		/*if (event.getKeyCode() != KeyEvent.KEYCODE_BACK ) {
 			return super.dispatchKeyEvent(event);
 		}else{
 			return false;
-		}
+		}*/
 	}
 
 

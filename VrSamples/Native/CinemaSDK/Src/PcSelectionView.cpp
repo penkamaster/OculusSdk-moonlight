@@ -1069,6 +1069,7 @@ void PcSelectionView::Frame( const ovrFrameInput & vrFrame )
 
     if ( vrFrame.Input.buttonPressed & BUTTON_B )
     {
+        /*
         if ( Cinema.InLobby )
         {
             Cinema.app->ShowSystemUI( VRAPI_SYS_UI_CONFIRM_QUIT_MENU );
@@ -1077,6 +1078,7 @@ void PcSelectionView::Frame( const ovrFrameInput & vrFrame )
         {
             Cinema.GetGuiSys().CloseMenu( Menu->GetVRMenu(), false );
         }
+         */
     }
 
     // check if they closed the menu with the back button
