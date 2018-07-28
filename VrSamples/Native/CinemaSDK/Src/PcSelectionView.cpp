@@ -274,9 +274,11 @@ void PcSelectionView::CreateMenu( OvrGuiSys & guiSys )
 			TextureFlags_t(TEXTUREFLAG_NO_DEFAULT), newPCWidth, newPCHeight);
 	bgTintTexture.LoadTextureFromApplicationPackage( "assets/backgroundTint.png" );
 
-    ButtonTexture.LoadTextureFromApplicationPackage( "assets/button.png" );
-	ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button_hoover.png" );
-	ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button_pressed.png" );
+    ButtonTexture.LoadTextureFromApplicationPackage( "assets/button_num.png" );
+	ButtonHoverTexture.LoadTextureFromApplicationPackage( "assets/button_num_hoover.png" );
+	ButtonPressedTexture.LoadTextureFromApplicationPackage( "assets/button_num_pressed.png" );
+
+
 
 	// ==============================================================================
 	//
@@ -621,13 +623,13 @@ void PcSelectionView::CreateMenu( OvrGuiSys & guiSys )
 		//button->SetFontScale( 1.0f );
 		button->SetColor( Vector4f( 0.0f, 0.0f, 0.0f, 1.0f ) );
 		//button->SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 120, 120 );
-        button->SetButtonImages( ButtonTexture, ButtonTexture, ButtonTexture );
+        button->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture);
 		button->SetOnClick( NewPCIPButtonCallback, this);
 		//button->UpdateButtonState();
 		newPCIPButtons[i] = button;
 	}
 	//newPCIPButtons[numButtons - 1]->SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 320, 120 );
-    newPCIPButtons[numButtons - 1]->SetButtonImages( ButtonTexture, ButtonTexture, ButtonTexture);
+    newPCIPButtons[numButtons - 1]->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture);
 	newPCIPButtons[numButtons - 1]->SetLocalPosition(Vector3f( 0.0f, 0.45f + ( (numButtons -1) / cols) * -0.3f, 0.15f ));
 
 }
