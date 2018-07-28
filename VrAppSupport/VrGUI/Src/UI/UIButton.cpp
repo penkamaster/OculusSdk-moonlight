@@ -26,6 +26,8 @@ UIButton::UIButton( OvrGuiSys &guiSys ) :
 	NormalColor( 1.0f ),
 	HoverColor( 1.0f ),
 	PressedColor( 1.0f ),
+    IsSelectedFunction( NULL ),
+    IsSelectedObject( NULL ),
 	OnClickFunction( NULL ),
 	OnClickObject( NULL ),
 	OnFocusGainedFunction( NULL ),
@@ -86,6 +88,11 @@ void UIButton::SetAsToggleButton( const UITexture & pressedHoverTexture, const V
 	PressedHoverTexture = &pressedHoverTexture;
 }
 
+void UIButton::SetIsSelected( bool ( *callback )( UIButton *, void * ), void *object )
+{
+	IsSelectedFunction = callback;
+	IsSelectedObject = object;
+}
 void UIButton::SetOnClick( void ( *callback )( UIButton *, void * ), void *object )
 {
 	OnClickFunction = callback;
@@ -116,6 +123,16 @@ void UIButton::SetOnFocusLost( void( *callback )( UIButton *, void * ), void *ob
 {
 	OnFocusLostFunction = callback;
 	OnFocusLostObject = object;
+}
+
+
+bool UIButton::IsSelected()
+{
+    if (  IsSelectedFunction != NULL )
+    {
+        return ( *IsSelectedFunction )( this, OnClickObject );
+    }
+    return false;
 }
 
 void UIButton::OnClick()
@@ -154,7 +171,7 @@ void UIButton::UpdateButtonState()
 		SetImage( 0, SURFACE_TEXTURE_DIFFUSE, *PressedHoverTexture, dims.x, dims.y, border );
 		SetColor( PressedHoverColor );
 	}
-	else if ( ButtonComponent->IsPressed() )
+	else if (  ButtonComponent->IsPressed() || IsSelected() )
 	{
 		SetImage( 0, SURFACE_TEXTURE_DIFFUSE, *PressedTexture, dims.x, dims.y, border );
 		SetColor( PressedColor );

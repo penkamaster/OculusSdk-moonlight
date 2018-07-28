@@ -17,6 +17,7 @@ Copyright   :   Copyright 2014 Oculus VR, LLC. All Rights reserved.
 #include "VRMenuComponent.h"
 #include "UI/UITexture.h"
 
+
 namespace OVR {
 
 class VrAppInterface;
@@ -102,6 +103,8 @@ public:
 	void								SetTouchDownSnd( const char * touchDownSnd );
 	void								SetTouchUpSnd( const char * touchUpSnd );
 
+	void 								SetIsSelected (bool (*callback)(UIButton *, void *), void *object );
+
 private:
 	UIButtonComponent *					ButtonComponent;
 	
@@ -118,10 +121,16 @@ private:
 	bool								ToggleButton { false };
 	eButtonActionType					ActionType { ClickOnUp };
 
+
+
+	bool 								( *IsSelectedFunction )( UIButton *button, void *object );
+	void *								IsSelectedObject;
+
 	void 								( *OnClickFunction )( UIButton *button, void *object );
 	void *								OnClickObject;
 
 	void 								OnClick();
+    bool                                IsSelected();
 
 	void								( *OnFocusGainedFunction )( UIButton *button, void *object );
 	void *								OnFocusGainedObject;

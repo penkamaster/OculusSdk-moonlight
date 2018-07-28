@@ -48,6 +48,12 @@ enum ePlaybackControlsEvent
 	UI_SEEK_PRESSED = 7
 };
 
+enum AspectRatio
+{
+	DIECISEIS_NOVENOS = 0,
+	CUATRO_TERCIOS,
+};
+
 enum MouseMode
 {
 	MOUSE_OFF = 0,
@@ -272,6 +278,8 @@ private:
 
 	UIButton                StreamMenuButton;
 	UIContainer *            StreamMenu;
+	UIButton            ButtonAspectRatio169;
+	UIButton            ButtonAspectRatio43;
 	UIButton            Button4k60;
 	UIButton            Button4k30;
     UIButton            Button1080p60;
@@ -356,10 +364,10 @@ private:
 	bool                    mouseDownMiddle;
 
 	MouseMode				mouseMode;
-	float                    gazeScaleValue;
-	float                    trackpadScaleValue;
+	float                   gazeScaleValue;
+	float                   trackpadScaleValue;
 
-
+	AspectRatio				streamAspectRatio;
 	int						streamWidth;
 	int 					streamHeight;
 	int						streamFPS;
@@ -440,6 +448,11 @@ private:
 	void			Load3Pressed();
 
 
+
+
+	friend void     GazeOnFocusLost( UIButton *button, void *object );
+	void            GazeFocusLost();
+
 	friend void        GazeCallback( UIButton *button, void *object );
 	void            GazePressed();
 	friend void        TrackpadCallback( UIButton *button, void *object );
@@ -460,6 +473,16 @@ private:
 	bool			TrackpadActive();
 	friend bool		OffActiveCallback( UIButton *button, void *object );
 	bool			OffActive();
+
+	friend void     ButtonAspectRatio169Callback( UIButton *button, void *object );
+	void            ButtonAspectRatio169Pressed();
+	friend bool     AspectRatio169IsSelectedCallback( UIButton *button, void *object );
+    bool ButtonAspectRatio169IsSelected();
+
+	friend void     ButtonAspectRatio43Callback( UIButton *button, void *object );
+	void            ButtonAspectRatio43Pressed();
+	friend bool     AspectRatio43IsSelectedCallback( UIButton *button, void *object );
+    bool ButtonAspectRatio43IsSelected();
 
 	friend void        Button4k60Callback( UIButton *button, void *object );
 	void            Button4k60Pressed();
@@ -545,6 +568,13 @@ private:
 	void                    RecordPose( long time, Matrix4f pose );
 	void                    CheckVRInput( const ovrFrameInput & vrFrame );
 	void                    HandleCalibration( const ovrFrameInput & vrFrame );
+
+	int HeightAspectRatio43();
+
+    int WidthAspectRatio43();
+
+	int WidthByAspect();
+
 
 };
 

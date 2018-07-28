@@ -96,6 +96,8 @@ MoviePlayerView::MoviePlayerView( CinemaApp &cinema ) :
     TrackpadSlider(),
     StreamMenuButton( Cinema.GetGuiSys()  ),
 	StreamMenu( NULL ),
+	ButtonAspectRatio169( Cinema.GetGuiSys()  ),
+	ButtonAspectRatio43( Cinema.GetGuiSys()  ),
     Button4k60( Cinema.GetGuiSys()  ),
     Button4k30( Cinema.GetGuiSys()  ),
 	Button1080p60( Cinema.GetGuiSys()  ),
@@ -167,6 +169,7 @@ MoviePlayerView::MoviePlayerView( CinemaApp &cinema ) :
     mouseMode(MOUSE_GAZE),
     gazeScaleValue(1.05),
     trackpadScaleValue(2.0),
+	streamAspectRatio(DIECISEIS_NOVENOS),
     streamWidth(1280),
     streamHeight(720),
     streamFPS(60),
@@ -258,8 +261,8 @@ void Save3Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView 
 void Load1Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Load1Pressed(); }
 void Load2Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Load2Pressed(); }
 void Load3Callback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Load3Pressed(); }
-
 void GazeCallback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->GazePressed(); }
+void GazeOnFocusLost				( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->GazeFocusLost(); }
 void TrackpadCallback				( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->TrackpadPressed(); }
 void OffCallback					( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->OffPressed(); }
 void GazeScaleCallback				( SliderComponent *button, void *object, const float value ) { ( ( MoviePlayerView * )object )->GazeScalePressed( value ); }
@@ -267,6 +270,10 @@ void TrackpadScaleCallback			( SliderComponent *button, void *object, const floa
 bool GazeActiveCallback				( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->GazeActive(); }
 bool TrackpadActiveCallback			( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->TrackpadActive(); }
 bool OffActiveCallback				( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->OffActive(); }
+void ButtonAspectRatio169Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->ButtonAspectRatio169Pressed(); }
+void ButtonAspectRatio43Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->ButtonAspectRatio43Pressed(); }
+bool AspectRatio169IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->ButtonAspectRatio169IsSelected(); }
+bool AspectRatio43IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->ButtonAspectRatio43IsSelected(); }
 
 void Button4k60Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button4k60Pressed(); }
 void Button4k30Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button4k30Pressed(); }
@@ -275,6 +282,8 @@ void Button1080p30Callback			( UIButton *button, void *object ) { ( ( MoviePlaye
 void Button720p60Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button720p60Pressed(); }
 void Button720p30Callback			( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->Button720p30Pressed(); }
 void HostAudioCallback				( UIButton *button, void *object ) { ( ( MoviePlayerView * )object )->HostAudioPressed(); }
+bool Button4k60IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button4k60IsSelected(); }
+bool Button4k30IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button4k30IsSelected(); }
 bool Button1080p60IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button1080p60IsSelected(); }
 bool Button1080p30IsSelectedCallback( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button1080p30IsSelected(); }
 bool Button720p60IsSelectedCallback	( UIButton *button, void *object ) { return ( ( MoviePlayerView * )object )->Button720p60IsSelected(); }
@@ -366,6 +375,8 @@ void MoviePlayerView::InitializeSettings()
 
 			defaultSettings->Define("StreamTheaterSettingsVersion", &settingsVersion);
 			defaultSettings->Define("MouseMode", (int*)&mouseMode);
+
+			defaultSettings->Define("StreamAspectRatio", (int*)&streamAspectRatio);
 			defaultSettings->Define("StreamWidth", &streamWidth);
 			defaultSettings->Define("StreamHeight", &streamHeight);
 			defaultSettings->Define("StreamFPS", &streamFPS);
@@ -709,7 +720,9 @@ void MoviePlayerView::InitializeSettings()
 	TextButtonHelper(ButtonGaze);
 	ButtonGaze.SetOnClick( GazeCallback, this);
     ButtonGaze.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-	//ButtonGaze.SetIsSelected( GazeActiveCallback, this);
+    ButtonGaze.SetIsSelected( GazeActiveCallback, this);
+
+
 
 
 	ButtonTrackpad.AddToMenu(  PlaybackControlsMenu, MouseMenu );
@@ -718,8 +731,7 @@ void MoviePlayerView::InitializeSettings()
 	TextButtonHelper(ButtonTrackpad);
 	ButtonTrackpad.SetOnClick( TrackpadCallback, this);
     ButtonTrackpad.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //ButtonTrackpad.SetIsSelected( TrackpadActiveCallback, this);
-
+    ButtonTrackpad.SetIsSelected( TrackpadActiveCallback, this);
 
     ButtonOff.AddToMenu(  PlaybackControlsMenu, MouseMenu );
 	ButtonOff.SetLocalPosition( PixelPos( MENU_X * 1.8, MENU_Y * 1, 1 ) );
@@ -727,8 +739,7 @@ void MoviePlayerView::InitializeSettings()
 	TextButtonHelper(ButtonOff);
 	ButtonOff.SetOnClick( OffCallback, this);
     ButtonOff.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //ButtonOff.SetIsSelected( OffActiveCallback, this);
-
+    ButtonOff.SetIsSelected( OffActiveCallback, this);
 
 	GazeScale.AddToMenu( PlaybackControlsMenu, MouseMenu );
 	GazeScale.SetLocalPosition( PixelPos( MENU_X * -1, MENU_Y * 2, 1 ) );
@@ -769,7 +780,7 @@ void MoviePlayerView::InitializeSettings()
     TextButtonHelper(Button4k60);
     Button4k60.SetOnClick( Button4k60Callback, this);
     Button4k60.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //Button4k60.SetIsSelected( Button4k60IsSelectedCallback, this);
+    Button4k60.SetIsSelected( Button4k60IsSelectedCallback, this);
 
 
     Button4k30.AddToMenu( PlaybackControlsMenu, StreamMenu );
@@ -778,7 +789,15 @@ void MoviePlayerView::InitializeSettings()
     TextButtonHelper(Button4k30);
     Button4k30.SetOnClick( Button4k30Callback, this);
     Button4k30.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //Button4k30.SetIsSelected( Button4k30IsSelectedCallback, this);
+    Button4k30.SetIsSelected( Button4k30IsSelectedCallback, this);
+
+	ButtonAspectRatio169.AddToMenu( PlaybackControlsMenu, StreamMenu );
+	ButtonAspectRatio169.SetLocalPosition( PixelPos( MENU_X * 3 , MENU_Y * 1, 1 ) );
+	ButtonAspectRatio169.SetText( "16:9" );
+	TextButtonHelper(ButtonAspectRatio169);
+	ButtonAspectRatio169.SetOnClick( ButtonAspectRatio169Callback, this);
+	ButtonAspectRatio169.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	ButtonAspectRatio169.SetIsSelected( AspectRatio169IsSelectedCallback, this);
 
 	Button1080p60.AddToMenu(  PlaybackControlsMenu, StreamMenu );
 	Button1080p60.SetLocalPosition( PixelPos( MENU_X * -1, MENU_Y * 2, 1 ) );
@@ -786,7 +805,7 @@ void MoviePlayerView::InitializeSettings()
 	TextButtonHelper(Button1080p60);
 	Button1080p60.SetOnClick( Button1080p60Callback, this);
     Button1080p60.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //Button1080p60.SetIsSelected( Button1080p60IsSelectedCallback, this);
+    Button1080p60.SetIsSelected( Button1080p60IsSelectedCallback, this);
 
 
     Button1080p30.AddToMenu( PlaybackControlsMenu, StreamMenu );
@@ -795,7 +814,16 @@ void MoviePlayerView::InitializeSettings()
 	TextButtonHelper(Button1080p30);
 	Button1080p30.SetOnClick( Button1080p30Callback, this);
     Button1080p30.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //Button1080p30.SetIsSelected( Button1080p30IsSelectedCallback, this);
+    Button1080p30.SetIsSelected( Button1080p30IsSelectedCallback, this);
+
+	ButtonAspectRatio43.AddToMenu( PlaybackControlsMenu, StreamMenu );
+	ButtonAspectRatio43.SetLocalPosition( PixelPos( MENU_X * 3 , MENU_Y * 2, 1 ) );
+	ButtonAspectRatio43.SetText( "4:3" );
+	TextButtonHelper(ButtonAspectRatio43);
+	ButtonAspectRatio43.SetOnClick( ButtonAspectRatio43Callback, this);
+	ButtonAspectRatio43.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+	ButtonAspectRatio43.SetIsSelected( AspectRatio43IsSelectedCallback, this);
+
 
 
     Button720p60.AddToMenu(  PlaybackControlsMenu, StreamMenu );
@@ -804,7 +832,7 @@ void MoviePlayerView::InitializeSettings()
 	TextButtonHelper(Button720p60);
 	Button720p60.SetOnClick( Button720p60Callback, this);
     Button720p60.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //Button720p60.SetIsSelected( Button720p60IsSelectedCallback, this);
+    Button720p60.SetIsSelected( Button720p60IsSelectedCallback, this);
 
 
     Button720p30.AddToMenu( PlaybackControlsMenu, StreamMenu );
@@ -813,7 +841,7 @@ void MoviePlayerView::InitializeSettings()
 	TextButtonHelper(Button720p30);
 	Button720p30.SetOnClick( Button720p30Callback, this);
     Button720p30.SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
-    //Button720p30.SetIsSelected( Button720p30IsSelectedCallback, this);
+    Button720p30.SetIsSelected( Button720p30IsSelectedCallback, this);
 
 	/*ButtonHostAudio.AddToMenu(  PlaybackControlsMenu, StreamMenu );
 	ButtonHostAudio.SetLocalPosition( PixelPos( MENU_X * -1, MENU_Y * 4, 1 ) );
@@ -947,7 +975,7 @@ void MoviePlayerView::OnOpen()
 
 	Cinema.SceneMgr.LightsOff( 1.5f );
 
-    Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+    Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
 	if ( Cinema.SceneMgr.SceneInfo.UseVRScreen )
 	{
 		screenMotionPaused = true;
@@ -1884,6 +1912,7 @@ void MoviePlayerView::ResetDefaultPressed()
 	trackpadScaleValue = 2.0;
 	streamWidth = 1280;
 	streamHeight = 720;
+	streamAspectRatio = DIECISEIS_NOVENOS;
 	streamFPS = 60;
 	streamHostAudio = true;
 	GazeMin = 0.7;
@@ -1901,7 +1930,7 @@ void MoviePlayerView::ResetDefaultPressed()
 
 	Cinema.SceneMgr.ClearMovie();
 	UpdateMenus();
-	Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+	Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
 
 }
 void MoviePlayerView::Save1Pressed()
@@ -1940,13 +1969,14 @@ void MoviePlayerView::LoadSettings(Settings* set)
 	int oldWidth = 	streamWidth;
 	int oldHeight = streamHeight;
 	int oldFPS = streamFPS;
+	int oldAspectRatio = streamAspectRatio;
 
 	set->Load();
 
-	if( oldWidth != streamWidth || oldHeight != streamHeight || oldFPS != streamFPS )
+	if( oldWidth != streamWidth || oldHeight != streamHeight || oldFPS != streamFPS || oldAspectRatio != streamAspectRatio)
 	{
 		Cinema.SceneMgr.ClearMovie();
-		Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+		Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
 	}
 
 	GazeSlider.SetExtents(GazeMax,GazeMin,2);
@@ -1971,11 +2001,27 @@ void MoviePlayerView::LoadSettings(Settings* set)
 	UpdateMenus();
 }
 
+	int MoviePlayerView::WidthByAspect(){
+
+		if (streamAspectRatio == DIECISEIS_NOVENOS){
+			return streamWidth;
+		}else{
+			return ((streamHeight/3)*4);
+		}
+
+
+	}
+
+    void MoviePlayerView::GazeFocusLost(){
+        ButtonGaze.SetHilighted(true);
+    }
+
 
 // Mouse controls
     void MoviePlayerView::GazePressed()
     {
         mouseMode = MOUSE_GAZE;
+        ButtonGaze.SetHilighted(true);
         UpdateMenus();
     }
     void MoviePlayerView::TrackpadPressed()
@@ -2012,6 +2058,26 @@ void MoviePlayerView::LoadSettings(Settings* set)
 		TrackpadSlider.SetValue( value );
 	}
 
+	//Aspect ratio controls
+
+
+	void MoviePlayerView::ButtonAspectRatio169Pressed()
+	{
+		Cinema.SceneMgr.ClearMovie();
+		streamAspectRatio = DIECISEIS_NOVENOS;
+		UpdateMenus();
+		//TODO: This all needs to be saved in prefs
+		Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
+	}
+
+	void MoviePlayerView::ButtonAspectRatio43Pressed()
+	{
+		Cinema.SceneMgr.ClearMovie();
+		streamAspectRatio = CUATRO_TERCIOS;
+		UpdateMenus();
+		//TODO: This all needs to be saved in prefs
+		Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
+	}
 
 	// Stream controls
 
@@ -2023,7 +2089,7 @@ void MoviePlayerView::LoadSettings(Settings* set)
         streamHeight = 2160;
         streamFPS = 60;
         UpdateMenus();
-        Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+        Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
     }
     void MoviePlayerView::Button4k30Pressed()
     {
@@ -2032,7 +2098,7 @@ void MoviePlayerView::LoadSettings(Settings* set)
         streamHeight = 2160;
         streamFPS = 30;
         UpdateMenus();
-        Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+        Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
     }
     void MoviePlayerView::Button1080p60Pressed()
     {
@@ -2042,7 +2108,7 @@ void MoviePlayerView::LoadSettings(Settings* set)
         streamHeight = 1080;
         streamFPS = 60;
         UpdateMenus();
-        Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+        Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
     }
     void MoviePlayerView::Button1080p30Pressed()
     {
@@ -2051,7 +2117,7 @@ void MoviePlayerView::LoadSettings(Settings* set)
         streamHeight = 1080;
         streamFPS = 30;
         UpdateMenus();
-        Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+        Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
     }
     void MoviePlayerView::Button720p60Pressed()
     {
@@ -2060,7 +2126,7 @@ void MoviePlayerView::LoadSettings(Settings* set)
         streamHeight = 720;
         streamFPS = 60;
         UpdateMenus();
-        Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+        Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
     }
     void MoviePlayerView::Button720p30Pressed()
     {
@@ -2069,14 +2135,14 @@ void MoviePlayerView::LoadSettings(Settings* set)
         streamHeight = 720;
         streamFPS = 30;
         UpdateMenus();
-        Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+        Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
     }
     void MoviePlayerView::HostAudioPressed()
     {
         Cinema.SceneMgr.ClearMovie();
         streamHostAudio = !streamHostAudio;
         UpdateMenus();
-        Cinema.StartMoviePlayback(streamWidth, streamHeight, streamFPS, streamHostAudio);
+        Cinema.StartMoviePlayback(WidthByAspect(), streamHeight, streamFPS, streamHostAudio);
     }
 
     void MoviePlayerView::LatencyPressed(const float value)
@@ -2120,7 +2186,7 @@ void MoviePlayerView::LoadSettings(Settings* set)
                 Cinema.SceneMgr.CurrentMovieFormat = VT_2D;
                 break;
 			default:
-				Cinema.SceneMgr.CurrentMovieFormat = VT_2D;
+				Cinema.SceneMgr.CurrentMovieFormat = VT_LEFT_RIGHT_3D;
 		}
 	}
 
@@ -2148,6 +2214,15 @@ void MoviePlayerView::LoadSettings(Settings* set)
     {
         return streamWidth == 1280 && streamHeight == 720 && streamFPS == 30;
     }
+	bool MoviePlayerView::ButtonAspectRatio169IsSelected()
+	{
+		return streamAspectRatio == DIECISEIS_NOVENOS;
+	}
+	bool MoviePlayerView::ButtonAspectRatio43IsSelected()
+	{
+		return streamAspectRatio == CUATRO_TERCIOS;
+	}
+
     bool MoviePlayerView::HostAudioIsSelected()
     {
         return streamHostAudio;
@@ -2189,6 +2264,9 @@ void MoviePlayerView::LoadSettings(Settings* set)
         ButtonGaze.UpdateButtonState();
         ButtonTrackpad.UpdateButtonState();
         ButtonOff.UpdateButtonState();
+
+        ButtonAspectRatio169.UpdateButtonState();
+        ButtonAspectRatio43.UpdateButtonState();
 
         Button4k60.UpdateButtonState();
         Button4k30.UpdateButtonState();

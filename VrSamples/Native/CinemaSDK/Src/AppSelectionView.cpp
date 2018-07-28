@@ -99,6 +99,10 @@ static const char* Guuid;
             ButtonGaze( NULL ),
             ButtonTrackpad( NULL ),
             ButtonOff( NULL ),
+            Button169( NULL ),
+            Button43( NULL ),
+            Button4k60( NULL ),
+            Button4k30( NULL ),
             Button1080p60( NULL ),
             Button1080p30( NULL ),
             Button720p60( NULL ),
@@ -107,6 +111,7 @@ static const char* Guuid;
             ButtonSaveApp( NULL ),
             ButtonSaveDefault( NULL ),
             mouseMode( MOUSE_GAZE ),
+            streamAspectRatio(DIECISEIS_NOVENOS),
             streamWidth( 1280 ),
             streamHeight( 720 ),
             streamFPS( 60 ),
@@ -808,11 +813,11 @@ static const char* Guuid;
         settingsMenu->SetVisible(false);
 
         newPCbg.AddToMenu(  Menu, settingsMenu);
-        newPCbg.SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 800, 900 );
+        newPCbg.SetImage( 0, SURFACE_TEXTURE_DIFFUSE, bgTintTexture, 800, 1400 );
 
         static const float column1 = -0.40f;
         static const float column2 = 0.40f;
-        static const float rowstart = 0.775f;
+        static const float rowstart = 1.0f;
         static const float rowinc = -0.25f;
         float rowpos = rowstart;
 
@@ -823,8 +828,9 @@ static const char* Guuid;
         TextButtonHelper(Button4k60);
         Button4k60->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         Button4k60->SetOnClick( SettingsCallback, this);
-        //Button4k60->SetSelected(SettingsSelectedCallback(Button4k60,this));
-        //Button1080p60->SetIsSelected( SettingsSelectedCallback, this);
+
+        Button4k60->SetIsSelected( SettingsSelectedCallback, this);
+
 
         Button4k30 = new UIButton( Cinema.GetGuiSys() );
         Button4k30->AddToMenu(  Menu, settingsMenu );
@@ -833,8 +839,8 @@ static const char* Guuid;
         TextButtonHelper(Button4k30);
         Button4k30->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         Button4k30->SetOnClick( SettingsCallback, this);
-        //Button4k30->SetSelected(SettingsSelectedCallback(Button4k30,this));
-        //Button1080p30->SetIsSelected( SettingsSelectedCallback, this);
+        Button4k30->SetIsSelected( SettingsSelectedCallback, this);
+
 
         Button1080p60 = new UIButton( Cinema.GetGuiSys() );
         Button1080p60->AddToMenu(  Menu, settingsMenu );
@@ -843,8 +849,7 @@ static const char* Guuid;
         TextButtonHelper(Button1080p60);
         Button1080p60->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         Button1080p60->SetOnClick( SettingsCallback, this);
-        //Button1080p60->SetSelected(SettingsSelectedCallback(Button1080p60,this));
-        //Button1080p60->SetIsSelected( SettingsSelectedCallback, this);
+        Button1080p60->SetIsSelected( SettingsSelectedCallback, this);
 
         Button1080p30 = new UIButton( Cinema.GetGuiSys() );
         Button1080p30->AddToMenu(  Menu, settingsMenu );
@@ -853,8 +858,7 @@ static const char* Guuid;
         TextButtonHelper(Button1080p30);
         Button1080p30->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         Button1080p30->SetOnClick( SettingsCallback, this);
-        //Button1080p30->SetSelected(SettingsSelectedCallback(Button1080p30,this));
-        //Button1080p30->SetIsSelected( SettingsSelectedCallback, this);
+        Button1080p30->SetIsSelected( SettingsSelectedCallback, this);
 
         Button720p60 = new UIButton( Cinema.GetGuiSys() );
         Button720p60->AddToMenu( Menu, settingsMenu );
@@ -863,8 +867,7 @@ static const char* Guuid;
         TextButtonHelper(Button720p60);
         Button720p60->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         Button720p60->SetOnClick( SettingsCallback, this);
-        //Button720p60->SetSelected(SettingsSelectedCallback(Button720p60,this));
-        //Button720p60->SetIsSelected( SettingsSelectedCallback, this);
+        Button720p60->SetIsSelected( SettingsSelectedCallback, this);
 
         Button720p30 = new UIButton( Cinema.GetGuiSys() );
         Button720p30->AddToMenu( Menu, settingsMenu );
@@ -873,8 +876,7 @@ static const char* Guuid;
         TextButtonHelper(Button720p30);
         Button720p30->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         Button720p30->SetOnClick( SettingsCallback, this);
-        //Button720p30->SetSelected(SettingsSelectedCallback(Button720p30,this));
-        //Button720p30->SetIsSelected( SettingsSelectedCallback, this);
+        Button720p30->SetIsSelected( SettingsSelectedCallback, this);
 
         // skip 1/4 a space
         rowpos += rowinc /4;
@@ -899,8 +901,7 @@ static const char* Guuid;
         TextButtonHelper(ButtonGaze);
         ButtonGaze->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         ButtonGaze->SetOnClick( SettingsCallback, this);
-        //ButtonGaze->SetSelected(SettingsSelectedCallback(ButtonGaze,this));
-        //ButtonGaze->SetIsSelected( SettingsSelectedCallback, this);
+        ButtonGaze->SetIsSelected( SettingsSelectedCallback, this);
 
         ButtonTrackpad = new UIButton( Cinema.GetGuiSys() );
         ButtonTrackpad->AddToMenu( Menu, settingsMenu );
@@ -909,8 +910,8 @@ static const char* Guuid;
         TextButtonHelper(ButtonTrackpad);
         ButtonTrackpad->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         ButtonTrackpad->SetOnClick( SettingsCallback, this);
-        //ButtonTrackpad->SetSelected(SettingsSelectedCallback(ButtonTrackpad,this));
-        //ButtonTrackpad->SetIsSelected( SettingsSelectedCallback, this);
+
+        ButtonTrackpad->SetIsSelected( SettingsSelectedCallback, this);
 
         ButtonOff = new UIButton( Cinema.GetGuiSys() );
         ButtonOff->AddToMenu( Menu, settingsMenu );
@@ -919,9 +920,28 @@ static const char* Guuid;
         TextButtonHelper(ButtonOff);
         ButtonOff->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
         ButtonOff->SetOnClick( SettingsCallback, this);
-        //ButtonOff->SetSelected(SettingsSelectedCallback(Button4k30,this));
+        ButtonOff->SetIsSelected( SettingsSelectedCallback, this);
 
-        //ButtonOff->SetIsSelected( SettingsSelectedCallback, this);
+        // skip half a space
+        rowpos += rowinc /2;
+
+        Button169 = new UIButton( Cinema.GetGuiSys() );
+        Button169->AddToMenu( Menu, settingsMenu );
+        Button169->SetLocalPosition( Vector3f( column2, rowpos += rowinc, 0.1f ) );
+        Button169->SetText( "16:9" );
+        TextButtonHelper(Button169);
+        Button169->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+        Button169->SetOnClick( SettingsCallback, this);
+        Button169->SetIsSelected( SettingsSelectedCallback, this);
+
+        Button43 = new UIButton( Cinema.GetGuiSys() );
+        Button43->AddToMenu( Menu, settingsMenu );
+        Button43->SetLocalPosition( Vector3f( column2, rowpos += rowinc, 0.1f ) );
+        Button43->SetText( "4:3" );
+        TextButtonHelper(Button43);
+        Button43->SetButtonImages( ButtonTexture, ButtonHoverTexture, ButtonPressedTexture );
+        Button43->SetOnClick( SettingsCallback, this);
+        Button43->SetIsSelected( SettingsSelectedCallback, this);
 
         // skip half a space
         rowpos += rowinc /2;
@@ -981,6 +1001,7 @@ static const char* Guuid;
 
                 defaultSettings->Define("StreamTheaterSettingsVersion", &settingsVersion);
                 defaultSettings->Define("MouseMode", (int*)&mouseMode);
+                defaultSettings->Define("StreamAspectRatio", (int*)&streamAspectRatio);
                 defaultSettings->Define("StreamWidth", &streamWidth);
                 defaultSettings->Define("StreamHeight", &streamHeight);
                 defaultSettings->Define("StreamFPS", &streamFPS);
@@ -1004,6 +1025,11 @@ static const char* Guuid;
         ButtonGaze->UpdateButtonState();
         ButtonTrackpad->UpdateButtonState();
         ButtonOff->UpdateButtonState();
+        Button169->UpdateButtonState();
+        Button43->UpdateButtonState();
+        Button4k60->UpdateButtonState();
+        Button4k30->UpdateButtonState();
+        Button1080p30->UpdateButtonState();
         Button1080p60->UpdateButtonState();
         Button1080p30->UpdateButtonState();
         Button720p60->UpdateButtonState();
@@ -1028,6 +1054,22 @@ static const char* Guuid;
         else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_ButtonOff )
         {
             mouseMode = MOUSE_OFF;
+        }
+        else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_Button4k60 )
+        {
+            streamWidth = 3840; streamHeight = 2160; streamFPS = 60;
+        }
+        else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_Button4k30 )
+        {
+            streamWidth = 3840; streamHeight = 2160; streamFPS = 30;
+        }
+        else if( button->GetText() == "16:9" )
+        {
+            streamAspectRatio = DIECISEIS_NOVENOS;
+        }
+        else if( button->GetText() == "4:3" )
+        {
+            streamAspectRatio = CUATRO_TERCIOS;
         }
         else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_Button1080p60 )
         {
@@ -1061,6 +1103,10 @@ static const char* Guuid;
         ButtonGaze->UpdateButtonState();
         ButtonTrackpad->UpdateButtonState();
         ButtonOff->UpdateButtonState();
+        Button169->UpdateButtonState();
+        Button43->UpdateButtonState();
+        Button4k60->UpdateButtonState();
+        Button4k30->UpdateButtonState();
         Button1080p60->UpdateButtonState();
         Button1080p30->UpdateButtonState();
         Button720p60->UpdateButtonState();
@@ -1083,6 +1129,22 @@ static const char* Guuid;
         else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_ButtonOff )
         {
             return mouseMode == MOUSE_OFF;
+        }
+        else if( button->GetText() == "16:9" )
+        {
+            return streamAspectRatio == DIECISEIS_NOVENOS;
+        }
+        else if( button->GetText() == "4:3"  )
+        {
+            return streamAspectRatio == CUATRO_TERCIOS;
+        }
+        else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_Button4k60 )
+        {
+            return streamWidth == 3840 && streamHeight == 2160 && streamFPS == 60;
+        }
+        else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_Button4k30 )
+        {
+            return streamWidth == 3840 && streamHeight == 2160 && streamFPS == 30;
         }
         else if( button->GetText() == Cinema.GetCinemaStrings().ButtonText_Button1080p60 )
         {
@@ -1283,7 +1345,7 @@ static const char* Guuid;
         MovieTitle->SetText("");
         LastMovieDisplayed = NULL;
 
-        MoviesIndex = 0;
+        //MoviesIndex = 0;
         if (nextMovie != NULL) {
             for (UPInt i = 0; i < AppList.GetSize(); i++) {
                 if (movies[i] == nextMovie) {

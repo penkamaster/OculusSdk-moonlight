@@ -161,6 +161,8 @@ private:
 	UIButton *                        ButtonGaze;
 	UIButton *                        ButtonTrackpad;
 	UIButton *                        ButtonOff;
+	UIButton *						  Button169;
+	UIButton *						  Button43;
 	UIButton *                        Button4k60;
 	UIButton *                        Button4k30;
 	UIButton *                        Button1080p60;
@@ -172,6 +174,7 @@ private:
 	UIButton *                        ButtonSaveDefault;
 
 	int                                    mouseMode;
+	int										streamAspectRatio;
 	int                                    streamWidth;
 	int                                    streamHeight;
 	int                                    streamFPS;
