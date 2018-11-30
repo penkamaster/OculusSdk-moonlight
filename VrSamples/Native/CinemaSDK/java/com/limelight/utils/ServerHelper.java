@@ -18,8 +18,7 @@ import java.net.UnknownHostException;
 
 public class ServerHelper {
     public static String getCurrentAddressFromComputer(ComputerDetails computer) {
-        return computer.reachability == ComputerDetails.Reachability.LOCAL ?
-                computer.localAddress : computer.remoteAddress;
+        return computer.activeAddress;
     }
 
     public static Intent createStartIntent(Activity parent, NvApp app, ComputerDetails computer,
@@ -30,8 +29,6 @@ public class ServerHelper {
         intent.putExtra(StreamInterface.EXTRA_APP_ID, app.getAppId());
         intent.putExtra(StreamInterface.EXTRA_APP_HDR, app.isHdrSupported());
         intent.putExtra(StreamInterface.EXTRA_UNIQUEID, managerBinder.getUniqueId());
-        intent.putExtra(StreamInterface.EXTRA_STREAMING_REMOTE,
-                computer.reachability != ComputerDetails.Reachability.LOCAL);
         intent.putExtra(StreamInterface.EXTRA_PC_UUID, computer.uuid.toString());
         intent.putExtra(StreamInterface.EXTRA_PC_NAME, computer.name);
         return intent;
@@ -39,6 +36,11 @@ public class ServerHelper {
 
     public static void doStart(Activity parent, NvApp app, ComputerDetails computer,
                                ComputerManagerService.ComputerManagerBinder managerBinder) {
+        if (computer.state == ComputerDetails.State.OFFLINE ||
+                ServerHelper.getCurrentAddressFromComputer(computer) == null) {
+            Toast.makeText(parent, parent.getResources().getString(R.string.pair_pc_offline), Toast.LENGTH_SHORT).show();
+            return;
+        }
         parent.startActivity(createStartIntent(parent, app, computer, managerBinder));
     }
 

@@ -17,7 +17,7 @@ static unsigned short lastSeq;
 
 #define RTP_PORT 48000
 
-#define MAX_PACKET_SIZE 400
+#define MAX_PACKET_SIZE 1400
 
 // This is much larger than we should typically have buffered, but
 // it needs to be. We need a cushion in case our thread gets blocked
@@ -42,9 +42,12 @@ static OPUS_MULTISTREAM_CONFIGURATION opus51SurroundConfig = {
     .mapping = {0, 4, 1, 5, 2, 3}
 };
 
-static POPUS_MULTISTREAM_CONFIGURATION opusConfigArray[] = {
-    &opusStereoConfig,
-    &opus51SurroundConfig,
+static OPUS_MULTISTREAM_CONFIGURATION opus51HighSurroundConfig = {
+        .sampleRate = SAMPLE_RATE,
+        .channelCount = 6,
+        .streams = 6,
+        .coupledStreams = 0,
+        .mapping = {0, 1, 2, 3, 4, 5}
 };
 
 typedef struct _QUEUED_AUDIO_PACKET {
@@ -148,8 +151,18 @@ static void ReceiveThreadProc(void* context) {
     PRTP_PACKET rtp;
     PQUEUED_AUDIO_PACKET packet;
     int queueStatus;
+    int useSelect;
 
     packet = NULL;
+
+    if (setNonFatalRecvTimeoutMs(rtpSocket, UDP_RECV_POLL_TIMEOUT_MS) < 0) {
+        // SO_RCVTIMEO failed, so use select() to wait
+        useSelect = 1;
+    }
+    else {
+        // SO_RCVTIMEO timeout set for recv()
+        useSelect = 0;
+    }
 
     while (!PltIsThreadInterrupted(&receiveThread)) {
         if (packet == NULL) {
@@ -161,7 +174,7 @@ static void ReceiveThreadProc(void* context) {
             }
         }
 
-        packet->size = recvUdpSocket(rtpSocket, &packet->data[0], MAX_PACKET_SIZE);
+        packet->size = recvUdpSocket(rtpSocket, &packet->data[0], MAX_PACKET_SIZE, useSelect);
         if (packet->size < 0) {
             Limelog("Audio Receive: recvUdpSocket() failed: %d\n", (int)LastSocketError());
             ListenerCallbacks.connectionTerminated(LastSocketError());
@@ -187,7 +200,7 @@ static void ReceiveThreadProc(void* context) {
         rtp->sequenceNumber = htons(rtp->sequenceNumber);
 
         queueStatus = RtpqAddPacket(&rtpReorderQueue, (PRTP_PACKET)packet, &packet->q.rentry);
-        if (queueStatus == RTPQ_RET_HANDLE_IMMEDIATELY) {
+        if (RTPQ_HANDLE_NOW(queueStatus)) {
             if ((AudioCallbacks.capabilities & CAPABILITY_DIRECT_SUBMIT) == 0) {
                 if (!queuePacketToLbq(&packet)) {
                     // An exit signal was received
@@ -199,12 +212,12 @@ static void ReceiveThreadProc(void* context) {
             }
         }
         else {
-            if (queueStatus != RTPQ_RET_REJECTED) {
+            if (RTPQ_PACKET_CONSUMED(queueStatus)) {
                 // The queue consumed our packet, so we must allocate a new one
                 packet = NULL;
             }
 
-            if (queueStatus == RTPQ_RET_QUEUED_PACKETS_READY) {
+            if (RTPQ_PACKET_READY(queueStatus)) {
                 // If packets are ready, pull them and send them to the decoder
                 while ((packet = (PQUEUED_AUDIO_PACKET)RtpqGetQueuedPacket(&rtpReorderQueue)) != NULL) {
                     if ((AudioCallbacks.capabilities & CAPABILITY_DIRECT_SUBMIT) == 0) {
@@ -282,9 +295,25 @@ void stopAudioStream(void) {
 
 int startAudioStream(void* audioContext, int arFlags) {
     int err;
+    POPUS_MULTISTREAM_CONFIGURATION chosenConfig;
 
-    err = AudioCallbacks.init(StreamConfig.audioConfiguration,
-        opusConfigArray[StreamConfig.audioConfiguration], audioContext, arFlags);
+    if (StreamConfig.audioConfiguration == AUDIO_CONFIGURATION_STEREO) {
+        chosenConfig = &opusStereoConfig;
+    }
+    else if (StreamConfig.audioConfiguration == AUDIO_CONFIGURATION_51_SURROUND) {
+        if (HighQualitySurroundEnabled) {
+            chosenConfig = &opus51HighSurroundConfig;
+        }
+        else {
+            chosenConfig = &opus51SurroundConfig;
+        }
+    }
+    else {
+        Limelog("Invalid audio configuration: %d\n", StreamConfig.audioConfiguration);
+        return -1;
+    }
+
+    err = AudioCallbacks.init(StreamConfig.audioConfiguration, chosenConfig, audioContext, arFlags);
     if (err != 0) {
         return err;
     }

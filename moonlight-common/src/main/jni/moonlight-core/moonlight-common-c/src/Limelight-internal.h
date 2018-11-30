@@ -20,6 +20,8 @@ extern DECODER_RENDERER_CALLBACKS VideoCallbacks;
 extern AUDIO_RENDERER_CALLBACKS AudioCallbacks;
 extern int NegotiatedVideoFormat;
 extern volatile int ConnectionInterrupted;
+extern int HighQualitySurroundEnabled;
+extern int OriginalVideoBitrate;
 
 #ifndef UINT24_MAX
 #define UINT24_MAX 0xFFFFFF
@@ -32,6 +34,8 @@ extern volatile int ConnectionInterrupted;
 #define isBefore16(x, y) (U16((x) - (y)) > (UINT16_MAX/2))
 #define isBefore24(x, y) (U24((x) - (y)) > (UINT24_MAX/2))
 #define isBefore32(x, y) (U32((x) - (y)) > (UINT32_MAX/2))
+
+#define UDP_RECV_POLL_TIMEOUT_MS 100
 
 int serviceEnetHost(ENetHost* client, ENetEvent* event, enet_uint32 timeoutMs);
 int extractVersionQuadFromString(const char* string, int* quad);

@@ -17,19 +17,6 @@ struct thread_context {
 static int running_threads = 0;
 
 #if defined(LC_WINDOWS)
-void LimelogWindows(char* Format, ...) {
-    va_list va;
-    char buffer[1024];
-
-    va_start(va, Format);
-    vsprintf(buffer, Format, va);
-    va_end(va);
-
-    OutputDebugStringA(buffer);
-}
-#endif
-
-#if defined(LC_WINDOWS)
 DWORD WINAPI ThreadProc(LPVOID lpParameter) {
     struct thread_context* ctx = (struct thread_context*)lpParameter;
 #elif defined(__vita__)

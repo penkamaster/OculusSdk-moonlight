@@ -11,6 +11,8 @@
 #define CHANNEL_MASK_STEREO 0x3
 #define CHANNEL_MASK_51_SURROUND 0xFC
 
+#define HIGH_BITRATE_THRESHOLD 15000
+
 typedef struct _SDP_OPTION {
     char name[MAX_OPTION_NAME_LEN + 1];
     void* payload;
@@ -160,6 +162,10 @@ static int addGen5Options(PSDP_OPTION* head) {
         err |= addAttributeString(head, "x-nv-vqos[0].fec.repairPercent", "5");
     }
 
+    // Recovery mode can cause the FEC percentage to change mid-frame, which
+    // breaks many assumptions in RTP FEC queue.
+    err |= addAttributeString(head, "x-nv-general.enableRecoveryMode", "0");
+
     return err;
 }
 
@@ -169,6 +175,9 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
     int audioChannelCount;
     int audioChannelMask;
     int err;
+
+    // This must have been resolved to either local or remote by now
+    LC_ASSERT(StreamConfig.streamingRemotely != STREAM_CFG_AUTO);
 
     optionHead = NULL;
     err = 0;
@@ -195,7 +204,7 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
     if (AppVersionQuad[0] >= 5) {
         int maxEncodingBitrate;
 
-        if (StreamConfig.width <= 1280 || StreamConfig.height <= 720) {
+        if (StreamConfig.width * StreamConfig.height <= 1366 * 768) {
             // 720p
             if (StreamConfig.fps <= 30) {
                 // 30 FPS
@@ -206,7 +215,7 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
                 maxEncodingBitrate = 12000;
             }
         }
-        else if (StreamConfig.width <= 1920 || StreamConfig.height <= 1080) {
+        else if (StreamConfig.width * StreamConfig.height <= 1920 * 1200) {
             // 1080p
             if (StreamConfig.fps <= 30) {
                 // 30 FPS
@@ -215,6 +224,17 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
             else {
                 // 60 FPS
                 maxEncodingBitrate = 25000;
+            }
+        }
+        else if (StreamConfig.width * StreamConfig.height <= 2560 * 1600) {
+            // 1440p
+            if (StreamConfig.fps <= 30) {
+                // 30 FPS
+                maxEncodingBitrate = 20000;
+            }
+            else {
+                // 60 FPS
+                maxEncodingBitrate = 35000;
             }
         }
         else {
@@ -242,7 +262,7 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
         err |= addAttributeString(&optionHead, "x-nv-vqos[0].bw.maximumBitrateKbps", payloadStr);
     }
     else {
-        if (StreamConfig.streamingRemotely) {
+        if (StreamConfig.streamingRemotely == STREAM_CFG_REMOTE) {
             err |= addAttributeString(&optionHead, "x-nv-video[0].averageBitrate", "4");
             err |= addAttributeString(&optionHead, "x-nv-video[0].peakBitrate", "4");
         }
@@ -257,7 +277,7 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
     
     err |= addAttributeString(&optionHead, "x-nv-vqos[0].videoQualityScoreUpdateTime", "5000");
 
-    if (StreamConfig.streamingRemotely) {
+    if (StreamConfig.streamingRemotely == STREAM_CFG_REMOTE) {
         err |= addAttributeString(&optionHead, "x-nv-vqos[0].qosTrafficType", "0");
         err |= addAttributeString(&optionHead, "x-nv-aqos.qosTrafficType", "0");
     }
@@ -277,12 +297,20 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
     }
 
     if (AppVersionQuad[0] >= 4) {
+        unsigned char slicesPerFrame;
+
+        // Use slicing for increased performance on some decoders
+        slicesPerFrame = (unsigned char)(VideoCallbacks.capabilities >> 24);
+        if (slicesPerFrame == 0) {
+            // If not using slicing, we request 1 slice per frame
+            slicesPerFrame = 1;
+        }
+        sprintf(payloadStr, "%d", slicesPerFrame);
+        err |= addAttributeString(&optionHead, "x-nv-video[0].videoEncoderSlicesPerFrame", payloadStr);
+
         if (NegotiatedVideoFormat & VIDEO_FORMAT_MASK_H265) {
             err |= addAttributeString(&optionHead, "x-nv-clientSupportHevc", "1");
             err |= addAttributeString(&optionHead, "x-nv-vqos[0].bitStreamFormat", "1");
-            
-            // Disable slicing on HEVC
-            err |= addAttributeString(&optionHead, "x-nv-video[0].videoEncoderSlicesPerFrame", "1");
 
             if (AppVersionQuad[0] >= 7) {
                 // Enable HDR if requested
@@ -294,12 +322,17 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
                 }
             }
 
-            // This disables split frame encode on GFE 3.10 which seems to produce broken
-            // HEVC output at 1080p60 (full of artifacts even on the SHIELD itself, go figure)
-            err |= addAttributeString(&optionHead, "x-nv-video[0].encoderFeatureSetting", "0");
+            if (AppVersionQuad[0] < 7 ||
+                (AppVersionQuad[0] == 7 && AppVersionQuad[1] < 1) ||
+                (AppVersionQuad[0] == 7 && AppVersionQuad[1] == 1 && AppVersionQuad[2] < 408)) {
+                // This disables split frame encode on GFE 3.10 which seems to produce broken
+                // HEVC output at 1080p60 (full of artifacts even on the SHIELD itself, go figure).
+                // It now appears to work fine on GFE 3.14.1.
+                Limelog("Disabling split encode for HEVC on older GFE version");
+                err |= addAttributeString(&optionHead, "x-nv-video[0].encoderFeatureSetting", "0");
+            }
         }
         else {
-            unsigned char slicesPerFrame;
             
             err |= addAttributeString(&optionHead, "x-nv-clientSupportHevc", "0");
             err |= addAttributeString(&optionHead, "x-nv-vqos[0].bitStreamFormat", "0");
@@ -313,15 +346,6 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
             // the server or client doesn't support HEVC and the client didn't do the correct checks
             // before requesting HDR streaming.
             LC_ASSERT(!StreamConfig.enableHdr);
-
-            // Use slicing for increased performance on some decoders
-            slicesPerFrame = (unsigned char)(VideoCallbacks.capabilities >> 24);
-            if (slicesPerFrame == 0) {
-                // If not using slicing, we request 1 slice per frame
-                slicesPerFrame = 1;
-            }
-            sprintf(payloadStr, "%d", slicesPerFrame);
-            err |= addAttributeString(&optionHead, "x-nv-video[0].videoEncoderSlicesPerFrame", payloadStr);
         }
 
         if (AppVersionQuad[0] >= 7) {
@@ -357,6 +381,22 @@ static PSDP_OPTION getAttributesList(char*urlSafeAddr) {
         }
         else {
             err |= addAttributeString(&optionHead, "x-nv-audio.surround.enable", "0");
+        }
+
+        if (AppVersionQuad[0] >= 7) {
+            // Decide to use HQ audio based on the original video bitrate, not the HEVC-adjusted value
+            if (OriginalVideoBitrate >= HIGH_BITRATE_THRESHOLD && audioChannelCount > 2) {
+                // Enable high quality mode for surround sound
+                err |= addAttributeString(&optionHead, "x-nv-audio.surround.AudioQuality", "1");
+
+                // Let the audio stream code know that it needs to disable coupled streams when
+                // decoding this audio stream.
+                HighQualitySurroundEnabled = 1;
+            }
+            else {
+                err |= addAttributeString(&optionHead, "x-nv-audio.surround.AudioQuality", "0");
+                HighQualitySurroundEnabled = 0;
+            }
         }
     }
 

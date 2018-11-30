@@ -262,9 +262,9 @@ public class PcSelector {
     public int reachabilityStateFromUUID(final String compUUID)
     {
         ComputerDetails comp = findByUUID(compUUID);
-        if(comp != null && comp.reachability != null)
+        if(comp != null && comp.state != null)
         {
-            return comp.reachability.ordinal();
+            return comp.state.ordinal();
         }
         return RS_UNKNOWN;
     }
@@ -278,7 +278,8 @@ public class PcSelector {
 
 
     private void doPair(final ComputerDetails computer) {
-        if (computer.reachability == ComputerDetails.Reachability.OFFLINE) {
+        if (computer.state == ComputerDetails.State.OFFLINE ||
+                ServerHelper.getCurrentAddressFromComputer(computer) == null) {
             MainActivity.nativeShowError(activity.getAppPtr(), activity.getResources().getString(R.string.pair_pc_offline));
             return;
         }
@@ -412,10 +413,11 @@ public class PcSelector {
         else pairInt= PS_FAILED;
 
         int reachInt=0;
-        if(details.reachability == ComputerDetails.Reachability.LOCAL) reachInt = RS_LOCAL;
+        /*if(details.reachability == ComputerDetails.Reachability.LOCAL) reachInt = RS_LOCAL;
         else if(details.reachability == ComputerDetails.Reachability.REMOTE) reachInt = RS_REMOTE;
         else if(details.reachability == ComputerDetails.Reachability.OFFLINE) reachInt = RS_OFFLINE;
-        else reachInt = RS_UNKNOWN;
+        else reachInt = RS_UNKNOWN;*/
+        reachInt = RS_UNKNOWN;
         //MainActivity.nativeAddPc(activity.getAppPtr(), details.name, details.uuid.toString(), pairInt, reachInt, managerBinder.getUniqueId(), details.runningGameId != 0);
 
         MainActivity.nativeAddPc(activity.getAppPtr(), details.name, details.uuid.toString(), pairInt, reachInt, managerBinder.getUniqueId(),details.runningGameId != 0);

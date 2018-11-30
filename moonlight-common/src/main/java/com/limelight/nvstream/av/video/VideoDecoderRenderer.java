@@ -15,6 +15,4 @@ public abstract class VideoDecoderRenderer {
 	public abstract void cleanup();
 
 	public abstract int getCapabilities();
-	public abstract long getLastFrameTimestamp();
-
 }

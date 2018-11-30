@@ -88,3 +88,7 @@ void LiInitializeConnectionCallbacks(PCONNECTION_LISTENER_CALLBACKS clCallbacks)
 void LiInitializeServerInformation(PSERVER_INFORMATION serverInfo) {
     memset(serverInfo, 0, sizeof(*serverInfo));
 }
+
+uint64_t LiGetMillis(void) {
+    return PltGetMillis();
+}

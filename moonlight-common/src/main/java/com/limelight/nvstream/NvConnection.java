@@ -1,5 +1,7 @@
 package com.limelight.nvstream;
 
+import android.app.ActivityManager;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +31,7 @@ public class NvConnection {
 	private String uniqueId;
 	private ConnectionContext context;
 	private static Semaphore connectionAllowed = new Semaphore(1);
+	private final boolean isMonkey;
 	
 	public NvConnection(String host, String uniqueId, StreamConfiguration config, LimelightCryptoProvider cryptoProvider)
 	{		
@@ -47,6 +50,7 @@ public class NvConnection {
 		}
 		
 		this.context.riKeyId = generateRiKeyId();
+		this.isMonkey = ActivityManager.isUserAMonkey();
 	}
 	
 	private static SecretKey generateRiAesKey() throws NoSuchAlgorithmException {
@@ -113,20 +117,12 @@ public class NvConnection {
 		// Check for a supported stream resolution
 		if (context.streamConfig.getHeight() >= 2160 && !h.supports4K(serverInfo)) {
 			// Client wants 4K but the server can't do it
-			context.connListener.displayTransientMessage("Your PC does not have a supported GPU or GFE version for 4K streaming. The stream will be 1080p.");
+			context.connListener.displayTransientMessage("You must update GeForce Experience to stream in 4K. The stream will be 1080p.");
 			
 			// Lower resolution to 1080p
 			context.negotiatedWidth = 1920;
 			context.negotiatedHeight = 1080;
 			context.negotiatedFps = context.streamConfig.getRefreshRate();
-		}
-		else if (context.streamConfig.getHeight() >= 2160 && context.streamConfig.getRefreshRate() >= 60 && !h.supports4K60(serverInfo)) {
-			// Client wants 4K 60 FPS but the server can't do it
-			context.connListener.displayTransientMessage("Your GPU does not support 4K 60 FPS streaming. The stream will be 4K 30 FPS.");
-			
-			context.negotiatedWidth = context.streamConfig.getWidth();
-			context.negotiatedHeight = context.streamConfig.getHeight();
-			context.negotiatedFps = 30;
 		}
 		else {
 			// Take what the client wanted
@@ -236,7 +232,10 @@ public class NvConnection {
 				context.connListener.stageStarting(appName);
 
 				try {
-					startApp();
+					if (!startApp()) {
+						context.connListener.stageFailed(appName, 0);
+						return;
+					}
 					context.connListener.stageComplete(appName);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -287,17 +286,23 @@ public class NvConnection {
 	
 	public void sendMouseMove(final short deltaX, final short deltaY)
 	{
-		MoonBridge.sendMouseMove(deltaX, deltaY);
+		if (!isMonkey) {
+			MoonBridge.sendMouseMove(deltaX, deltaY);
+		}
 	}
 	
 	public void sendMouseButtonDown(final byte mouseButton)
 	{
-		MoonBridge.sendMouseButton(MouseButtonPacket.PRESS_EVENT, mouseButton);
+		if (!isMonkey) {
+			MoonBridge.sendMouseButton(MouseButtonPacket.PRESS_EVENT, mouseButton);
+		}
 	}
 	
 	public void sendMouseButtonUp(final byte mouseButton)
 	{
-		MoonBridge.sendMouseButton(MouseButtonPacket.RELEASE_EVENT, mouseButton);
+		if (!isMonkey) {
+			MoonBridge.sendMouseButton(MouseButtonPacket.RELEASE_EVENT, mouseButton);
+		}
 	}
 	
 	public void sendControllerInput(final short controllerNumber,
@@ -306,7 +311,10 @@ public class NvConnection {
 			final short leftStickX, final short leftStickY,
 			final short rightStickX, final short rightStickY)
 	{
-		MoonBridge.sendMultiControllerInput(controllerNumber, activeGamepadMask, buttonFlags, leftTrigger, rightTrigger, leftStickX, leftStickY, rightStickX, rightStickY);
+		if (!isMonkey) {
+			MoonBridge.sendMultiControllerInput(controllerNumber, activeGamepadMask, buttonFlags,
+			        leftTrigger, rightTrigger, leftStickX, leftStickY, rightStickX, rightStickY);
+		}
 	}
 	
 	public void sendControllerInput(final short buttonFlags,
@@ -314,14 +322,25 @@ public class NvConnection {
 			final short leftStickX, final short leftStickY,
 			final short rightStickX, final short rightStickY)
 	{
-		MoonBridge.sendControllerInput(buttonFlags, leftTrigger, rightTrigger, leftStickX, leftStickY, rightStickX, rightStickY);
+		if (!isMonkey) {
+			MoonBridge.sendControllerInput(buttonFlags, leftTrigger, rightTrigger, leftStickX,
+			        leftStickY, rightStickX, rightStickY);
+		}
 	}
 	
 	public void sendKeyboardInput(final short keyMap, final byte keyDirection, final byte modifier) {
-		MoonBridge.sendKeyboardInput(keyMap, keyDirection, modifier);
+		if (!isMonkey) {
+			MoonBridge.sendKeyboardInput(keyMap, keyDirection, modifier);
+		}
 	}
 	
 	public void sendMouseScroll(final byte scrollClicks) {
-		MoonBridge.sendMouseScroll(scrollClicks);
+		if (!isMonkey) {
+			MoonBridge.sendMouseScroll(scrollClicks);
+		}
+	}
+
+	public static String findExternalAddressForMdns() {
+		return MoonBridge.findExternalAddressIP4("stun.stunprotocol.org", 3478);
 	}
 }

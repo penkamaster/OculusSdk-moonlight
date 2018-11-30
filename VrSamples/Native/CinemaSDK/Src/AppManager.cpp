@@ -61,6 +61,10 @@ namespace OculusCinema {
                 TextureFlags_t(TEXTUREFLAG_NO_DEFAULT), width, height);
         LOG(" Default gluint: %i", DefaultPoster);
 
+
+
+
+
         BuildTextureMipmaps(GlTexture(DefaultPoster, width, height));
         MakeTextureTrilinear(GlTexture(DefaultPoster, width, height));
         MakeTextureClamped(GlTexture(DefaultPoster, width, height));
@@ -178,24 +182,25 @@ namespace OculusCinema {
                                               anApp->PosterWidth, anApp->PosterHeight);
         LOG("Poster loaded: %s %i %i %i", posterFilename.ToCStr(), anApp->Poster,
             anApp->PosterWidth, anApp->PosterHeight);
-        if (anApp->Poster == 0) {
-            anApp->Poster = DefaultPoster;
-        } else {
+        //if (anApp->Poster == 0) {
+        anApp->Poster = DefaultPoster;
+        /*} else {
 
             BuildTextureMipmaps(GlTexture(anApp->Poster, anApp->PosterWidth, anApp->PosterHeight));
             MakeTextureTrilinear(GlTexture(anApp->Poster, anApp->PosterWidth, anApp->PosterHeight));
             MakeTextureClamped(GlTexture(anApp->Poster, anApp->PosterWidth, anApp->PosterHeight));
-        }
+        }*/
     }
 
     void AppManager::LoadPosters()
     {
         for(UPInt i=0; i < Apps.GetSize(); i++)
         {
-            if( Apps[i]->Poster == 0 || Apps[i]->Poster == DefaultPoster )
+            /*if( Apps[i]->Poster == 0 || Apps[i]->Poster == DefaultPoster )
             {
                 LoadPoster(Apps[i]);
-            }
+            }*/
+            LoadPoster(Apps[i]);
         }
     }
 

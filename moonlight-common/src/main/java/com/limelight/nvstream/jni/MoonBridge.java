@@ -170,7 +170,7 @@ public class MoonBridge {
 
     public static native int startConnection(String address, String appVersion, String gfeVersion,
                                               int width, int height, int fps,
-                                              int bitrate, int packetSize, boolean streamingRemotely,
+                                              int bitrate, int packetSize, int streamingRemotely,
                                               int audioConfiguration, boolean supportsHevc,
                                               boolean enableHdr,
                                               int hevcBitratePercentageMultiplier,
@@ -202,6 +202,8 @@ public class MoonBridge {
     public static native void sendMouseScroll(byte scrollClicks);
 
     public static native String getStageName(int stage);
+
+    public static native String findExternalAddressIP4(String stunHostName, int stunPort);
 
     public static native void init();
 }

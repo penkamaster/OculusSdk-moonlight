@@ -141,7 +141,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
     public static final String EXTRA_APP_NAME = "AppName";
     public static final String EXTRA_APP_ID = "AppId";
     public static final String EXTRA_UNIQUEID = "UniqueId";
-    public static final String EXTRA_STREAMING_REMOTE = "Remote";
+
     public long getLastFrameTimestamp() {
         if(decoderRenderer != null)
             return decoderRenderer.getLastFrameTimestamp();
@@ -357,8 +357,8 @@ public class StreamInterface implements SurfaceHolder.Callback,
                 .setBitrate(prefConfig.bitrate)
                 .setEnableSops(prefConfig.enableSops)
                 .enableLocalAudioPlayback(hostAudio)
-                .setMaxPacketSize((remote || prefConfig.width <= 1920) ? 1024 : 1292)
-                .setRemote(remote)
+                .setMaxPacketSize(1392)
+                .setRemoteConfiguration(StreamConfiguration.STREAM_CFG_AUTO)
                 .setHevcBitratePercentageMultiplier(75)
                 .setHevcSupported(decoderRenderer.isHevcSupported())
                 .setEnableHdr(willStreamHdr)
@@ -368,8 +368,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
                 .build();
 
         // Initialize the connection
-        String ip = computer.reachability == ComputerDetails.Reachability.LOCAL ?
-                computer.localAddress : computer.remoteAddress;
+        String ip = computer.activeAddress;
         conn = new NvConnection(ip, uniqueId, config, PlatformBinding.getCryptoProvider(activity));
         controllerHandler = new ControllerHandler(activity, conn, this, prefConfig);
 
@@ -564,6 +563,9 @@ public class StreamInterface implements SurfaceHolder.Callback,
             }
         }
 
+        //streamView.getHolder().setFixedSize(prefConfig.width, prefConfig.width);
+
+        /*
         if (prefConfig.stretchVideo || aspectRatioMatch) {
             // Set the surface to the size of the video
             streamView.getHolder().setFixedSize(prefConfig.width, prefConfig.height);
@@ -572,7 +574,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
             // Set the surface to scale based on the aspect ratio of the stream
             //streamView.setDesiredAspectRatio((double)prefConfig.width / (double)prefConfig.height);
         }
-
+        */
         return displayRefreshRate;
     }
 
@@ -820,8 +822,12 @@ public class StreamInterface implements SurfaceHolder.Callback,
         }
 
         // Handle a synthetic back button event that some Android OS versions
-        // create as a result of a right-click.
-        if (event.getSource() == InputDevice.SOURCE_MOUSE && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+        // create as a result of a right-click. This event WILL repeat if
+        // the right mouse button is held down, so we ignore those.
+        if ((event.getSource() == InputDevice.SOURCE_MOUSE ||
+                event.getSource() == InputDevice.SOURCE_MOUSE_RELATIVE) &&
+                event.getKeyCode() == KeyEvent.KEYCODE_BACK &&
+                event.getRepeatCount() == 0) {
             conn.sendMouseButtonDown(MouseButtonPacket.BUTTON_RIGHT);
             return true;
         }
@@ -871,7 +877,9 @@ public class StreamInterface implements SurfaceHolder.Callback,
 
         // Handle a synthetic back button event that some Android OS versions
         // create as a result of a right-click.
-        if (event.getSource() == InputDevice.SOURCE_MOUSE && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+        if ((event.getSource() == InputDevice.SOURCE_MOUSE ||
+                event.getSource() == InputDevice.SOURCE_MOUSE_RELATIVE) &&
+                event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             conn.sendMouseButtonUp(MouseButtonPacket.BUTTON_RIGHT);
             return true;
         }
@@ -939,6 +947,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
         {
             // This case is for mice
             if (event.getSource() == InputDevice.SOURCE_MOUSE ||
+                    event.getSource() == InputDevice.SOURCE_MOUSE_RELATIVE ||
                     (event.getPointerCount() >= 1 &&
                             event.getToolType(0) == MotionEvent.TOOL_TYPE_MOUSE))
             {
@@ -1000,12 +1009,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
                     lastMouseY = (int)event.getY();
                 }
                 else {
-                    // First process the history
-                    for (int i = 0; i < event.getHistorySize(); i++) {
-                        updateMousePosition((int)event.getHistoricalX(i), (int)event.getHistoricalY(i));
-                    }
-
-                    // Now process the current values
+                    // Don't process the history. We just want the current position now.
                     updateMousePosition((int)event.getX(), (int)event.getY());
                 }
 

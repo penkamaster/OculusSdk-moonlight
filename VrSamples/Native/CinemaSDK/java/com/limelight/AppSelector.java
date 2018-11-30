@@ -84,12 +84,11 @@ public class AppSelector {
                 public void run() {
                     // Wait for the binder to be ready
                     localBinder.waitForReady();
-
                     // Now make the binder visible
                     managerBinder = localBinder;
 
                     // Get the computer object
-                    computer = managerBinder.getComputer(UUID.fromString(uuidString));
+                    computer = localBinder.getComputer(UUID.fromString(uuidString));
                     if (computer == null) {
                         //finish();
                         return;

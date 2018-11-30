@@ -22,7 +22,6 @@ int sceClibPrintf(const char *fmt, ...);
 #include "enet/enet.h"
 
 #define TCP_NODELAY SCE_NET_TCP_NODELAY
-#define INADDR_ANY SCE_NET_INADDR_ANY
 
 #define SOMAXCONN 128
 #define MSG_NOSIGNAL 0

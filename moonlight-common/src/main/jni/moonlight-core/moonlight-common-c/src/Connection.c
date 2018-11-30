@@ -18,6 +18,8 @@ DECODER_RENDERER_CALLBACKS VideoCallbacks;
 AUDIO_RENDERER_CALLBACKS AudioCallbacks;
 int NegotiatedVideoFormat;
 volatile int ConnectionInterrupted;
+int HighQualitySurroundEnabled;
+int OriginalVideoBitrate;
 
 // Connection stages
 static const char* stageNames[STAGE_MAX] = {
@@ -160,60 +162,6 @@ static void ClInternalConnectionTerminated(long errorCode)
     PltCloseThread(&terminationCallbackThread);
 }
 
-static int resolveHostName(const char* host)
-{
-#ifndef __vita__
-    struct addrinfo hints, *res;
-    int err;
-
-    // We must first try IPv4-only because GFE doesn't listen on IPv6,
-    // so we'll only want to use an IPv6 address if it's the only address we have.
-    // For NAT64 networks, the IPv4 address resolution will fail but the IPv6 address
-    // will give us working connectivity to the host. All other networks will use IPv4
-    // addresses.
-    memset(&hints, 0, sizeof(hints));
-    hints.ai_family = AF_INET;
-    hints.ai_flags = AI_ADDRCONFIG;
-    err = getaddrinfo(host, NULL, &hints, &res);
-    if (err != 0 || res == NULL) {
-        memset(&hints, 0, sizeof(hints));
-        hints.ai_family = AF_UNSPEC;
-        hints.ai_flags = AI_ADDRCONFIG;
-        err = getaddrinfo(host, NULL, &hints, &res);
-        if (err != 0) {
-            Limelog("getaddrinfo() failed: %d\n", err);
-            return err;
-        }
-        
-        if (res == NULL) {
-            Limelog("getaddrinfo() returned success without addresses\n");
-            return -1;
-        }
-    }
-
-    // Use the first address in the list
-    memcpy(&RemoteAddr, res->ai_addr, res->ai_addrlen);
-    RemoteAddrLen = res->ai_addrlen;
-
-    freeaddrinfo(res);
-    return 0;
-#else
-    struct hostent *phost = gethostbyname(host);
-    if (!phost) {
-        Limelog("gethostbyname() failed for host %s\n", host);
-        return -1;
-    }
-    struct sockaddr_in tmp = {0};
-    tmp.sin_len = sizeof(tmp);
-    tmp.sin_family = SCE_NET_AF_INET;
-    memcpy(&tmp.sin_addr, phost->h_addr, phost->h_length);
-
-    memcpy(&RemoteAddr, &tmp, sizeof(tmp));
-    RemoteAddrLen = sizeof(tmp);
-    return 0;
-#endif
-}
-
 // Starts the connection to the streaming machine
 int LiStartConnection(PSERVER_INFORMATION serverInfo, PSTREAM_CONFIGURATION streamConfig, PCONNECTION_LISTENER_CALLBACKS clCallbacks,
     PDECODER_RENDERER_CALLBACKS drCallbacks, PAUDIO_RENDERER_CALLBACKS arCallbacks, void* renderContext, int drFlags,
@@ -222,17 +170,25 @@ int LiStartConnection(PSERVER_INFORMATION serverInfo, PSTREAM_CONFIGURATION stre
 
     NegotiatedVideoFormat = 0;
     memcpy(&StreamConfig, streamConfig, sizeof(StreamConfig));
+    OriginalVideoBitrate = streamConfig->bitrate;
     RemoteAddrString = strdup(serverInfo->address);
     
     // FEC only works in 16 byte chunks, so we must round down
     // the given packet size to the nearest multiple of 16.
     StreamConfig.packetSize -= StreamConfig.packetSize % 16;
+
+    if (StreamConfig.packetSize == 0) {
+        Limelog("Invalid packet size specified\n");
+        err = -1;
+        goto Cleanup;
+    }
     
     // Extract the appversion from the supplied string
     if (extractVersionQuadFromString(serverInfo->serverInfoAppVersion,
                                      AppVersionQuad) < 0) {
         Limelog("Invalid appversion string: %s\n", serverInfo->serverInfoAppVersion);
-        return -1;
+        err = -1;
+        goto Cleanup;
     }
 
     // Replace missing callbacks with placeholders
@@ -264,7 +220,7 @@ int LiStartConnection(PSERVER_INFORMATION serverInfo, PSTREAM_CONFIGURATION stre
 
     Limelog("Resolving host name...");
     ListenerCallbacks.stageStarting(STAGE_NAME_RESOLUTION);
-    err = resolveHostName(serverInfo->address);
+    err = resolveHostName(serverInfo->address, AF_UNSPEC, 47984, &RemoteAddr, &RemoteAddrLen);
     if (err != 0) {
         Limelog("failed: %d\n", err);
         ListenerCallbacks.stageFailed(STAGE_NAME_RESOLUTION, err);
@@ -274,6 +230,25 @@ int LiStartConnection(PSERVER_INFORMATION serverInfo, PSTREAM_CONFIGURATION stre
     LC_ASSERT(stage == STAGE_NAME_RESOLUTION);
     ListenerCallbacks.stageComplete(STAGE_NAME_RESOLUTION);
     Limelog("done\n");
+
+    // If STREAM_CFG_AUTO was requested, determine the streamingRemotely value
+    // now that we have resolved the target address and impose the video packet
+    // size cap if required.
+    if (StreamConfig.streamingRemotely == STREAM_CFG_AUTO) {
+        if (isPrivateNetworkAddress(&RemoteAddr)) {
+            StreamConfig.streamingRemotely = STREAM_CFG_LOCAL;
+        }
+        else {
+            StreamConfig.streamingRemotely = STREAM_CFG_REMOTE;
+
+            if (StreamConfig.packetSize > 1024) {
+                // Cap packet size at 1024 for remote streaming to avoid
+                // MTU problems and fragmentation.
+                Limelog("Packet size capped at 1KB for remote streaming\n");
+                StreamConfig.packetSize = 1024;
+            }
+        }
+    }
 
     Limelog("Starting RTSP handshake...");
     ListenerCallbacks.stageStarting(STAGE_RTSP_HANDSHAKE);

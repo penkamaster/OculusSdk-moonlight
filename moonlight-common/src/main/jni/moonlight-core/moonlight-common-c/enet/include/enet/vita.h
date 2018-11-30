@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <psp2/kernel/clib.h>
 
 #define ENET_BUFFER_MAXIMUM 10
 

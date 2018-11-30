@@ -384,7 +384,6 @@ public class MediaCodecDecoderRenderer extends VideoDecoderRenderer {
     }
 
 
-    @Override
     public long getLastFrameTimestamp() {
         return presentationTimeUs / 1000;
     }

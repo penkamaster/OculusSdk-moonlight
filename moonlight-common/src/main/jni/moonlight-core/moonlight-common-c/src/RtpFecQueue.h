@@ -24,11 +24,11 @@ typedef struct _RTP_FEC_QUEUE {
     int bufferHighestSequenceNumber;
     int bufferFirstParitySequenceNumber;
     int bufferDataPackets;
+    int bufferParityPackets;
     int receivedBufferDataPackets;
     int fecPercentage;
 
     int currentFrameNumber;
-    unsigned int nextRtpSequenceNumber;
 } RTP_FEC_QUEUE, *PRTP_FEC_QUEUE;
 
 #define RTPF_RET_QUEUED_NOTHING_READY 0

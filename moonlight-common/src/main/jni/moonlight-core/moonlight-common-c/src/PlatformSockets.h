@@ -10,6 +10,9 @@
 #define LastSocketError() WSAGetLastError()
 
 #define SHUT_RDWR SD_BOTH
+#define EWOULDBLOCK WSAEWOULDBLOCK
+#define EAGAIN WSAEWOULDBLOCK
+#define EINTR WSAEINTR
 
 typedef int SOCK_RET;
 typedef int SOCKADDR_LEN;
@@ -49,7 +52,12 @@ typedef socklen_t SOCKADDR_LEN;
 
 #if defined(__vita__)
 #define TCP_NODELAY SCE_NET_TCP_NODELAY
-#define INADDR_ANY SCE_NET_INADDR_ANY
+#undef EAGAIN
+#undef EWOULDBLOCK
+#undef EINTR
+#define EAGAIN SCE_NET_EAGAIN
+#define EWOULDBLOCK SCE_NET_EWOULDBLOCK
+#define EINTR SCE_NET_EINTR
 
 #define sockaddr_in6 sockaddr_in
 #define sin6_addr sin_addr
@@ -64,10 +72,13 @@ typedef socklen_t SOCKADDR_LEN;
 #define URLSAFESTRING_LEN (INET6_ADDRSTRLEN+2)
 void addrToUrlSafeString(struct sockaddr_storage* addr, char* string);
 
+int resolveHostName(const char* host, int family, int tcpTestPort, struct sockaddr_storage* addr, SOCKADDR_LEN* addrLen);
 SOCKET connectTcpSocket(struct sockaddr_storage* dstaddr, SOCKADDR_LEN addrlen, unsigned short port, int timeoutSec);
 SOCKET bindUdpSocket(int addrfamily, int bufferSize);
 int enableNoDelay(SOCKET s);
-int recvUdpSocket(SOCKET s, char* buffer, int size);
+int recvUdpSocket(SOCKET s, char* buffer, int size, int useSelect);
 void shutdownTcpSocket(SOCKET s);
+int setNonFatalRecvTimeoutMs(SOCKET s, int timeoutMs);
 void setRecvTimeout(SOCKET s, int timeoutSec);
 void closeSocket(SOCKET s);
+int isPrivateNetworkAddress(struct sockaddr_storage* address);

@@ -4,12 +4,19 @@
 
 #pragma once
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 // Enable this definition during debugging to enable assertions
 //#define LC_DEBUG
+
+// Values for the 'streamingRemotely' field below
+#define STREAM_CFG_LOCAL   0
+#define STREAM_CFG_REMOTE  1
+#define STREAM_CFG_AUTO    2
 
 typedef struct _STREAM_CONFIGURATION {
     // Dimensions in pixels of the desired video stream
@@ -22,11 +29,16 @@ typedef struct _STREAM_CONFIGURATION {
     // Bitrate of the desired video stream (audio adds another ~1 Mbps)
     int bitrate;
 
-    // Max video packet size in bytes (use 1024 if unsure)
+    // Max video packet size in bytes (use 1024 if unsure). If STREAM_CFG_AUTO
+    // determines the stream is remote (see below), it will cap this value at
+    // 1024 to avoid MTU-related issues like packet loss and fragmentation.
     int packetSize;
 
-    // Set to non-zero value to enable remote (over the Internet)
-    // streaming optimizations. If unsure, set to 0.
+    // Determines whether to enable remote (over the Internet)
+    // streaming optimizations. If unsure, set to STREAM_CFG_AUTO.
+    // STREAM_CFG_AUTO uses a heuristic (whether the target address is
+    // in the RFC 1918 address blocks) to decide whether the stream
+    // is remote or not.
     int streamingRemotely;
 
     // Specifies the channel configuration of the audio stream.
@@ -105,9 +117,9 @@ typedef struct _DECODE_UNIT {
     // Frame type
     int frameType;
 
-    // Receive time of first buffer
-    // NOTE: This will be populated from gettimeofday() if !HAVE_CLOCK_GETTIME and
-    // populated from clock_gettime(CLOCK_MONOTONIC) if HAVE_CLOCK_GETTIME
+    // Receive time of first buffer. This value uses an implementation-defined epoch.
+    // To compute actual latency values, use LiGetMillis() to get a timestamp that
+    // shares the same epoch as this value.
     unsigned long long receiveTimeMs;
 
     // Length of the entire buffer chain in bytes
@@ -211,13 +223,13 @@ typedef struct _OPUS_MULTISTREAM_CONFIGURATION {
     int channelCount;
     int streams;
     int coupledStreams;
-    const unsigned char mapping[6];
+    unsigned char mapping[6];
 } OPUS_MULTISTREAM_CONFIGURATION, *POPUS_MULTISTREAM_CONFIGURATION;
 
 // This callback initializes the audio renderer. The audio configuration parameter
 // provides the negotiated audio configuration. This may differ from the one
 // specified in the stream configuration. Returns 0 on success, non-zero on failure.
-typedef int(*AudioRendererInit)(int audioConfiguration, POPUS_MULTISTREAM_CONFIGURATION opusConfig, void* context, int arFlags);
+typedef int(*AudioRendererInit)(int audioConfiguration, const POPUS_MULTISTREAM_CONFIGURATION opusConfig, void* context, int arFlags);
 
 // This callback notifies the decoder that the stream is starting. No audio can be submitted before this callback returns.
 typedef void(*AudioRendererStart)(void);
@@ -345,6 +357,8 @@ int LiSendMouseMoveEvent(short deltaX, short deltaY);
 #define BUTTON_LEFT 0x01
 #define BUTTON_MIDDLE 0x02
 #define BUTTON_RIGHT 0x03
+#define BUTTON_X1 0x04
+#define BUTTON_X2 0x05
 int LiSendMouseButtonEvent(char action, int button);
 
 // This function queues a keyboard event to be sent to the remote server.
@@ -388,6 +402,17 @@ int LiSendMultiControllerEvent(short controllerNumber, short activeGamepadMask,
 
 // This function queues a vertical scroll event to the remote server.
 int LiSendScrollEvent(signed char scrollClicks);
+
+// This function returns a time in milliseconds with an implementation-defined epoch.
+// NOTE: This will be populated from gettimeofday() if !HAVE_CLOCK_GETTIME and
+// populated from clock_gettime(CLOCK_MONOTONIC) if HAVE_CLOCK_GETTIME.
+uint64_t LiGetMillis(void);
+
+// This is a simplistic STUN function that can assist clients in getting the WAN address
+// for machines they find using mDNS over IPv4. This can be used to pre-populate the external
+// address for streaming after GFE stopped sending it a while back. wanAddr is returned in
+// network byte order.
+int LiFindExternalAddressIP4(const char* stunServer, unsigned short stunPort, unsigned int* wanAddr);
 
 #ifdef __cplusplus
 }

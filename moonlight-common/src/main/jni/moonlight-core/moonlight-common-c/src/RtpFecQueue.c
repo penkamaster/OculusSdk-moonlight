@@ -5,7 +5,6 @@
 void RtpfInitializeQueue(PRTP_FEC_QUEUE queue) {
     reed_solomon_init();
     memset(queue, 0, sizeof(*queue));
-    queue->nextRtpSequenceNumber = UINT16_MAX;
     
     queue->currentFrameNumber = UINT16_MAX;
 }
@@ -28,7 +27,7 @@ void RtpfCleanupQueue(PRTP_FEC_QUEUE queue) {
 static int queuePacket(PRTP_FEC_QUEUE queue, PRTPFEC_QUEUE_ENTRY newEntry, int head, PRTP_PACKET packet, int length, int isParity) {
     PRTPFEC_QUEUE_ENTRY entry;
     
-    LC_ASSERT(!isBefore16(packet->sequenceNumber, queue->nextRtpSequenceNumber));
+    LC_ASSERT(!isBefore16(packet->sequenceNumber, queue->bufferLowestSequenceNumber));
 
     // Don't queue duplicates either
     entry = queue->bufferHead;
@@ -72,16 +71,21 @@ static int queuePacket(PRTP_FEC_QUEUE queue, PRTPFEC_QUEUE_ENTRY newEntry, int h
     return 1;
 }
 
+#define PACKET_RECOVERY_FAILURE()                     \
+    ret = -1;                                         \
+    Limelog("FEC recovery returned corrupt packet %d" \
+            " (frame %d)", rtpPacket->sequenceNumber, \
+            queue->currentFrameNumber);               \
+    free(packets[i]);                                 \
+    continue
+
 // Returns 0 if the frame is completely constructed
 static int reconstructFrame(PRTP_FEC_QUEUE queue) {
     int totalPackets = U16(queue->bufferHighestSequenceNumber - queue->bufferLowestSequenceNumber) + 1;
-    int totalParityPackets = (queue->bufferDataPackets * queue->fecPercentage + 99) / 100;
-    int parityPackets = totalPackets - queue->bufferDataPackets;
-    int missingPackets = totalPackets - queue->bufferSize;
     int ret;
     
-    if (parityPackets < missingPackets) {
-        // Not enough parity data to recover yet
+    if (queue->bufferSize < queue->bufferDataPackets) {
+        // Not enough data to recover yet
         return -1;
     }
     
@@ -98,7 +102,7 @@ static int reconstructFrame(PRTP_FEC_QUEUE queue) {
         goto cleanup;
     }
     
-    rs = reed_solomon_new(queue->bufferDataPackets, totalParityPackets);
+    rs = reed_solomon_new(queue->bufferDataPackets, queue->bufferParityPackets);
     
     // This could happen in an OOM condition, but it could also mean the FEC data
     // that we fed to reed_solomon_new() is bogus, so we'll assert to get a better look.
@@ -108,8 +112,6 @@ static int reconstructFrame(PRTP_FEC_QUEUE queue) {
         goto cleanup;
     }
     
-    rs->shards = queue->bufferDataPackets + missingPackets; //Don't let RS complain about missing parity packets
-
     memset(marks, 1, sizeof(char) * (totalPackets));
     
     int receiveSize = StreamConfig.packetSize + MAX_RTP_HEADER_SIZE;
@@ -164,6 +166,24 @@ cleanup_packets:
                 PNV_VIDEO_PACKET nvPacket = (PNV_VIDEO_PACKET)(((char*)rtpPacket) + dataOffset);
                 nvPacket->frameIndex = queue->currentFrameNumber;
 
+                // Do some rudamentary checks to see that the recovered packet is sane.
+                // In some cases (4K 30 FPS 80 Mbps), we seem to get some odd failures
+                // here in rare cases where FEC recovery is required. I'm unsure if it
+                // is our bug, NVIDIA's, or something else, but we don't want the corrupt
+                // packet to by ingested by our depacketizer (or worse, the decoder).
+                if (i == 0 && !(nvPacket->flags & FLAG_SOF)) {
+                    PACKET_RECOVERY_FAILURE();
+                }
+                if (i == queue->bufferDataPackets - 1 && !(nvPacket->flags & FLAG_EOF)) {
+                    PACKET_RECOVERY_FAILURE();
+                }
+                if (i > 0 && i < queue->bufferDataPackets - 1 && !(nvPacket->flags & FLAG_CONTAINS_PIC_DATA)) {
+                    PACKET_RECOVERY_FAILURE();
+                }
+                if (nvPacket->flags & ~(FLAG_SOF | FLAG_EOF | FLAG_CONTAINS_PIC_DATA)) {
+                    PACKET_RECOVERY_FAILURE();
+                }
+
                 // FEC recovered frames may have extra zero padding at the end. This is
                 // fine per H.264 Annex B which states trailing zero bytes must be
                 // discarded by decoders. It's not safe to strip all zero padding because
@@ -212,8 +232,8 @@ static void removeEntry(PRTP_FEC_QUEUE queue, PRTPFEC_QUEUE_ENTRY entry) {
 }
 
 int RtpfAddPacket(PRTP_FEC_QUEUE queue, PRTP_PACKET packet, int length, PRTPFEC_QUEUE_ENTRY packetEntry) {
-    if (isBefore16(packet->sequenceNumber, queue->nextRtpSequenceNumber)) {
-        // Reject packets behind our current sequence number
+    if (isBefore16(packet->sequenceNumber, queue->bufferLowestSequenceNumber)) {
+        // Reject packets behind our current buffer window
         return RTPF_RET_REJECTED;
     }
 
@@ -228,6 +248,8 @@ int RtpfAddPacket(PRTP_FEC_QUEUE queue, PRTP_PACKET packet, int length, PRTPFEC_
         // Reject frames behind our current frame number
         return RTPF_RET_REJECTED;
     }
+
+    int fecIndex = (nvPacket->fecInfo & 0x3FF000) >> 12;
     
     // Reinitialize the queue if it's empty after a frame delivery or
     // if we can't finish a frame before receiving the next one.
@@ -241,7 +263,6 @@ int RtpfAddPacket(PRTP_FEC_QUEUE queue, PRTP_PACKET packet, int length, PRTPFEC_
         }
         
         queue->currentFrameNumber = nvPacket->frameIndex;
-        queue->nextRtpSequenceNumber = queue->bufferHighestSequenceNumber;
         
         // Discard any unsubmitted buffers from the previous frame
         while (queue->bufferHead != NULL) {
@@ -253,17 +274,23 @@ int RtpfAddPacket(PRTP_FEC_QUEUE queue, PRTP_PACKET packet, int length, PRTPFEC_
         queue->bufferTail = NULL;
         queue->bufferSize = 0;
         
-        int fecIndex = (nvPacket->fecInfo & 0xFF000) >> 12;
         queue->bufferLowestSequenceNumber = U16(packet->sequenceNumber - fecIndex);
         queue->receivedBufferDataPackets = 0;
-        queue->bufferHighestSequenceNumber = packet->sequenceNumber;
-        queue->bufferDataPackets = ((nvPacket->fecInfo & 0xFFF00000) >> 20) / 4;
-        queue->fecPercentage = ((nvPacket->fecInfo & 0xFF0) >> 4);
+        queue->bufferDataPackets = (nvPacket->fecInfo & 0xFFC00000) >> 22;
+        queue->fecPercentage = (nvPacket->fecInfo & 0xFF0) >> 4;
+        queue->bufferParityPackets = (queue->bufferDataPackets * queue->fecPercentage + 99) / 100;
         queue->bufferFirstParitySequenceNumber = U16(queue->bufferLowestSequenceNumber + queue->bufferDataPackets);
+        queue->bufferHighestSequenceNumber = U16(queue->bufferFirstParitySequenceNumber + queue->bufferParityPackets - 1);
     } else if (isBefore16(queue->bufferHighestSequenceNumber, packet->sequenceNumber)) {
-        queue->bufferHighestSequenceNumber = packet->sequenceNumber;
+        // In rare cases, we get extra parity packets. It's rare enough that it's probably
+        // not worth handling, so we'll just drop them.
+        return RTPF_RET_REJECTED;
     }
-    
+
+    LC_ASSERT(!queue->fecPercentage || U16(packet->sequenceNumber - fecIndex) == queue->bufferLowestSequenceNumber);
+    LC_ASSERT((nvPacket->fecInfo & 0xFF0) >> 4 == queue->fecPercentage);
+    LC_ASSERT((nvPacket->fecInfo & 0xFFC00000) >> 22 == queue->bufferDataPackets);
+
     if (!queuePacket(queue, packetEntry, 0, packet, length, !isBefore16(packet->sequenceNumber, queue->bufferFirstParitySequenceNumber))) {
         return RTPF_RET_REJECTED;
     }

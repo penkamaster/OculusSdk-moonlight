@@ -14,6 +14,7 @@ static unsigned int lastPacketInStream;
 static int decodingFrame;
 static int strictIdrFrameWait;
 static unsigned long long firstPacketReceiveTime;
+static int dropStatePending;
 
 #define CONSECUTIVE_DROP_LIMIT 120
 static unsigned int consecutiveFrameDrops;
@@ -39,6 +40,7 @@ void initializeVideoDepacketizer(int pktSize) {
     lastPacketInStream = UINT32_MAX;
     decodingFrame = 0;
     firstPacketReceiveTime = 0;
+    dropStatePending = 0;
     strictIdrFrameWait = !isReferenceFrameInvalidationEnabled();
 }
 
@@ -57,6 +59,12 @@ static void cleanupFrameState(void) {
 
 // Cleanup frame state and set that we're waiting for an IDR Frame
 static void dropFrameState(void) {
+    // This may only be called at frame boundaries
+    LC_ASSERT(!decodingFrame);
+
+    // We're dropping frame state now
+    dropStatePending = 0;
+
     // We'll need an IDR frame now if we're in strict mode
     if (strictIdrFrameWait) {
         waitingForIdrFrame = 1;
@@ -409,11 +417,16 @@ void requestDecoderRefresh(void) {
     // Wait for the next IDR frame
     waitingForIdrFrame = 1;
     
-    // Flush the decode unit queue and pending state
-    dropFrameState();
+    // Flush the decode unit queue
     if ((VideoCallbacks.capabilities & CAPABILITY_DIRECT_SUBMIT) == 0) {
         freeDecodeUnitList(LbqFlushQueueItems(&decodeUnitQueue));
     }
+    
+    // Request the receive thread drop its state
+    // on the next call. We can't do it here because
+    // it may be trying to queue DUs and we'll nuke
+    // the state out from under it.
+    dropStatePending = 1;
     
     // Request the IDR frame
     requestIdrOnDemand();
@@ -454,11 +467,27 @@ void processRtpPayload(PNV_VIDEO_PACKET videoPacket, int length, unsigned long l
     flags = videoPacket->flags;
     firstPacket = isFirstPacket(flags);
 
+    LC_ASSERT((flags & ~(FLAG_SOF | FLAG_EOF | FLAG_CONTAINS_PIC_DATA)) == 0);
+
     streamPacketIndex = videoPacket->streamPacketIndex;
     
-    // The packets and frames must be in sequence from the FEC queue
-    LC_ASSERT(!isBefore24(streamPacketIndex, U24(lastPacketInStream + 1)));
-    LC_ASSERT(!isBefore32(frameIndex, nextFrameNumber));
+    // Drop packets from a previously corrupt frame
+    if (isBefore32(frameIndex, nextFrameNumber)) {
+        return;
+    }
+
+    // The FEC queue can sometimes recover corrupt frames (see comments in RtpFecQueue).
+    // It almost always detects them before they get to us, but in case it doesn't
+    // the streamPacketIndex not matching correctly should find nearly all of the rest.
+    if (isBefore24(streamPacketIndex, U24(lastPacketInStream + 1)) ||
+            (!firstPacket && streamPacketIndex != U24(lastPacketInStream + 1))) {
+        Limelog("Depacketizer detected corrupt frame: %d", frameIndex);
+        decodingFrame = 0;
+        nextFrameNumber = frameIndex + 1;
+        waitingForNextSuccessfulFrame = 1;
+        dropFrameState();
+        return;
+    }
 
     // Notify the listener of the latest frame we've seen from the PC
     connectionSawFrame(frameIndex);
@@ -486,10 +515,6 @@ void processRtpPayload(PNV_VIDEO_PACKET videoPacket, int length, unsigned long l
         decodingFrame = 1;
         firstPacketReceiveTime = receiveTimeMs;
     }
-
-    // This must be the first packet in a frame or be contiguous with the last
-    // packet received.
-    LC_ASSERT(firstPacket || streamPacketIndex == U24(lastPacketInStream + 1));
 
     lastPacketInStream = streamPacketIndex;
 
@@ -546,6 +571,17 @@ void processRtpPayload(PNV_VIDEO_PACKET videoPacket, int length, unsigned long l
         if (waitingForIdrFrame) {
             Limelog("Waiting for IDR frame\n");
 
+            dropFrameState();
+            return;
+        }
+
+        // Carry out any pending state drops. We can't just do this
+        // arbitrarily in the middle of processing a frame because
+        // may cause the depacketizer state to become corrupted. For
+        // example, if we drop state after the first packet, the
+        // depacketizer will next try to process a non-SOF packet,
+        // and cause it to assert.
+        if (dropStatePending) {
             dropFrameState();
             return;
         }
