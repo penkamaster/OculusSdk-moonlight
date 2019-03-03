@@ -65,6 +65,8 @@ public:
 	String    ButtonText_ButtonSpeed;
 	String    ButtonText_ButtonComfortMode;
 	String    ButtonText_ButtonHostAudio;
+	String    ButtonText_ButtonBitrate;
+	String    ButtonText_ButtonApply;
 	String    ButtonText_Button4k60;
 	String    ButtonText_Button4k30;
 	String    ButtonText_Button1080p60;

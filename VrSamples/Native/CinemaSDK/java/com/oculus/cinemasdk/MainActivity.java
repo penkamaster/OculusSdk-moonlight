@@ -40,6 +40,7 @@ import com.limelight.StreamInterface;
 import com.limelight.nvstream.http.ComputerDetails;
 import com.oculus.vrappframework.VrActivity;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -104,7 +105,6 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 	{
 		Log.d( TAG, "onCreate" );
 		super.onCreate( savedInstanceState );
-
 		Intent intent = getIntent();
 		String commandString = VrActivity.getCommandStringFromIntent( intent );
 		String fromPackageNameString = VrActivity.getPackageStringFromIntent( intent );
@@ -388,7 +388,7 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 	}
 
 
-	public void startMovie( final String uuid, final String appName, final int appId, final String binder, final int width, final int height, final int fps, final boolean hostAudio , final boolean remote)
+	public void startMovie( final String uuid, final String appName, final int appId, final String binder, final int width, final int height, final int fps, final boolean hostAudio , final int customBitrate, final boolean remote)
 	{
 		// set playbackFinished and playbackFailed to false immediately so it's set when we return to native
 		playbackFinished = false;
@@ -399,12 +399,12 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 		 @Override
     		public void run()
     		{
-			 	startMovieLocal(  uuid, appName, appId, binder, width, height, fps, hostAudio,remote);
+			 	startMovieLocal(  uuid, appName, appId, binder, width, height, fps, hostAudio,customBitrate,remote);
 			}
     	} );
 	}
 
-	private void startMovieLocal( final String uuid, final String appName, int appId, final String binder, int width, int height, int fps, boolean hostAudio, boolean remote )
+	private void startMovieLocal( final String uuid, final String appName, int appId, final String binder, int width, int height, int fps, boolean hostAudio, int customBitrate, boolean remote )
 	{
 		Log.v(TAG, "startMovie " + appName + " on " + uuid );
 		
@@ -437,7 +437,7 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 
 			ModifiableSurfaceHolder surfaceHolder = new ModifiableSurfaceHolder();
 			surfaceHolder.setSurface(movieSurface);
-			streamInterface = new StreamInterface(this, uuid, currentAppName, appId, binder, surfaceHolder, width, height, fps, hostAudio ,remote);
+			streamInterface = new StreamInterface(this, uuid, currentAppName, appId, binder, surfaceHolder, width, height, fps, hostAudio ,customBitrate,remote);
 			streamInterface.surfaceCreated(surfaceHolder);
 			// Manually poke this - originally the movie player would call it
 

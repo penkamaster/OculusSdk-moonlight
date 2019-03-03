@@ -144,7 +144,7 @@
         name="MoviePlayer_Reorient"
         project="oculus-cinemasdk"
         description="Text displayed when user looks away from the screen in the Void theater to indicate that they can reorient the screen by tapping the touchpad."
-        >Tap the touchpad to reorient screen</string>
+        >点击触摸板以重新定向屏幕</string>
 
     <string name="ButtonText_ButtonSaveApp">未当前应用存储设置</string>
     <string name="ButtonText_ButtonSaveDefault">保存默认设置</string>
@@ -164,6 +164,9 @@
     <string name="ButtonText_LabelVRXScale">Horizontal Scale</string>
     <string name="ButtonText_LabelVRYScale">Vertical Scale</string>
 
+    <string name="ButtonText_ButtonBitrate">Bitrate</string>
+    <string name="ButtonText_ButtonApply">Apply</string>
+
     <string name="ButtonText_Button4k60">4k 60fps</string>
     <string name="ButtonText_Button4k30">4k 30fps</string>
     <string name="ButtonText_Button1080p60">1080p 60fps</string>
@@ -182,6 +185,12 @@
     <string name="ButtonText_Settings">Settings</string>
 
     <string
+        name="TheaterSelection_Title"
+        project="oculus-cinemasdk"
+        description="Title of theater selection menu."
+        >选择影院</string>
+
+    <string
         name="app_name"      project="oculus-cinemasdk"
         description="The title of the application, Oculus Cinema, which let's you watch movies inside of Oculus"
         >串流影院</string>
@@ -190,6 +199,6 @@
         name="MovieSelection_Resume"
         project="oculus-cinemasdk"
         description="Resume movie icon text for movie selection carousel. Let's you resume a paused movie."
-        >Play</string>
+        >游戏</string>
 
 </resources>

@@ -33,7 +33,7 @@ public:
 	static bool 		IsPlaybackFinished( App *app );
 	static bool 		HadPlaybackError( App *app );
 
-	static void         StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio, bool remote );
+	static void         StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio, int customBitrate, bool remote );
 
 
 	static void 		StopMovie( App *app );

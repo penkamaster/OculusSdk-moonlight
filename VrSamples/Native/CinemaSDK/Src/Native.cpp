@@ -181,7 +181,7 @@ void Native::OneTimeInit( App *app, jclass mainActivityClass )
 	isPlayingMethodId 					= GetMethodID( app, mainActivityClass, "isPlaying", "()Z" );
 	isPlaybackFinishedMethodId			= GetMethodID( app, mainActivityClass, "isPlaybackFinished", "()Z" );
 	hadPlaybackErrorMethodId			= GetMethodID( app, mainActivityClass, "hadPlaybackError", "()Z" );
-	startMovieMethodId                     = GetMethodID( app, mainActivityClass, "startMovie", "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;IIIZZ)V" );
+	startMovieMethodId                     = GetMethodID( app, mainActivityClass, "startMovie", "(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;IIIZIZ)V" );
 	stopMovieMethodId 					= GetMethodID( app, mainActivityClass, "stopMovie", "()V" );
 	initPcSelectorMethodId                 = GetMethodID( app, mainActivityClass, "initPcSelector", "()V" );
     pairPcMethodId                         = GetMethodID( app, mainActivityClass, "pairPc", "(Ljava/lang/String;)V" );
@@ -280,7 +280,7 @@ bool Native::HadPlaybackError( App * app )
 #endif
 }
 
-void Native::StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio, bool remote )
+void Native::StartMovie( App *app, const char * uuid, const char * appName, int id, const char * binder, int width, int height, int fps, bool hostAudio, int customBitrate, bool remote )
 
 {
 	LOG( "StartMovie( %s )", appName );
@@ -290,7 +290,7 @@ void Native::StartMovie( App *app, const char * uuid, const char * appName, int 
 	jstring jstrBinder = app->GetJava()->Env->NewStringUTF( binder );
 
 
-	app->GetJava()->Env->CallVoidMethod( app->GetJava()->ActivityObject, startMovieMethodId, jstrUUID, jstrAppName, id, jstrBinder, width, height, fps, hostAudio, remote );
+	app->GetJava()->Env->CallVoidMethod( app->GetJava()->ActivityObject, startMovieMethodId, jstrUUID, jstrAppName, id, jstrBinder, width, height, fps, hostAudio, customBitrate, remote );
 
 	app->GetJava()->Env->DeleteLocalRef( jstrUUID );
 	app->GetJava()->Env->DeleteLocalRef( jstrAppName );

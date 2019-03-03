@@ -288,6 +288,16 @@ private:
     UIButton            Button720p30;
     UIButton            ButtonHostAudio;
 
+	UIButton            ButtonApply;
+
+	UILabel             BitrateAdjust;
+	UIImage             BitrateSliderBackground;
+	UIImage             BitrateSliderIndicator;
+	UILabel             BitrateCurrentSetting;
+	UILabel             BitrateNewSetting;
+	SliderComponent     BitrateSlider;
+
+
 	UIButton                ScreenMenuButton;
 	UIContainer *            ScreenMenu;
     UIButton            ButtonSBS;
@@ -372,6 +382,12 @@ private:
 	int 					streamHeight;
 	int						streamFPS;
 	bool					streamHostAudio;
+	float                   customBitrate;
+	int                     bitrate;
+
+    bool                    videoSettingsUpdated;
+	float                   BitrateMin;
+	float                   BitrateMax;
 
 	float					GazeMin;
 	float					GazeMax;
@@ -498,6 +514,9 @@ private:
 	void            Button720p30Pressed();
 	friend void        HostAudioCallback( UIButton *button, void *object );
 	void            HostAudioPressed();
+	friend void        ApplyVideoCallback( UIButton *button, void *object );
+	void            ApplyVideoPressed();
+
 	//friend void        SBSCallback( UIButton *button, void *object );
 	//void            SBSPressed();
 
@@ -515,6 +534,12 @@ private:
     bool            Button720p30IsSelected();
     friend bool        HostAudioIsSelectedCallback( UIButton *button, void *object );
     bool            HostAudioIsSelected();
+
+	friend bool        ApplyVideoIsEnabledCallback( UIButton *button, void *object );
+	bool            ApplyVideoIsEnabled();
+	friend void        BitrateCallback( SliderComponent *button, void *object, const float value );
+	void            BitratePressed( const float value);
+
 
 	friend void        LatencyCallback( SliderComponent *button, void *object, const float value );
 	void            LatencyPressed(const float value);

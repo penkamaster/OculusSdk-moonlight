@@ -7,7 +7,7 @@
   <string
       name="app_name"      project="oculus-cinemasdk"
       description="The title of the application, Oculus Cinema, which let's you watch movies inside of Oculus"
-      >Streaming Cinema</string>
+      >Moonlight for Go</string>
   <string
       name="action_settings"      project="oculus-cinemasdk"
       description="The name of the settings menu."
@@ -113,6 +113,9 @@
     <string name="ButtonText_LabelLatency">VR Screen Lag</string>
     <string name="ButtonText_LabelVRXScale">Horizontal Scale</string>
     <string name="ButtonText_LabelVRYScale">Vertical Scale</string>
+
+    <string name="ButtonText_ButtonBitrate">Bitrate</string>
+    <string name="ButtonText_ButtonApply">Apply</string>
 
     <string name="ButtonText_Button4k60">4k 60fps</string>
     <string name="ButtonText_Button4k30">4k 30fps</string>

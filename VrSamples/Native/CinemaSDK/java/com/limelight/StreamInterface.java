@@ -152,7 +152,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
     public static final String EXTRA_PC_NAME = "PcName";
     public static final String EXTRA_APP_HDR = "HDR";
 
-    public StreamInterface(MainActivity creatingActivity, String compUUID, String appName, int appId, String uniqueId, SurfaceHolder sh, int width, int height, int fps, boolean hostAudio, boolean remote) {
+    public StreamInterface(MainActivity creatingActivity, String compUUID, String appName, int appId, String uniqueId, SurfaceHolder sh, int width, int height, int fps, boolean hostAudio, int customBitrate, boolean remote) {
         //super.onCreate(savedInstanceState);
         activity = creatingActivity;
         UiHelper.setLocale(activity);
@@ -354,7 +354,7 @@ public class StreamInterface implements SurfaceHolder.Callback,
                 .setResolution(width, height)
                 .setRefreshRate(fps)
                 .setApp(new NvApp(appName, appId, willStreamHdr))
-                .setBitrate(prefConfig.bitrate)
+                .setBitrate(customBitrate > 0 ? customBitrate : prefConfig.bitrate * 1000)
                 .setEnableSops(prefConfig.enableSops)
                 .enableLocalAudioPlayback(hostAudio)
                 .setMaxPacketSize(1392)

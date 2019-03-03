@@ -53,6 +53,8 @@ cinema.GetLocale().GetString( "@string/Error_NoVideosInLimeLight", "@string/Erro
 	cinema.GetLocale().GetString( "@string/ButtonText_ButtonComfortMode", 	"@string/ButtonText_ButtonComfortMode", 	ButtonText_ButtonComfortMode );
 
 	cinema.GetLocale().GetString( "@string/ButtonText_ButtonHostAudio", 	"@string/ButtonText_ButtonHostAudio", 	ButtonText_ButtonHostAudio );
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonBitrate", 	"@string/ButtonText_ButtonBitrate", 	ButtonText_ButtonBitrate);
+	cinema.GetLocale().GetString( "@string/ButtonText_ButtonApply", 	"@string/ButtonText_ButtonApply", 	ButtonText_ButtonApply);
 	cinema.GetLocale().GetString( "@string/ButtonText_Button4k30", 	"@string/ButtonText_Button4k30", 	ButtonText_Button4k30 );
 	cinema.GetLocale().GetString( "@string/ButtonText_Button4k60", 	"@string/ButtonText_Button4k60", 	ButtonText_Button4k60 );
 	cinema.GetLocale().GetString( "@string/ButtonText_Button1080p30", 	"@string/ButtonText_Button1080p30", 	ButtonText_Button1080p30 );
