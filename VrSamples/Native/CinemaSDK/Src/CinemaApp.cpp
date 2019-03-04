@@ -52,7 +52,7 @@ CinemaApp::CinemaApp() :
 	PcMgr( *this ),
     AppMgr( *this ),
 	InLobby( true ),
-	AllowDebugControls( true ),
+	AllowDebugControls( false ),
 	SoundEffectContext( NULL ),
 	SoundEffectPlayer( NULL ),
 	VrFrame(),

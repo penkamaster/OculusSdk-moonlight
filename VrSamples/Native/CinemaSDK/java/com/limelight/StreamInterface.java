@@ -114,6 +114,9 @@ public class StreamInterface implements SurfaceHolder.Callback,
     private boolean grabbedInput = true;
     private boolean grabComboDown = false;
     private StreamView streamView;
+    private boolean gotBackPointerEvent = false;
+    private boolean syntheticBackDown = false;
+
 
     private ShortcutHelper shortcutHelper;
 
@@ -826,9 +829,18 @@ public class StreamInterface implements SurfaceHolder.Callback,
         // the right mouse button is held down, so we ignore those.
         if ((event.getSource() == InputDevice.SOURCE_MOUSE ||
                 event.getSource() == InputDevice.SOURCE_MOUSE_RELATIVE) &&
-                event.getKeyCode() == KeyEvent.KEYCODE_BACK &&
-                event.getRepeatCount() == 0) {
-            conn.sendMouseButtonDown(MouseButtonPacket.BUTTON_RIGHT);
+                event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            // It appears this may get turned into a right-click pointer event
+            // if we don't return true to indicate that we handled it on
+            // some devices. https://github.com/moonlight-stream/moonlight-android/issues/634
+            if (!gotBackPointerEvent || syntheticBackDown) {
+                // We need to raise the button if gotBackPointerEvent is true
+                // in the case where it transitioned to true after we already
+                // sent the right click down event.
+                syntheticBackDown = false;
+                conn.sendMouseButtonUp(MouseButtonPacket.BUTTON_RIGHT);
+            }
+
             return true;
         }
 
@@ -879,7 +891,12 @@ public class StreamInterface implements SurfaceHolder.Callback,
         // create as a result of a right-click.
         if ((event.getSource() == InputDevice.SOURCE_MOUSE ||
                 event.getSource() == InputDevice.SOURCE_MOUSE_RELATIVE) &&
-                event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                event.getKeyCode() == KeyEvent.KEYCODE_BACK &&
+                (!gotBackPointerEvent || syntheticBackDown)) {
+            // We need to raise the button if gotBackPointerEvent is true
+            // in the case where it transitioned to true after we already
+            // sent the right click down event.
+            syntheticBackDown = false;
             conn.sendMouseButtonUp(MouseButtonPacket.BUTTON_RIGHT);
             return true;
         }
@@ -980,6 +997,11 @@ public class StreamInterface implements SurfaceHolder.Callback,
                     else {
                         conn.sendMouseButtonUp(MouseButtonPacket.BUTTON_RIGHT);
                     }
+                    // Don't use the KEYCODE_BACK hack (which interferes with mice
+                    // with actual back buttons) since we're getting right clicks
+                    // using this callback.
+                    gotBackPointerEvent = true;
+
                 }
 
                 if ((changedButtons & MotionEvent.BUTTON_TERTIARY) != 0) {

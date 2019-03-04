@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="KeyEvent source:" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a00b07d-3355-4032-b8d9-6ae461ac1ca5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../../../.gitignore" afterPath="$PROJECT_DIR$/../../../../../.gitignore" />
+    <list default="true" id="cb68b48d-690b-4569-a47e-3dc88e68857c" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/android.debug.keystore" afterPath="$PROJECT_DIR$/android.debug.keystore" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
+      <change beforePath="$PROJECT_DIR$/../../Src/CinemaApp.cpp" afterPath="$PROJECT_DIR$/../../Src/CinemaApp.cpp" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/limelight/StreamInterface.java" afterPath="$PROJECT_DIR$/../../java/com/limelight/StreamInterface.java" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/oculus/cinemasdk/MainActivity.java" afterPath="$PROJECT_DIR$/../../java/com/oculus/cinemasdk/MainActivity.java" />
+      <change beforePath="$PROJECT_DIR$/../../res/drawable-xxhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/../../res/drawable-xxhdpi/ic_launcher.png" />
+      <change beforePath="$PROJECT_DIR$/../../res/drawable-xxhdpi/img_ic_launcher.png" afterPath="$PROJECT_DIR$/../../res/drawable-xxhdpi/img_ic_launcher.png" />
     </list>
+    <ignored path="$PROJECT_DIR$/../../../../../out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrApi/out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrIntegration/out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrApi/Loader/out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrIntegration/Loader/out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrApi/Loader/Projects/out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrIntegration/Loader/Projects/out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrApi/Loader/Projects/Android/out/" />
+    <ignored path="$PROJECT_DIR$/../../../../../VrIntegration/Loader/Projects/Android/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +38,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/../../../../..">
+      <ProjectState />
+    </projectState>
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
@@ -29,35 +53,33 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../java/com/oculus/cinemasdk/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="397" column="50" lean-forward="false" selection-start-line="397" selection-start-column="50" selection-end-line="397" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SceneManager.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../../Src/SceneManager.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="868" column="35" lean-forward="false" selection-start-line="868" selection-start-column="35" selection-end-line="868" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
       <file leaf-file-name="MoviePlayerView.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../Src/MoviePlayerView.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23443">
-              <caret line="2051" column="0" lean-forward="false" selection-start-line="2051" selection-start-column="0" selection-end-line="2051" selection-end-column="0" />
-              <folding>
-                <element signature="e#548#570#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="2358" column="0" lean-forward="false" selection-start-line="2358" selection-start-column="0" selection-end-line="2358" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VrApi_Helpers.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Helpers.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VrApi_Ext.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Ext.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -65,112 +87,62 @@
       <file leaf-file-name="StreamInterface.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../java/com/limelight/StreamInterface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4726">
-              <caret line="349" column="36" lean-forward="false" selection-start-line="349" selection-start-column="36" selection-end-line="349" selection-end-column="36" />
+            <state relative-caret-position="12631">
+              <caret line="816" column="0" lean-forward="false" selection-start-line="816" selection-start-column="0" selection-end-line="816" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CinemaApp.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../Src/CinemaApp.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="918">
+              <caret line="54" column="22" lean-forward="false" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../java/com/oculus/cinemasdk/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="489" column="60" lean-forward="false" selection-start-line="489" selection-start-column="47" selection-end-line="489" selection-end-column="60" />
               <folding>
-                <marker date="1527304841931" expanded="true" signature="20062:24928" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="25019:26412" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="25073:26406" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="26456:26661" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="27824:28369" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="28395:30420" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="30477:30771" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="30897:32869" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="32928:33290" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="33448:33530" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="33597:35131" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="35205:35283" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="35346:36812" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="36876:37044" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="37093:37379" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="37483:45796" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="45865:45946" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="46023:46112" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="46175:47080" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="47436:47585" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="47645:47652" ph="{}" />
-                <marker date="1527304841931" expanded="true" signature="47688:48301" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="48174:48276" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="48375:49267" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="49336:50038" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="50090:50639" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="50294:50602" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="50708:50934" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="50756:50926" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="50810:50916" ph="{}" />
-                <marker date="1527304841931" expanded="true" signature="51012:51315" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="51107:51297" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="51169:51283" ph="{}" />
-                <marker date="1527304841931" expanded="true" signature="51419:51790" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="51859:52138" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="52209:52583" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="52649:52716" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="52793:53480" ph="{...}" />
-                <marker date="1527304841931" expanded="true" signature="53663:54188" ph="{...}" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#11068#11250#0" expanded="true" />
+                <element signature="e#11249#11250#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppManager.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Src/AppManager.cpp">
+      <file leaf-file-name="ControllerHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../java/com/limelight/binding/input/ControllerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3179">
-              <caret line="187" column="0" lean-forward="false" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+            <state relative-caret-position="10948">
+              <caret line="667" column="0" lean-forward="false" selection-start-line="667" selection-start-column="0" selection-end-line="667" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppManager.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Src/AppManager.h">
+      <file leaf-file-name="VrApi_Config.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Config.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="44" column="42" lean-forward="false" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppSelectionView.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Src/AppSelectionView.cpp">
+      <file leaf-file-name="readme.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../1stParty/OpenGL_Loader/readme.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13328">
-              <caret line="784" column="0" lean-forward="false" selection-start-line="784" selection-start-column="0" selection-end-line="785" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppSelector.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../java/com/limelight/AppSelector.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6443">
-              <caret line="418" column="0" lean-forward="false" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
-              <folding>
-                <marker date="1527305117786" expanded="true" signature="16812:18208" ph="{...}" />
-                <marker date="1527305117786" expanded="true" signature="16812:18218" ph="{...}" />
-                <marker date="1527305117786" expanded="true" signature="16812:18227" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CinemaStrings.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Src/CinemaStrings.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="986">
-              <caret line="58" column="36" lean-forward="false" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CinemaStrings.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Src/CinemaStrings.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -180,47 +152,37 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Button4k60Callback</find>
-      <find>Button4k60Pressed</find>
-      <find>3840</find>
-      <find>mousemove</find>
-      <find>TrackpadSlider.SetExtents(4.0,0.25,2);</find>
-      <find>Native::MouseMove(Cin</find>
-      <find>Array&lt;const PcDef *&gt; AppManager::GetAppList( PcCategory category ) const</find>
-      <find>SetAppList(Cinema.AppMgr.GetAppList(Curren</find>
-      <find>String fileName = activity.getFilesDir() + &quot;/gameposters/&quot; + app.getAppName() + &quot;.png&quot;;</find>
-      <find>MainActivity.nativeAddApp</find>
-      <find>TrackpadSlider.SetExtents(4.0,-4.0,2);</find>
-      <find>prefConfig.fps</find>
-      <find>limelo</find>
-      <find>loadposters</find>
-      <find>cinema</find>
-      <find>poster</find>
-      <find>createVideoThumbnail</find>
-      <find>hideui</find>
-      <find>log</find>
-      <find>if (  vrFrame.Input.buttonPressed &amp; BUTTON_TOUCH_LONGPRESS){</find>
-      <find>KeyEvent source:</find>
-      <find>LOG</find>
-      <find>I/inputHoo</find>
-      <find>HandleGazeMouse</find>
-      <find>Log.e(&quot;INPUT&quot;, &quot;KeyEvent source: &quot; + event.getSource());</find>
-      <find>showui</find>
-      <find>ShowUI</find>
-      <find>event</find>
-      <find>ui</find>
-      <find>1920 *</find>
+      <find>laten</find>
+      <find>Cinema\( cinema \)\,\n\	uiAc</find>
+      <find>Cinema.StartMoviePlayback</find>
+      <find>Cinema.StartMoviePlayback(</find>
+      <find>buttonap</find>
+      <find>BitrateAdjust.SetLocalPosition</find>
+      <find>BitrateAdjust.SetLocalPosition( PixelPos( MENU_X * -1, MENU_Y * 2.75, 1 ) );</find>
+      <find>ButtonApply</find>
+      <find>Button720p30</find>
+      <find>ButtonHoverTexture</find>
+      <find>ButtonText_ButtonApply</find>
+      <find>//import com.mi.dlabs.vr.sdk.VrLib;</find>
+      <find>load</find>
+      <find>//</find>
+      <find>result</find>
+      <find>Samsung's</find>
+      <find>private boolean grabComboDown = false;</find>
+      <find>event.getRepeatCount() == 0) {</find>
+      <find>conn.sendMouseButtonUp(MouseButtonPacket.BUTTON_RIGHT);</find>
+      <find>event.getKeyCode() == KeyEvent.KEYCODE_BACK &amp;&amp;</find>
+      <find>mode</find>
+      <find>screen</find>
+      <find>size</find>
+      <find>select</find>
+      <find>debug m</find>
+      <find>recenter</find>
+      <find>AllowDebugControls</find>
+      <find>event.getKeyCode() == KeyEvent.KEYCODE_BACK) {</find>
+      <find>allowdeb</find>
+      <find>SOURCE_GAMEPAD</find>
     </findStrings>
-    <replaceStrings>
-      <replace>Button</replace>
-      <replace>UIButton</replace>
-      <replace>UITextButton</replace>
-      <replace>4k</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>C:\Users\rafa\Documents\otroSdk\VrSamples</dir>
-      <dir>C:\Users\rafa\Documents\otroSdk</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
@@ -17690,36 +17652,27 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../Src/CinemaApp.cpp" />
+        <option value="$PROJECT_DIR$/../../java/com/limelight/computers/ComputerManagerService.java" />
         <option value="$PROJECT_DIR$/../../Src/CinemaApp.h" />
-        <option value="$PROJECT_DIR$/../../Src/ModelManager.cpp" />
-        <option value="$PROJECT_DIR$/../../Src/SceneManager.h" />
-        <option value="$PROJECT_DIR$/../../Src/Native.h" />
-        <option value="$PROJECT_DIR$/../../Src/Native.cpp" />
-        <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UITextButton.cpp" />
-        <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UITextButton.h" />
-        <option value="$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Projects/Android/jni/Android.mk" />
-        <option value="$PROJECT_DIR$/../../Src/PcManager.h" />
-        <option value="$PROJECT_DIR$/../../Src/MoviePlayerView.h" />
         <option value="$PROJECT_DIR$/../../Src/CinemaStrings.h" />
-        <option value="$PROJECT_DIR$/../../res/values/strings.xml" />
         <option value="$PROJECT_DIR$/../../Src/CinemaStrings.cpp" />
-        <option value="$PROJECT_DIR$/../../Src/AppManager.cpp" />
-        <option value="$PROJECT_DIR$/../../Src/AppManager.h" />
-        <option value="$PROJECT_DIR$/../../Src/AppSelectionView.cpp" />
-        <option value="$PROJECT_DIR$/../../java/com/limelight/StreamInterface.java" />
-        <option value="$PROJECT_DIR$/../../java/com/limelight/AppSelector.java" />
+        <option value="$PROJECT_DIR$/../../Src/Native.cpp" />
+        <option value="$PROJECT_DIR$/../../Src/Native.h" />
+        <option value="$PROJECT_DIR$/../../res/values-zh-rCN/strings.xml" />
+        <option value="$PROJECT_DIR$/../../res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/../../Src/MoviePlayerView.h" />
         <option value="$PROJECT_DIR$/../../Src/MoviePlayerView.cpp" />
+        <option value="$PROJECT_DIR$/../../java/com/limelight/StreamInterface.java" />
+        <option value="$PROJECT_DIR$/../../Src/CinemaApp.cpp" />
         <option value="$PROJECT_DIR$/../../java/com/oculus/cinemasdk/MainActivity.java" />
-        <option value="$PROJECT_DIR$/../../Src/SceneManager.cpp" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1296" />
-    <option name="height" value="612" />
+    <option name="x" value="1003" />
+    <option name="y" value="318" />
+    <option name="width" value="1381" />
+    <option name="height" value="854" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -17736,7 +17689,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -17760,51 +17713,59 @@
               <item name="CinemaSDK-Projects-Android" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="limelight" type="462c0819:PsiDirectoryNode" />
+              <item name="oculus" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="CinemaSDK-Projects-Android" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="oculus" type="462c0819:PsiDirectoryNode" />
+              <item name="cinemasdk" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="VrAppSupport" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="VrAppFramework" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="VrAppSupport" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="VrGUI" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
@@ -17812,7 +17773,7 @@
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
@@ -17821,7 +17782,7 @@
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
@@ -17831,58 +17792,81 @@
             </path>
             <path>
               <item name="Android" type="b2602c69:ProjectViewProjectNode" />
-              <item name="otroSdk" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="Src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="limelight" type="462c0819:PsiDirectoryNode" />
+              <item name="binding" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="limelight" type="462c0819:PsiDirectoryNode" />
+              <item name="binding" type="462c0819:PsiDirectoryNode" />
+              <item name="input" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="menaGamez" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="oculus" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="oculus" type="462c0819:PsiDirectoryNode" />
+              <item name="cinemasdk" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OculusSdk-moonlight" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="VrSamples" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="Native" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="CinemaSDK" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="Projects" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="Android" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="CinemaSDK-Projects-Android" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="Android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="VrAppFramework-Projects-Android" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="Android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="VrGUI-Projects-Android" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="Android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="VrLocale-Projects-Android" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="Android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="VrLocale-Projects-Android" type="616d4139:PackageViewModuleNode" />
-              <item name="Libraries" type="5c3f07af:PackageViewLibrariesNode" />
-            </path>
-            <path>
-              <item name="Android" type="58d84e3e:PackageViewProjectNode" />
-              <item name="VrSound-Projects-Android" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="android.project.structure.last.selected" value="Android" />
-    <property name="android.project.structure.proportion" value="0.15" />
-    <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.0.1" />
+    <property name="sync.plugin.last.upgrade.timestamp" value="1551638456786" />
     <property name="device.picker.selection" value="1KWPH802SS8137" />
   </component>
   <component name="RunDashboard">
@@ -18056,37 +18040,38 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0a00b07d-3355-4032-b8d9-6ae461ac1ca5" name="Default" comment="" />
-      <created>1527183329311</created>
+      <changelist id="cb68b48d-690b-4569-a47e-3dc88e68857c" name="Default" comment="" />
+      <created>1543533084040</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1527183329311</updated>
+      <updated>1543533084040</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="972" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="974" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24307036" sideWeight="0.5283401" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4090909" sideWeight="0.5063966" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32927817" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19856459" sideWeight="0.81556505" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.64677805" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24307036" sideWeight="0.47165993" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4090909" sideWeight="0.4936034" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1609808" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3649635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5947612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16666667" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45346063" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -18096,6 +18081,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -18103,377 +18089,431 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/../../Src/MoviePlayerView.cpp</url>
-          <line>1910</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="37" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="CinemaSDK-Projects-Android-java">
+        <watch expression="event.getSource() " />
+        <watch expression="InputDevice.SOURCE_KEYBOARD " />
+        <watch expression="InputDevice.SOURCE_GAMEPAD" />
+        <watch expression="event.getSource() &amp; (InputDevice.SOURCE_KEYBOARD) " language="JAVA" custom="android.view.InputDevice" />
+        <watch expression="event.getKeyCode()" />
+        <watch expression="event.getSource() &amp; ( InputDevice.SOURCE_GAMEPAD )" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>event.getSource() &amp; (InputDevice.SOURCE_KEYBOARD)</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>android.view.InputDevice</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>event.getSource() &amp; ( InputDevice.SOURCE_GAMEPAD)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>(event.getSource() &amp; ( InputDevice.SOURCE_KEYBOARD )</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>event.getSource()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../Src/AppSelectionView.h">
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="21" column="37" lean-forward="false" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        <state relative-caret-position="250">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../Src/Native.cpp">
+    <entry file="file://$PROJECT_DIR$/../../../../../app/src/main/res/xml/preferences.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="269" column="0" lean-forward="false" selection-start-line="269" selection-start-column="0" selection-end-line="269" selection-end-column="0" />
+        <state relative-caret-position="350">
+          <caret line="14" column="33" lean-forward="false" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/VRMenuObject.h">
+    <entry file="file://$PROJECT_DIR$/../../Src/CinemaApp.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16966">
-          <caret line="998" column="24" lean-forward="false" selection-start-line="998" selection-start-column="24" selection-end-line="998" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UIButton.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2363">
-          <caret line="139" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppFramework/Include/OVR_Input.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="90" column="4" lean-forward="false" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UITextButton.h" />
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Projects/Android/jni/Android.mk">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="50" lean-forward="false" selection-start-line="50" selection-start-column="50" selection-end-line="50" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UITextButton.cpp" />
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UIObject.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="781" column="0" lean-forward="false" selection-start-line="781" selection-start-column="0" selection-end-line="781" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UITextBox.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UIButton.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="79" column="1" lean-forward="true" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UIContainer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="29" column="18" lean-forward="false" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/return_up.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/scrollbar_thumb_horz.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/scrollbar_thumb_vert.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/seablue.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/shift_dn.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/shift_up.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_bar.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_base_vert.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_base_vert_small.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_bubble_vert.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/burgundy.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/space_up.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/space_dn.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_track_vert_small.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_track_vert.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_track_full_vert_small.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_track_full_vert.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_scrubber.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_caret_hi.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/res/raw/slider_caret.tga">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Src/PcManager.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="35" column="104" lean-forward="false" selection-start-line="35" selection-start-column="104" selection-end-line="35" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppFramework/Src/Framebuffer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="8" lean-forward="false" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/VRMenuEventHandler.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="354" column="50" lean-forward="false" selection-start-line="354" selection-start-column="50" selection-end-line="354" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/VRMenuObject.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="1199" column="0" lean-forward="false" selection-start-line="1199" selection-start-column="0" selection-end-line="1199" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/preferences/StreamSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="43" column="18" lean-forward="false" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Src/CinemaApp.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="458" column="53" lean-forward="false" selection-start-line="458" selection-start-column="53" selection-end-line="458" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../VrAppFramework/Src/AppRender.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="18" column="14" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Src/MoviePlayerView.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="358" column="34" lean-forward="false" selection-start-line="358" selection-start-column="29" selection-end-line="358" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1802">
-          <caret line="106" column="42" lean-forward="false" selection-start-line="106" selection-start-column="42" selection-end-line="106" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="348">
+          <caret line="75" column="114" lean-forward="false" selection-start-line="75" selection-start-column="114" selection-end-line="75" selection-end-column="114" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../Src/CinemaStrings.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="58" column="36" lean-forward="false" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="36" />
-          <folding />
+        <state relative-caret-position="304">
+          <caret line="66" column="14" lean-forward="false" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../Src/CinemaStrings.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+        <state relative-caret-position="338">
+          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Src/Native.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="875">
+          <caret line="35" column="197" lean-forward="false" selection-start-line="35" selection-start-column="197" selection-end-line="35" selection-end-column="197" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../Src/AppManager.h">
+    <entry file="file://$PROJECT_DIR$/../../res/values-zh-rCN/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="42" lean-forward="false" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
+        <state relative-caret-position="4100">
+          <caret line="164" column="67" lean-forward="false" selection-start-line="164" selection-start-column="67" selection-end-line="164" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/StreamInterface.java">
+    <entry file="file://$PROJECT_DIR$/../../res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4726">
-          <caret line="349" column="36" lean-forward="false" selection-start-line="349" selection-start-column="36" selection-end-line="349" selection-end-column="36" />
-          <folding>
-            <marker date="1527304841931" expanded="true" signature="20062:24928" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="25019:26412" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="25073:26406" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="26456:26661" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="27824:28369" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="28395:30420" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="30477:30771" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="30897:32869" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="32928:33290" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="33448:33530" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="33597:35131" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="35205:35283" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="35346:36812" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="36876:37044" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="37093:37379" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="37483:45796" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="45865:45946" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="46023:46112" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="46175:47080" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="47436:47585" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="47645:47652" ph="{}" />
-            <marker date="1527304841931" expanded="true" signature="47688:48301" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="48174:48276" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="48375:49267" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="49336:50038" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="50090:50639" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="50294:50602" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="50708:50934" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="50756:50926" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="50810:50916" ph="{}" />
-            <marker date="1527304841931" expanded="true" signature="51012:51315" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="51107:51297" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="51169:51283" ph="{}" />
-            <marker date="1527304841931" expanded="true" signature="51419:51790" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="51859:52138" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="52209:52583" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="52649:52716" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="52793:53480" ph="{...}" />
-            <marker date="1527304841931" expanded="true" signature="53663:54188" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Src/AppManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3179">
-          <caret line="187" column="0" lean-forward="false" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+        <state relative-caret-position="2900">
+          <caret line="116" column="60" lean-forward="false" selection-start-line="116" selection-start-column="60" selection-end-line="116" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/AppSelector.java">
+    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UIObject.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6443">
-          <caret line="418" column="0" lean-forward="false" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
-          <folding>
-            <marker date="1527305117786" expanded="true" signature="16812:18208" ph="{...}" />
-            <marker date="1527305117786" expanded="true" signature="16812:18218" ph="{...}" />
-            <marker date="1527305117786" expanded="true" signature="16812:18227" ph="{...}" />
-          </folding>
+        <state relative-caret-position="19525">
+          <caret line="781" column="0" lean-forward="false" selection-start-line="781" selection-start-column="0" selection-end-line="781" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrAppSupport/VrGUI/Src/UI/UIButton.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4625">
+          <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Src/MoviePlayerView.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="287" column="24" lean-forward="false" selection-start-line="287" selection-start-column="24" selection-end-line="287" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../Src/AppSelectionView.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13328">
-          <caret line="784" column="0" lean-forward="false" selection-start-line="784" selection-start-column="0" selection-end-line="785" selection-end-column="0" />
+        <state relative-caret-position="781">
+          <caret line="108" column="12" lean-forward="false" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/ui/StreamView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="64" column="11" lean-forward="false" selection-start-line="64" selection-start-column="11" selection-end-line="64" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrAppFramework/Include/App.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="302" column="71" lean-forward="true" selection-start-line="302" selection-start-column="71" selection-end-line="302" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Src/Native.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="775">
+          <caret line="299" column="34" lean-forward="true" selection-start-line="299" selection-start-column="34" selection-end-line="299" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../CinemaSDK.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../LICENSE.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1200">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3525">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../THIRD_PARTY_NOTICES.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-900">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrApp.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-675">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrAppFramework/Include/OVR_Input.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6294">
+          <caret line="26" column="28" lean-forward="true" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../cflags.mk">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../PATENTS-Cinema.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../VrSamples.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Native.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Native-CinemaSDK.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../LICENSE-Cinema.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../res/xml/preferences.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2850">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../res/xml/network_security_config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../res/xml/backup_rules.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../CinemaSDK-Projects.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/com/oculus/cinemasdk/ModifiableSurfaceHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-187">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/PcSelector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="67" column="13" lean-forward="false" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/HelpActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/AppViewShortcutTrampoline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Types.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="306" column="37" lean-forward="false" selection-start-line="306" selection-start-column="37" selection-end-line="306" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Input.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Helpers.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Ext.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../VrApi/Include/VrApi_Config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../1stParty/OpenGL_Loader/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Src/CinemaApp.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="54" column="22" lean-forward="false" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../Src/MoviePlayerView.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23443">
-          <caret line="2051" column="0" lean-forward="false" selection-start-line="2051" selection-start-column="0" selection-end-line="2051" selection-end-column="0" />
-          <folding>
-            <element signature="e#548#570#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="2358" column="0" lean-forward="false" selection-start-line="2358" selection-start-column="0" selection-end-line="2358" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/StreamInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12631">
+          <caret line="816" column="0" lean-forward="false" selection-start-line="816" selection-start-column="0" selection-end-line="816" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../java/com/limelight/binding/input/ControllerHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10948">
+          <caret line="667" column="0" lean-forward="false" selection-start-line="667" selection-start-column="0" selection-end-line="667" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../LibOVRKernel/Src/Kernel/OVR_Array.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="422" column="0" lean-forward="false" selection-start-line="422" selection-start-column="0" selection-end-line="422" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-27/android/view/InputDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="175" column="7" lean-forward="true" selection-start-line="175" selection-start-column="7" selection-end-line="175" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../java/com/oculus/cinemasdk/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="397" column="50" lean-forward="false" selection-start-line="397" selection-start-column="50" selection-end-line="397" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Src/SceneManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="868" column="35" lean-forward="false" selection-start-line="868" selection-start-column="35" selection-end-line="868" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="127">
+          <caret line="489" column="60" lean-forward="false" selection-start-line="489" selection-start-column="47" selection-end-line="489" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#11068#11250#0" expanded="true" />
+            <element signature="e#11249#11250#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

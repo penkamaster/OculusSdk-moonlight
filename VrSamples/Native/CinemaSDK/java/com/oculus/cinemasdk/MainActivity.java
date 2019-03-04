@@ -491,7 +491,7 @@ public class MainActivity extends VrActivity implements AudioManager.OnAudioFocu
 			Log.e("INPUT dispatchKeyEvent GAMEPAD OR KEYBOARD", "KeyEvent source: " + event.getSource());
 			if(streamInterface != null && streamInterface.isConnected())
 			{
-				if (event.getKeyCode() == KeyEvent.KEYCODE_BACK ){
+				if (event.getKeyCode() == KeyEvent.KEYCODE_BACK  && ((event.getSource() & ( InputDevice.SOURCE_GAMEPAD )) == 0)){
 					return super.dispatchKeyEvent(event);
 				}
 				boolean ret = false;
